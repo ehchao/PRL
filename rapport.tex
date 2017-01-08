@@ -1,0 +1,121 @@
+\documentclass[12pt]{report}
+
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{yfonts}
+\usepackage{amscd}
+\graphicspath{ {images/} }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\contentsname}{Table des matières}
+%\renewcommand{\refname}{Bibliographie}
+\renewcommand{\baselinestretch}{1.05}
+
+\theoremstyle{theoreme}
+\newtheorem{theoreme}{Théorème}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{PRL}
+
+\author{En-Hung Chao \\ Honghao Li}
+\date{\today}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+\chapter{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Études théoriques des systèmes à plusieurs corps}
+\section{Théorie de la fonction de densité}
+\subsection{Approximation d'Oppenheimer}
+Dans la physique des solides, on est ramené à étudier l'équation de Schrödinger d'un système à plusieurs corps ($N$ électrons et $M$ ions par exemple), ce qui consiste à résoudre une équation du type
+
+$$
+(\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i} + \sum_{I=1}^M \frac{\textbf{P}_i^2}{2M_I} 
++ \sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |} - \sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i 
+- \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |} ) \Psi(\textbf{r}, \textbf{R}) = E_{tot} \Psi(\textbf{r}, \textbf{R})
+$$
+où les lettres en majuscule sont des quantités physiques pour les ions, les lettres en miniscule sont celles pour les électrons et $E_{tot}$ une certaine énergie propre du système qu'on voudra trouver.
+
+Comme le système qu'on considère (les solides) comprend souvent un nombre très élevé d'électrons et d'ions, cette équation devient très difficile à résoudre numériquement. Ainsi, on doit appliquer certaines approximations au système afin de réduire le temps de calcul. La première approximation qu'on peut prendre, celle la plus intuitive, est celle de Born-Oppenheimer. En tenant compte du rapport de masse entre les électrons et les ions et en supposant que les ions sont quasiment figés par rapport aux électrons (ayant une longueur d'onde de De Broglie plus élevée), on peut réécrire l'hamiltonien du système comme
+
+$$
+H = \underbrace{\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i}}_{T}
++ \underbrace{\sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |}}_{V} 
+- \underbrace{\sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i +(- \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |}}_{V_{ext}}
+$$ 
+où $T$ est l'énergie cinétique des électrons, $V$ leur énergie potentielle d'interaction et $V_{ext}$ l'énergie potentielle dûe à l'extérieur. 
+Notre problème devient 
+
+$$
+H \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) = E_{tot} \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N)
+$$
+
+Or, le problème n'est toujours pas simple car la fonction d'onde $\Psi_e$ que l'on cherche est une fonction à plusieurs variables. La méthode proposée par Kohn et Sham \cite{Koh65} que l'on va présenter dans la suite nous contournent alors le problème.
+
+\subsection{La méthode de Kohn et Sham}
+Si les électrons étaient non-interagissant entre eux, on pourrait écrire l'hamiltonien comme une somme de plusieurs hamiltoniens d'un seul électron, \textit{i.e.},
+
+$$
+H = \sum_i H_i^{(1e)} = \sum_i (-\frac{\hbar^2}{2m}\nabla_i^2 + V_{ext}(\textbf{r}_i) + \frac{1}{2}\sum_{i \neq j} v_{ij}(|\textbf{r}_i - \textbf{r}_j))
+$$
+
+Le théorème développé par Hohenberg et Kohn \cite{Hoh64} nous donne la possibilité d'approximer la vraie solution en passant par un système auxiliaire d'électrons non-interagissants.
+
+\begin{theoreme}[Hohnenberg-Kohn]
+La valeur d'espérance d'un observable dans l'état fondamental est l'unique fonctionnel de la densité d'électron. 
+\end{theoreme}
+
+La preuve de ce théorème peut être trouvée dans \cite{Sot03}. 
+Ce résultat implique que la valeur d'espérance de l'hamiltonien à l'état fondament total, donc l'énergie fondamentale du système, est une fonctionnel de la densité d'électrons $n(\textbf{r}) = |\Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) |^2$.
+
+La méthode de Kohn et Sham consiste à poser un système auxiliaire d'hamiltonien $H' = T' + V'_{ext}$, qui a le même densité d'électrons que notre vrai système $H = T + V + V_{ext}$. Ce système auxiliaire étant non-interagissant, on peut donc prendre pour la densité $n(\textbf{r}) = n'(\textbf{r}) = \sum_i |\phi_i(\textbf{r})|^2$. On peut donc considérer le système d'équation suivant
+
+$$
+(-\frac{1}{2}\nabla_i^2 + V_{tot}[n](\textbf{r}))\phi_i(\textbf{r}) = \epsilon_i \phi_i (\textbf{r})
+$$
+
+avec 
+$$
+V_{tot}(\textbf{r}) = V_{ext}(\textbf{r}) + \int d\textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r'}|} + V_{xc}([n], \textbf{r})
+$$
+pour chacun des électrons $i$. Le problème devient un simple problème de diagonalisation. On pourra ensuite faire une résolution auto-consistente en réinjectant $n = \sum_i |\phi_i^{(p)}(\textbf{r})|^2 $ après chaque itération $p$. (L'auto-consistence de cette méthode n'a toujours pas été prouvée.) Une fois minisé l'énergie totale du système auxiliaire $\langle \Psi_e | H' | \Psi_e \rangle $, on obtiendra la densité exacte $n(\textbf{r})$ du vrai système, ce qui nous permettra de trouver l'énergie de l'état fondamental.
+
+Cependant, il y a une approximation à faire pour le terme du potentiel d'échange et de corrélation $V_{xc}(\textbf{r}) = \frac{\delta E_{xc}}{\delta n(\textbf{r})}$, où 
+
+$$
+E_{xc} = T[n] + V[n] - \frac{1}{2}\int d\textbf{r} \int d\textbf{r}' v(\textbf{r}, \textbf{r}') n(\textbf{r}) n(\textbf{r'}) - T'[n]
+$$
+
+Il existe beaucoup de méthodes d'approximation, par exemple celle de LDA (Local Density Approximation)
+
+\begin{thebibliography}{9}
+
+\bibitem{Sot03}
+	F. Sottile, thèse de doctorat (2003)
+
+\bibitem{Hoh64}
+	P. Hohenberg et W. Kohn, Phys. Rev. Lett. 136, B864 (1964)
+
+\bibitem{Koh65}
+	W. Kohn et L. J. Sham, Phys. Rev. Lett. 140, A1133 (1965)
+	
+
+\end{thebibliography}
+
+
+\end{document}
+
