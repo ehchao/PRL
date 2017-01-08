@@ -1,0 +1,24 @@
+- Motivation
+Proposé par le tuteur. Il y a une équipe de chercheurs à Orsay qui étudie les applications médicales de Ca phosphalte. (qui peut être trouvé dansl les os, les reins etc) Ce que nous étudions, CaC2O4 Ca oxalate, qui fait partie de la grande cellule élémentaire de Ca phosphalte. 
+
+- DFT
+	- calcul ab initio
+	- model
+	- principal
+
+- Simulation 
+	- parameters
+		- atom positions
+		- lattice group 
+		- wyckoff position
+		- ecut
+	- convergence study
+		1.) ecut (+diemac?)
+		2.) acell
+		3.) kptr_latt
+		4.) ionmov
+	- band structure
+		- Emphasize that it is not quantatively correct to use the ground state calculation. However, it gives a good qualitative illustration of the structure of the material and will be used in the perturbative method during the next calculation for excited state.
+****************************************************
+
+
