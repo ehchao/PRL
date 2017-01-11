@@ -1,15 +1,15 @@
 - Motivation
-Proposé par le tuteur. Il y a une équipe de chercheurs à Orsay qui étudie les applications médicales de Ca phosphalte. (qui peut être trouvé dansl les os, les reins etc) Ce que nous étudions, CaC2O4 Ca oxalate, qui fait partie de la grande cellule élémentaire de Ca phosphalte. 
+Proposé par le tuteur. Il y a une équipe de chercheurs à Orsay qui étudie les applications médicales de Ca phosphalte. (qui peut être trouvé dansl les os, les reins etc) Ce que nous étudions, CaC2O4 Ca oxalate, qui fait partie de la grande cellule élémentaire de Ca phosphalte.
 
 - DFT
 	- calcul ab initio
 	- model
 	- principal
 
-- Simulation 
+- Simulation
 	- parameters
 		- atom positions
-		- lattice group 
+		- lattice group
 		- wyckoff position
 		- ecut
 	- convergence study
@@ -20,5 +20,3 @@ Proposé par le tuteur. Il y a une équipe de chercheurs à Orsay qui étudie le
 	- band structure
 		- Emphasize that it is not quantatively correct to use the ground state calculation. However, it gives a good qualitative illustration of the structure of the material and will be used in the perturbative method during the next calculation for excited state.
 ****************************************************
-
-
