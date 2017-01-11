@@ -9,7 +9,7 @@
 \usepackage{graphicx}
 \usepackage{yfonts}
 \usepackage{amscd}
-\graphicspath{ {images/} }
+\graphicspath{{images/}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\contentsname}{Table des matières}
 %\renewcommand{\refname}{Bibliographie}
@@ -55,7 +55,7 @@ Comme le système qu'on considère (les solides) comprend souvent un nombre trè
 $$
 H = \underbrace{\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i}}_{T}
 + \underbrace{\sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |}}_{V} 
-- \underbrace{\sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i +(- \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |}}_{V_{ext}}
+- \underbrace{\sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i - \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |}}_{V_{ext}}
 $$ 
 où $T$ est l'énergie cinétique des électrons, $V$ leur énergie potentielle d'interaction et $V_{ext}$ l'énergie potentielle dûe à l'extérieur. 
 Notre problème devient 
@@ -64,7 +64,7 @@ $$
 H \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) = E_{tot} \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N)
 $$
 
-Or, le problème n'est toujours pas simple car la fonction d'onde $\Psi_e$ que l'on cherche est une fonction à plusieurs variables. La méthode proposée par Kohn et Sham \cite{Koh65} que l'on va présenter dans la suite nous contournent alors le problème.
+Or, le problème n'est toujours pas simple car la fonction d'onde $\Psi_e$ que l'on cherche est une fonction à plusieurs variables. La méthode proposée par Kohn et Sham~\cite{Koh65} que l'on va présenter dans la suite nous contournent alors le problème.
 
 \subsection{La méthode de Kohn et Sham}
 Si les électrons étaient non-interagissant entre eux, on pourrait écrire l'hamiltonien comme une somme de plusieurs hamiltoniens d'un seul électron, \textit{i.e.},
@@ -73,13 +73,13 @@ $$
 H = \sum_i H_i^{(1e)} = \sum_i (-\frac{\hbar^2}{2m}\nabla_i^2 + V_{ext}(\textbf{r}_i) + \frac{1}{2}\sum_{i \neq j} v_{ij}(|\textbf{r}_i - \textbf{r}_j))
 $$
 
-Le théorème développé par Hohenberg et Kohn \cite{Hoh64} nous donne la possibilité d'approximer la vraie solution en passant par un système auxiliaire d'électrons non-interagissants.
+Le théorème développé par Hohenberg et Kohn~\cite{Hoh64} nous donne la possibilité d'approximer la vraie solution en passant par un système auxiliaire d'électrons non-interagissants.
 
 \begin{theoreme}[Hohnenberg-Kohn]
 La valeur d'espérance d'un observable dans l'état fondamental est l'unique fonctionnel de la densité d'électron. 
 \end{theoreme}
 
-La preuve de ce théorème peut être trouvée dans \cite{Sot03}. 
+La preuve de ce théorème peut être trouvée dans~\cite{Sot03}. 
 Ce résultat implique que la valeur d'espérance de l'hamiltonien à l'état fondament total, donc l'énergie fondamentale du système, est une fonctionnel de la densité d'électrons $n(\textbf{r}) = |\Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) |^2$.
 
 La méthode de Kohn et Sham consiste à poser un système auxiliaire d'hamiltonien $H' = T' + V'_{ext}$, qui a le même densité d'électrons que notre vrai système $H = T + V + V_{ext}$. Ce système auxiliaire étant non-interagissant, on peut donc prendre pour la densité $n(\textbf{r}) = n'(\textbf{r}) = \sum_i |\phi_i(\textbf{r})|^2$. On peut donc considérer le système d'équation suivant
@@ -118,4 +118,3 @@ Il existe beaucoup de méthodes d'approximation, par exemple celle de LDA (Local
 
 
 \end{document}
-
