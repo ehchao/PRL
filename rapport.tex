@@ -38,14 +38,14 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Études théoriques des systèmes à plusieurs corps
+\chapter{Études théoriques des systèmes à plusieurs corps}
 \section{Théorie de la fonctionelle de la densité}
 \subsection{Approximation d'Oppenheimer}
 Dans la physique des solides, on est ramené à étudier l'équation de Schrödinger d'un système à plusieurs corps ($N$ électrons et $M$ ions par exemple), ce qui consiste à résoudre une équation du type
 
 $$
-(\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i} + \sum_{I=1}^M \frac{\textbf{P}_i^2}{2M_I} 
-+ \sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |} - \sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i 
+(\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i} + \sum_{I=1}^M \frac{\textbf{P}_i^2}{2M_I}
++ \sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |} - \sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i
 - \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |} ) \Psi(\textbf{r}, \textbf{R}) = E_{tot} \Psi(\textbf{r}, \textbf{R})
 $$
 où les lettres en majuscule sont des quantités physiques pour les ions, les lettres en miniscule sont celles pour les électrons et $E_{tot}$ une certaine énergie propre du système qu'on voudra trouver.
@@ -56,9 +56,9 @@ $$
 H = \underbrace{\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i}}_{T}
 + \underbrace{\sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |}}_{V}
 - \underbrace{\sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i - \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |}}_{V_{ext}}
-$$ 
-où $T$ est l'énergie cinétique des électrons, $V$ leur énergie potentielle d'interaction et $V_{ext}$ l'énergie potentielle dûe à l'extérieur. 
-Notre problème devient 
+$$
+où $T$ est l'énergie cinétique des électrons, $V$ leur énergie potentielle d'interaction et $V_{ext}$ l'énergie potentielle dûe à l'extérieur.
+Notre problème devient
 
 $$
 H \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) = E_{tot} \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N)
@@ -76,10 +76,10 @@ $$
 Le théorème développé par Hohenberg et Kohn~\cite{Hoh64} nous donne la possibilité d'approximer la vraie solution en passant par un système auxiliaire d'électrons non-interagissants.
 
 \begin{theoreme}[Hohnenberg-Kohn]
-La valeur d'espérance d'un observable dans l'état fondamental est l'unique fonctionnel de la densité d'électron. 
+  La valeur d'espérance d'un observable dans l'état fondamental est l'unique fonctionnel de la densité d'électron.
 \end{theoreme}
 
-La preuve de ce théorème peut être trouvée dans~\cite{Sot03}. 
+La preuve de ce théorème peut être trouvée dans~\cite{Sot03}.
 Ce résultat implique que la valeur d'espérance de l'hamiltonien à l'état fondament total, donc l'énergie fondamentale du système, est une fonctionnel de la densité d'électrons $n(\textbf{r}) = |\Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) |^2$.
 
 La méthode de Kohn et Sham consiste à poser un système auxiliaire d'hamiltonien $H' = T' + V'_{ext}$, qui a le même densité d'électrons que notre vrai système $H = T + V + V_{ext}$. Ce système auxiliaire étant non-interagissant, on peut donc prendre pour la densité $n(\textbf{r}) = n'(\textbf{r}) = \sum_i |\phi_i(\textbf{r})|^2$. On peut donc considérer le système d'équation suivant
@@ -88,28 +88,28 @@ $$
 (-\frac{1}{2}\nabla_i^2 + V_{tot}[n](\textbf{r}))\phi_i(\textbf{r}) = \epsilon_i \phi_i (\textbf{r})
 $$
 
-avec 
+avec
 $$
 V_{tot}(\textbf{r}) = V_{ext}(\textbf{r}) + \int d\textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r'}|} + V_{xc}([n], \textbf{r})
 $$
 pour chacun des électrons $i$. Le problème devient un simple problème de diagonalisation. On pourra ensuite faire une résolution auto-consistente en réinjectant $n = \sum_i |\phi_i^{(p)}(\textbf{r})|^2 $ après chaque itération $p$. (L'auto-consistence de cette méthode n'a toujours pas été prouvée.) Une fois minisé l'énergie totale du système auxiliaire $\langle \Psi_e | H' | \Psi_e \rangle $, on obtiendra la densité exacte $n(\textbf{r})$ du vrai système, ce qui nous permettra de trouver l'énergie de l'état fondamental.
 
-Cependant, il y a une approximation à faire pour le terme du potentiel d'échange et de corrélation $V_{xc}(\textbf{r}) = \frac{\delta E_{xc}}{\delta n(\textbf{r})}$, où 
+Cependant, il y a une approximation à faire pour le terme du potentiel d'échange et de corrélation $V_{xc}(\textbf{r}) = \frac{\delta E_{xc}}{\delta n(\textbf{r})}$, où
 
 $$
 E_{xc} = T[n] + V[n] - \frac{1}{2}\int d\textbf{r} \int d\textbf{r}' v(\textbf{r}, \textbf{r}') n(\textbf{r}) n(\textbf{r'}) - T'[n]
 $$
 
-Il existe beaucoup de méthodes d'approximation, par exemple celle de LDA (Local Density Approximation). Certaines méthodes d'approximations sont présentées dans \cite{Sot03} (Sect. 2.4 et 2.5).
+Il existe beaucoup de méthodes d'approximation, par exemple celle de LDA (Local Density Approximation). Certaines méthodes d'approximations sont présentées dans~\cite{Sot03} (Sect. 2.4 et 2.5).
 
 %17/02/2017%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Théorie de la fonctionelle de la densité dépendente du temps} \label{TDDFT}
-Dans les études de spectroscopie, nous étudions les comportements des matériaux sous exicitation. La constante diélectrique et son inverse sont par exemple des grandeurs physiques que l'on regarde souvent dans les expériences (déduites à partir de l'absorption et de la réflexion des lumières, cf. \cite{Sot03} Chap. 1). Par conséquent, la simple étude de l'état fondamental ne suffit pas, il nous faut de plus des études sur les états excités. 
+\section{Théorie de la fonctionelle de la densité dépendente du temps}\label{TDDFT}
+Dans les études de spectroscopie, nous étudions les comportements des matériaux sous exicitation. La constante diélectrique et son inverse sont par exemple des grandeurs physiques que l'on regarde souvent dans les expériences (déduites à partir de l'absorption et de la réflexion des lumières, cf.~\cite{Sot03} Chap. 1). Par conséquent, la simple étude de l'état fondamental ne suffit pas, il nous faut de plus des études sur les états excités.
 
-La méthode que nous allons présenter dans ce rapport, la théorie de la fonction de densité dépendente du temps (\textit{Time-Depending Density Functional Theory}, est utilisée dans le code à l'aide duquel on fait des simulations numériques \textit{ab initio}. Pour l'introduire, nous commençons par présenter les éléments de la théorie de la réponse linéaire.
+La méthode que nous allons présenter dans ce rapport, la théorie de la fonction de densité dépendente du temps (\textit{Time-Depending Density Functional Theory}), est utilisée dans le code à l'aide duquel on fait des simulations numériques \textit{ab initio}. Pour l'introduire, nous commençons par présenter les éléments de la théorie de la réponse linéaire.
 
 \subsection{Théorie de la réponse linéaire}
-Soit $n$ un observable. On suppose que $n$ varie en fonction de la perturbation $V$ de par 
+Soit $n$ un observable. On suppose que $n$ varie en fonction de la perturbation $V$ de par
 
 $$
 n(\textbf{r}, t) = \int dt d\textbf{r'}  \chi (\textbf{r}, \textbf{r'}, t-t') V(\textbf{r'}, t')
@@ -124,12 +124,12 @@ $$
 la fonction de réponse linéaire $\chi$ est donnée par la formule de Kubo\cite{Ton12}
 
 \begin{equation}\label{kubo}
-\chi (\textbf{r}, \textbf{r'}, t-t') = -i \langle N | [n(\textbf{r}, t), n(\textbf{r'}, t) |N \rangle \Theta(t-t')
+  \chi (\textbf{r}, \textbf{r}', t-t') = -i \langle N | [n(\textbf{r}, t), n(\textbf{r}', t)] |N \rangle \Theta(t-t')
 \end{equation}
 
 où $|N \rangle $ désigne l'état dans lequel on mesure l'observable $n$.
 
-Nous supposons que la structure de bande obtenue à partir de l'état fondamental nous fournisse une base complète. Nous partons de $|N \rangle$ l'état fondamental constitué de $N$ électrons dans \ref{kubo}. Notons $| j_N \rangle $ le j-ième état excité de notre système à $N$ électrons. En faisant la transformation de Fourier temporelle, la fonction de réponse linéaire s'écrit dans ce cas 
+Nous supposons que la structure de bande obtenue à partir de l'état fondamental nous fournisse une base complète. Nous partons de $|N \rangle$ l'état fondamental constitué de $N$ électrons dans~\ref{kubo}. Notons $| j_N \rangle $ le j-ième état excité de notre système à $N$ électrons. En faisant la transformation de Fourier temporelle, la fonction de réponse linéaire s'écrit dans ce cas
 
 \begin{equation}
 \chi (\textbf{r}, \textbf{r}', \omega) = \sum_j \frac{f_j(\textbf{r}) f_j^*(\textbf{r}') }{\omega - \Omega_j + i \eta} + \frac{f_j(\textbf{r}') f_j^*(\textbf{r}) }{\omega + \Omega_j + i \eta}
@@ -137,7 +137,7 @@ Nous supposons que la structure de bande obtenue à partir de l'état fondamenta
 
 où $f_j = \langle N | n(\textbf{r}, 0) | j_N \rangle$ le nombre d'occupation de l'état $j$, $\Omega_j \pm (E_0 - E_j)$ le \textit{gap} entre l'état $j$ qui et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening}) qui est à tendre vers 0 pour le calcul théorique.
 
-Notons $n$ la fonciton de densité. C'est un observable obtenu à partir de la relation suivante 
+Notons $n$ la fonciton de densité. C'est un observable obtenu à partir de la relation suivante
 
 $$
 n = \psi^\dagger \psi
@@ -155,17 +155,17 @@ $$
 où $\phi_\textbf{k}$ est la fonction d'onde de Bloch pour l'impulsion $\textbf{k}$ et $a_\textbf{k}$ l'opérateur de création correspondant. La fonction de réponse linéaire peut encore s'écrire
 
 \begin{equation}\label{chi}
-\chi(\textbf{r}, \textbf{r}', \omega) = \sum_{vc} \frac{(f_v - f_c)\phi_v(\textbf{r}) \phi_c^*(\textbf{r}) \phi_v^*(\textbf{r}') \phi_c(\textbf{r}')}{\omega - (\epsilon_c - \epsilon_v) + i\eta} \quad + \quad a.r.
+  \chi(\textbf{r}, \textbf{r}', \omega) = \sum_{vc} \frac{(f_v - f_c)\phi_v(\textbf{r}) \phi_c^*(\textbf{r}) \phi_v^*(\textbf{r}') \phi_c(\textbf{r}')}{\omega - (\epsilon_c - \epsilon_v) + i\eta} \quad + \quad \text{a.r.}
 \end{equation}
 
-où $a.r.$ représente les termes d'anti-résonance et $v$ et $c$ pour bande de valence et bande de conduction respectivement.
+où a.r.\ représente les termes d'anti-résonance et $v$ et $c$ pour bande de valence et bande de conduction respectivement.
 
 \subsection{TDDFT}
 Nous allons étudier le comportement du coefficient diélectrique du système en présence d'une excitation extérieure. La relation entre le potentiel d'perturbation extérieure et le potentiel total à l'intérieur du système est donnée par (dans l'espace réciproque de transformation de Fourier temporelle)
 
 $$
 V_{tot}(\textbf{r}, \omega) = \int d\textbf{r}' \epsilon^{-1}(\omega) V_{ext}(\textbf{r}', \omega)
-$$  
+$$
 
 On notera $\chi^0$ et $\chi$ les fonctions de réponse linéaire pour $V_{tot}$ et $V_{ext}$ respectivement. On a les relations entre la fonctionelle de densité $n$ et ces deux potentiels
 
@@ -177,14 +177,14 @@ $$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Simulations numériques}
-Nos travaux ont été réalisés en deux temps. Nous commençons par étudier l'état fondamental du calcium oxalate. Le code utilisé s'appelle \textit{Abinit}. Ensuite, nous utilisons le fichier décrivant la fonction de densité de l'état fondamental obtenu dans la première étape pour calculer le coefficient diélectrique dont on déduit la fonction de perte (\textit{Loss fonction} en anglais). Le code utilisé pour cette étape s'appelle \textit{DP}. 
-%TODO une présentation d'Abinit et de DP 
+Nos travaux ont été réalisés en deux temps. Nous commençons par étudier l'état fondamental du calcium oxalate. Le code utilisé s'appelle \textit{Abinit}. Ensuite, nous utilisons le fichier décrivant la fonction de densité de l'état fondamental obtenu dans la première étape pour calculer le coefficient diélectrique dont on déduit la fonction de perte (\textit{Loss fonction} en anglais). Le code utilisé pour cette étape s'appelle \textit{DP}.
+%TODO une présentation d'Abinit et de DP
 
 Les fonctionnements des outils seront présentés au cours de ce chapitre.
 
 \section{Abinit}
 
-\section{DP}  
+\section{DP}
 %DP est un code qui permet de calculer le coefficient diélectrique en fonction de la fréquence de lumière absorbée par le matériau. Il implémente le calcul détaillé dans la section \ref{TDDFT}. Nous donnons une brève description de son fonctionnement par la suite.
 
 \section{Simulation}
@@ -214,24 +214,20 @@ Pour toute étude $\textit{ab initio }$des matériaux, il faut trouver un optimu
 \item[shiftk] Paramètre à mettre dans le cas où aucune symétrie n'est utilisée pour générer la grille des points-k dans le fichier décrivant la fonction de densité de l'état fondamental.
 \end{itemize}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{thebibliography}{9}
 
 \bibitem{Sot03}
-	F. Sottile, thèse de doctorat (2003)
+    F. Sottile, thèse de doctorat (2003)
 
 \bibitem{Hoh64}
-	P. Hohenberg et W. Kohn, Phys. Rev. Lett. 136, B864 (1964)
+    P. Hohenberg et W. Kohn, Phys. Rev. Lett. 136, B864 (1964)
 
 \bibitem{Koh65}
-	W. Kohn et L. J. Sham, Phys. Rev. Lett. 140, A1133 (1965)
-	
+    W. Kohn et L. J. Sham, Phys. Rev. Lett. 140, A1133 (1965)
+
 \bibitem{Ton12}
-	D. Tong, Kinetic Theory, cours donné dans University of Cambridge Graduate Course, 2012
+    D. Tong, Kinetic Theory, cours donné dans University of Cambridge Graduate Course, 2012
 
 \end{thebibliography}
-
 
 \end{document}
