@@ -1,0 +1,113 @@
+\section{Abinit}
+\label{sec-abinit}
+\textit{Abinit} est un logiciel qui implémente numériquement la théorie de la fonctionnelle de la densité.
+Il nous permet de faire des calculs ab initio pour obtenir la densité électronique,
+et ainsi l'énergie fondamentale du système.
+Plus précisément, Abinit effectue la résolution auto-consistente pour le système d'équations de Kohn et Sham à l'aide une base d'ondes planes.
+A chaque itération, le point minimum d'énergie est calculé par la méthode du gradient conjugué,
+et l'approximation du pseudo-potentiel est introduite pour éliminer dans le systéme d'équations les électrons du cœur,
+ce qui réduit considérablement la complexité du probleme.
+
+Avant de démarer le calcul,
+plusieurs paramètres doivent être spécifiés pour la résolution numérique.
+Du côté physique, le système étudié étant cristallin,
+il faut d'abord définir la maille élémentaire.
+Du côté technique, il faut préciser les méthodes utilisées et des valuers critiques qui gouvernent le comportement du calcul.
+Dans la suite, nous proposons d'abord quelques approximations importantes. Ensuite,
+Nous présentons les paramètres principaux qui nous servent dans notre études.
+Une liste complète des paramètres utilisés se trouve dans l'annexe.
+
+\subsection{Espace réciproque}
+\label{subsec-reciprocal}
+La partie éssentielle du calcul avec Abinit consiste à résoudre le système d'équations de Kohn et Sham,
+dont une quantité clée est la densité de charge $n$, qui est donnée par l'équation %TODO
+Or les système étudiés sont souvent des matériaux cristallins,
+auxquels on applique la condition périodique aux limites.
+D'après le théorème de Bloch, les états propres, et ainsi les fonctions d'ondes correspondantes,
+sont caractérisés par deux nombres quantiques:
+le vecteur d'onde $k$ dans la première zone de Brillouin, et l'indice de bande $n$.
+La densité de charge s'exprime donc par
+\begin{equation}
+  \label{eqn-den1}
+  n(r) = \frac{\Omega_{maille}}{{(2\pi)}^3} \sum_{n, k}^{occ}|\phi_{n, k}(r)|^2,
+\end{equation}
+avec la somme sur tous les états occupés.
+A la limite des cristaux idéals infinis, la taille de grille dans l'espace réciproque tend vers zéro,
+alors~\cref{eqn-den1} devient
+\begin{equation}
+  \label{eqn-den2}
+  n(r) = \frac{\Omega_{maille}}{{(2\pi)}^3} \sum_n^{occ}\int_{ZB}d^3k|\phi_{n, k}(r)|^2.
+\end{equation}
+Ensuite, à l'approximation numérique,
+l'intégral sur $k$ doit être discrétisée en somme sur $N_k$ point $k$ pondérés:
+\begin{equation}
+  \label{eqn-den3}
+  n(r) = \sum_n^{occ}\sum_{i=1}^{N_k}w_i|\phi_{n, k}(r)|^2.
+\end{equation}
+Le temps de calcul étant proportionnel à $N_k$,
+il est donc nécessaire de choisir les poids $w_i$ et les points $k$ afin de reproduire le résultat
+de l'intégral avec la moindre erreur et le moindre nombre de point $k$.
+Une méthode beaucoup utilisée est l'échantillonage de Monkhorst-Pack,
+qui consiste en pricipal à prendre les points $k$ tels que chaque point ne peut pas être lié avec un autre par aucun opération de symétrie,%TODO:not clear enough
+avec un certain décalage si nécessaire.
+La justification de la méthode est donnée dans.%TODO:find reference
+Avec cette méthode, le nombre de points nécessaire pour évaluer l'intégral dans la première zone de Brillouin est reduit énoremément.
+
+\subsection{Base d'ondes planes}
+\label{subsec-planewave}
+La transformation de Fourier est très souvent lié avec la périodicité du système étudié.
+Il est alors naturel de choisir, dans le contexte de l'approximation numérique,
+la base d'ondes planes pour approximer les fonctions d'onde des états propres $\phi_i = \phi_{n,k_i}$.
+La théorème de Bloch nous donne:
+\begin{equation}
+  \phi_{n,k_i} = \frac{1}{\Omega_{maille}}e^{ik_i\cdot r}\sum_G c_{n,k_i}(G)e_{iG\cdot r} = e^{ik_i\cdot r} u_{n,k_i}(r)
+\end{equation}
+où $u_{n,k_i}(r)$ a la même périodicité que la structure cristalline
+et $G$ est un vecteur de réseau dans l'espace réciproque.
+La base d'ondes planes nous donne les avantages suivants:
+\begin{itemize}
+  \item[-] La simplification des calculs de dérivé et d'intégral,
+    qui apparaissent dans le calcul des éléments de l'hamiltonien.
+  \item[-] Elle nous permet la méthode FFT pour des transformations rapides entre l'espace réel et l'espace réciproque.
+  \item[-] L'ensemble d'ondes planes est complèt et orthonormal.
+  \item[-] La base est de dimension infinie, mais le coupage de la dimension peut être réalisé facilement
+    par la définition d'un seuil d'énergie $E_{cut}$:
+    \begin{equation}
+      \frac{1}{2}|k+G|^2 \leq E_{cut}
+    \end{equation}
+    qui relie le nombre d'ondes planes dans la base et $E_{cut}$ par
+    \begin{equation}
+      N_{op}\propto \Omega_{maille}{(E_{cut})}^{\frac{3}{2}}.
+    \end{equation}
+    Une étude de la convergence de l'énergie totale du système par rapport à ce seuil de coupage est alors nécessaire.
+\end{itemize}
+
+\section{l'Annexe}
+Définition des points $k$ dans l'espace réciproque
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[ngkpt] Vecteur de taille 3 qui représente le nombre de points de grille dans les trois directions de translation dans l'espace réciproque.
+  \item[nshiftk] Nombre de directions dans lesquelle un décalage de point $k$ sera effectué.
+  \item[shiftk] Matrice de nshiftk*3 qui précise les directions et les quantité de décalage.
+\end{itemize}
+Définition de la maille élémentaire:
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[acell] Vecteur de taille 3 élément qui représente l'échelle de la taille de la maille élémentaire.
+  \item[rprim] Matrice de 3*3 qui représente les trois directions de translation.
+    Ensemble avec acell définit les trois vectors de translation dans l'espace réel.
+  \item[ntypat] Nombre de types d'atomes dans la maille élémentaire.
+  \item[znucl] Vecteur de taille 3 qui représente le charge nucléaire de chaque type d'atome.
+  \item[natom] Nombre d'atomes dans la maille élémentaire.
+  \item[typat] Vecteur de taille natom qui précise le type de chaque atome dans la maille élémentaire.
+  \item[xred] Matrice de natom*3 qui représente la coordonnée réduite de chaque atome,
+    par ordre cohérent avec typat.
+\end{itemize}
+Paramètres de convergence:
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[ecut] Seuil d'énergie qui correspont à l'énergie maximale des ondes planes utilisées dans le calcul à un point k donné.
+    Plus grande la ecut, plus précis et moin efficace le calcul.
+    Une étude sur la convergence en ecut est alors nécessaire pour avoir à la fois la précision et l'efficacité.
+  \item[nstep] Nombre maximal d'itération pour le calcul auto-consistente.
+    Ce paramètre assure la cessation du calcul, mais doit être suffisamment grande pour que le calcul converge avant de se terminer.
+  \item[tolfe] Seuil de la valeur absolue de la différence d'énergie totale entre deux itérations successives.
+    On dit que le calcul converge lorsque l'on passe au-dessous de ce seuil.
+\end{itemize}
