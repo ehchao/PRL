@@ -82,16 +82,17 @@ Le théorème développé par Hohenberg et Kohn~\cite{Hoh64} nous donne la possi
 La preuve de ce théorème peut être trouvée dans~\cite{Sot03}.
 Ce résultat implique que la valeur d'espérance de l'hamiltonien à l'état fondament total, donc l'énergie fondamentale du système, est une fonctionnel de la densité d'électrons $n(\textbf{r}) = |\Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) |^2$.
 
-La méthode de Kohn et Sham consiste à poser un système auxiliaire d'hamiltonien $H' = T' + V'_{ext}$, qui a le même densité d'électrons que notre vrai système $H = T + V + V_{ext}$. Ce système auxiliaire étant non-interagissant, on peut donc prendre pour la densité $n(\textbf{r}) = n'(\textbf{r}) = \sum_i |\phi_i(\textbf{r})|^2$. On peut donc considérer le système d'équation suivant
+La méthode de Kohn et Sham consiste à poser un système auxiliaire d'hamiltonien $H' = T' + V'_{ext}$, qui a le même densité d'électrons que notre vrai système $H = T + V + V_{ext}$. Ce système auxiliaire étant non-interagissant, on peut donc prendre pour la densité $n(\textbf{r}) = n'(\textbf{r}) = \prod_i |\phi_i(\textbf{r})|^2$. On peut donc considérer le système d'équation suivant
 
 $$
 (-\frac{1}{2}\nabla_i^2 + V_{tot}[n](\textbf{r}))\phi_i(\textbf{r}) = \epsilon_i \phi_i (\textbf{r})
 $$
 
 avec
-$$
+\begin{equation}\label{Vtot}
 V_{tot}(\textbf{r}) = V_{ext}(\textbf{r}) + \int d\textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r'}|} + V_{xc}([n], \textbf{r})
-$$
+\end{equation}
+
 pour chacun des électrons $i$. Le problème devient un simple problème de diagonalisation. On pourra ensuite faire une résolution auto-consistente en réinjectant $n = \sum_i |\phi_i^{(p)}(\textbf{r})|^2 $ après chaque itération $p$. (L'auto-consistence de cette méthode n'a toujours pas été prouvée.) Une fois minisé l'énergie totale du système auxiliaire $\langle \Psi_e | H' | \Psi_e \rangle $, on obtiendra la densité exacte $n(\textbf{r})$ du vrai système, ce qui nous permettra de trouver l'énergie de l'état fondamental.
 
 Cependant, il y a une approximation à faire pour le terme du potentiel d'échange et de corrélation $V_{xc}(\textbf{r}) = \frac{\delta E_{xc}}{\delta n(\textbf{r})}$, où
@@ -163,9 +164,9 @@ où a.r.\ représente les termes d'anti-résonance et $v$ et $c$ pour bande de v
 \subsection{TDDFT}
 Nous allons étudier le comportement du coefficient diélectrique du système en présence d'une excitation extérieure. La relation entre le potentiel d'perturbation extérieure et le potentiel total à l'intérieur du système est donnée par (dans l'espace réciproque de transformation de Fourier temporelle)
 
-$$
+\begin{equation}\label{VtotVext}
 V_{tot}(\textbf{r}, \omega) = \int d\textbf{r}' \epsilon^{-1}(\omega) V_{ext}(\textbf{r}', \omega)
-$$
+\end{equation}
 
 On notera $\chi^0$ et $\chi$ les fonctions de réponse linéaire pour $V_{tot}$ et $V_{ext}$ respectivement. On a les relations entre la fonctionelle de densité $n$ et ces deux potentiels
 
@@ -173,7 +174,32 @@ $$
 n(\textbf{r}, t) = \int d\textbf{r}' dt' \chi^0(\textbf{r}, \textbf{r'}, t-t') V_{tot}(\textbf{r}', t) = \int d\textbf{r}' dt' \chi(\textbf{r}, \textbf{r'}, t-t') V_{ext}(\textbf{r}', t)
 $$
 
+Enfin, la relation entre $\chi^0$ et $\chi$ peut être donnée de façon plus explicite en utilisant la méthode variationnelle
+
+\begin{equation}\label{chi0chi}
+\chi = \frac{\delta n}{\delta V_{ext}} = \frac{\delta n}{\delta V_{tot}} \frac{\delta V_{tot}}{\delta n} = \chi^0 ( 1 + (v+f_{xc})\chi)
+\end{equation}
+
+où nous avons utilisé l'expression de $V_{tot}$ de l'équation \ref{Vtot}, $v = \frac{\delta V_H}{\delta n}$ pour la variation du deuxième terme dans l'expression de $V_{tot}$ (potentiel de Hatree) et $f_{xc} = \frac{\delta V_{xc}}{\delta n}$. À noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
+
+À nouveau, le terme d'échange et de corrélation $f_{xc}$ doit être approximé. Les méthodes d'approximation que nous utilisons dans le cadre de ce projet est la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA).
+
 \subsection{Coefficient diélectrique et fonction de perte}
+Dans une vraie expérience de spectroscopie, on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron (\textit{Electron Energy Loss Spectra} en anglais, EELS). Ces deux grandeurs physiques sont données par (~\cite{Sot03}, Sect. 1.5)
+
+$$
+Abs = \mathfrak{I}(\epsilon) \quad EELS = -\mathfrak{I}(\epsilon^{-1})
+$$
+
+En appliquant la méthode variationnelle sur l'équation \ref{VtotVext}, on obtient 
+
+\begin{equation}\label{epsilon}
+\epsilon^{-1} = 1+ (v + f_{xc})\chi
+\end{equation} 
+
+L'intérêt principal de notre travail est donc de prédire le comportement de $\epsilon$ du matériau choisi quand des photos de certaines énergies y sont envoyés.
+
+Dans la suite de ce rapport, nous allons présenter les aspects numériques de notre projet, dont les codes qui exploitent les relations que l'on vient d'établir.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Simulations numériques}
