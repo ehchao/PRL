@@ -1,7 +1,8 @@
-\documentclass[12pt]{report}
+\documentclass[12pt, french]{report}
 
 \usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx}
 \usepackage[utf8]{inputenc}
+\usepackage{babel}
 \usepackage{enumitem}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -9,6 +10,8 @@
 \usepackage{graphicx}
 \usepackage{yfonts}
 \usepackage{amscd}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{cleveref}
 \graphicspath{{images/}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\contentsname}{Table des matières}
@@ -208,7 +211,7 @@ Nos travaux ont été réalisés en deux temps. Nous commençons par étudier l'
 
 Les fonctionnements des outils seront présentés au cours de ce chapitre.
 
-\section{Abinit}
+\include{abinit}
 
 \section{DP}
 %DP est un code qui permet de calculer le coefficient diélectrique en fonction de la fréquence de lumière absorbée par le matériau. Il implémente le calcul détaillé dans la section \ref{TDDFT}. Nous donnons une brève description de son fonctionnement par la suite.
