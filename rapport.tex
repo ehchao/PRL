@@ -183,7 +183,7 @@ Enfin, la relation entre $\chi^0$ et $\chi$ peut être donnée de façon plus ex
 \chi = \frac{\delta n}{\delta V_{ext}} = \frac{\delta n}{\delta V_{tot}} \frac{\delta V_{tot}}{\delta n} = \chi^0 ( 1 + (v+f_{xc})\chi)
 \end{equation}
 
-où nous avons utilisé l'expression de $V_{tot}$ de l'équation \ref{Vtot}, $v = \frac{\delta V_H}{\delta n}$ pour la variation du deuxième terme dans l'expression de $V_{tot}$ (potentiel de Hatree) et $f_{xc} = \frac{\delta V_{xc}}{\delta n}$. À noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
+où nous avons utilisé l'expression de $V_{tot}$ de l'équation~\ref{Vtot}, $v = \frac{\delta V_H}{\delta n}$ pour la variation du deuxième terme dans l'expression de $V_{tot}$ (potentiel de Hatree) et $f_{xc} = \frac{\delta V_{xc}}{\delta n}$. À noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
 
 À nouveau, le terme d'échange et de corrélation $f_{xc}$ doit être approximé. Les méthodes d'approximation que nous utilisons dans le cadre de ce projet est la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA).
 
@@ -194,11 +194,11 @@ $$
 Abs = \mathfrak{I}(\epsilon) \quad EELS = -\mathfrak{I}(\epsilon^{-1})
 $$
 
-En appliquant la méthode variationnelle sur l'équation \ref{VtotVext}, on obtient 
+En appliquant la méthode variationnelle sur l'équation~\ref{VtotVext}, on obtient
 
 \begin{equation}\label{epsilon}
 \epsilon^{-1} = 1+ (v + f_{xc})\chi
-\end{equation} 
+\end{equation}
 
 L'intérêt principal de notre travail est donc de prédire le comportement de $\epsilon$ du matériau choisi quand des photos de certaines énergies y sont envoyés.
 
@@ -207,7 +207,7 @@ Dans la suite de ce rapport, nous allons présenter les aspects numériques de n
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Simulations numériques}
 Nos travaux ont été réalisés en deux temps. Nous commençons par étudier l'état fondamental du calcium oxalate. Le code utilisé s'appelle \textit{Abinit}. Ensuite, nous utilisons le fichier décrivant la fonction de densité de l'état fondamental obtenu dans la première étape pour calculer le coefficient diélectrique dont on déduit la fonction de perte (\textit{Loss fonction} en anglais). Le code utilisé pour cette étape s'appelle \textit{DP}.
-%TODO une présentation d'Abinit et de DP
+%TODO une présentation d'Abinit (done) et de DP
 
 Les fonctionnements des outils seront présentés au cours de ce chapitre.
 
