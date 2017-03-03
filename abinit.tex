@@ -82,6 +82,22 @@ La base d'ondes planes nous donne les avantages suivants:
     Une étude de la convergence de l'énergie totale du système par rapport à ce seuil de coupage est alors nécessaire.
 \end{itemize}
 
+\subsection{Pseudo-potentiel}
+\label{subsec-pseudo}
+Le nombre total d'électrons du système étudié étant souvent énorme,
+beaucoup d'entre eux se trouvent proche de l'atome dans la bonde de valence.
+Ensemble avec les atomes, ces électrons dits ``gelé'' contribuent peu àux caractéristiques chimiques du système.
+Cependant, ils apparaissent dans les termes d'interaction entre électrons avec les électrons de conduction.
+I'idée essentielle du pseudo-potentiel est donc de simuler l'effet de l'atome et des électrons gelés
+sur les électrons de conduction par un potentiel effectif qui donne aux électrons de conduction
+les même values propres et caractéristiques de ``scattering'' que le système réel.
+Un premier avantage de l'introduction de pseudo-potentiel est la réduction du nombre d'électrons dans l'hamiltonien.
+Un autre avantage moin évident mais aussi important est la réduction du seuil d'énergie des ondes planes introduit dans~\cref{subsec-planewave},
+c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moin abrupts
+que les vrais potentiels d'atome qui diverge près de l'origine,
+ce qui signifie un moindre nombre de modes nécessaire dans la transformation de Fourier.
+Dans notre études, nous utilisons des pour tous les atomes les pseudo-potentiels fournis par le site d'Abinit. %TODO:Give explicite source.
+
 \section{l'Annexe}
 Définition des points $k$ dans l'espace réciproque
 \begin{itemize}[leftmargin=0em, font=\bfseries]
