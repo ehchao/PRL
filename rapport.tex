@@ -98,13 +98,14 @@ V_{tot}(\textbf{r}) = V_{ext}(\textbf{r}) + \int d\textbf{r}' \frac{n(\textbf{r}
 
 pour chacun des électrons $i$. Le problème devient un simple problème de diagonalisation. On pourra ensuite faire une résolution auto-consistente en réinjectant $n = \sum_i |\phi_i^{(p)}(\textbf{r})|^2 $ après chaque itération $p$. (L'auto-consistence de cette méthode n'a toujours pas été prouvée.) Une fois minisé l'énergie totale du système auxiliaire $\langle \Psi_e | H' | \Psi_e \rangle $, on obtiendra la densité exacte $n(\textbf{r})$ du vrai système, ce qui nous permettra de trouver l'énergie de l'état fondamental.
 
-Cependant, il y a une approximation à faire pour le terme du potentiel d'échange et de corrélation $V_{xc}(\textbf{r}) = \frac{\delta E_{xc}}{\delta n(\textbf{r})}$, où
+Cependant, il y a une approximation à faire pour le terme du potentiel d'échange-corrélation $V_{xc}(\textbf{r}) = \frac{\delta E_{xc}}{\delta n(\textbf{r})}$, où
 
-$$
-E_{xc} = T[n] + V[n] - \frac{1}{2}\int d\textbf{r} \int d\textbf{r}' v(\textbf{r}, \textbf{r}') n(\textbf{r}) n(\textbf{r'}) - T'[n]
-$$
+\begin{equation}
+\label{eqn-exc}
+  E_{xc} = T[n] + V[n] - \frac{1}{2}\int d\textbf{r}
+  \int d\textbf{r}' v(\textbf{r}, \textbf{r}') n(\textbf{r}) n(\textbf{r'}) - T'[n]
+\end{equation}
 
-Il existe beaucoup de méthodes d'approximation, par exemple celle de LDA (Local Density Approximation). Certaines méthodes d'approximations sont présentées dans~\cite{Sot03} (Sect. 2.4 et 2.5).
 
 %17/02/2017%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Théorie de la fonctionelle de la densité dépendente du temps}\label{TDDFT}
@@ -185,7 +186,7 @@ Enfin, la relation entre $\chi^0$ et $\chi$ peut être donnée de façon plus ex
 
 où nous avons utilisé l'expression de $V_{tot}$ de l'équation~\ref{Vtot}, $v = \frac{\delta V_H}{\delta n}$ pour la variation du deuxième terme dans l'expression de $V_{tot}$ (potentiel de Hatree) et $f_{xc} = \frac{\delta V_{xc}}{\delta n}$. À noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
 
-À nouveau, le terme d'échange et de corrélation $f_{xc}$ doit être approximé. Les méthodes d'approximation que nous utilisons dans le cadre de ce projet est la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA).
+À nouveau, le terme d'échange-corrélation $f_{xc}$ doit être approximé. Les méthodes d'approximation que nous utilisons dans le cadre de ce projet est la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA).
 
 \subsection{Coefficient diélectrique et fonction de perte}
 Dans une vraie expérience de spectroscopie, on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron (\textit{Electron Energy Loss Spectra} en anglais, EELS). Ces deux grandeurs physiques sont données par (~\cite{Sot03}, Sect. 1.5)
@@ -197,7 +198,7 @@ $$
 En appliquant la méthode variationnelle sur l'équation~\ref{VtotVext}, on obtient
 
 \begin{equation}\label{epsilon}
-\epsilon^{-1} = 1+ (v + f_{xc})\chi
+  \epsilon^{-1} = 1+ (v + f_{xc})\chi
 \end{equation}
 
 L'intérêt principal de notre travail est donc de prédire le comportement de $\epsilon$ du matériau choisi quand des photos de certaines énergies y sont envoyés.
@@ -205,31 +206,44 @@ L'intérêt principal de notre travail est donc de prédire le comportement de $
 Dans la suite de ce rapport, nous allons présenter les aspects numériques de notre projet, dont les codes qui exploitent les relations que l'on vient d'établir.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Simulations numériques}
-Nos travaux ont été réalisés en deux temps. Nous commençons par étudier l'état fondamental du calcium oxalate. Le code utilisé s'appelle \textit{Abinit}. Ensuite, nous utilisons le fichier décrivant la fonction de densité de l'état fondamental obtenu dans la première étape pour calculer le coefficient diélectrique dont on déduit la fonction de perte (\textit{Loss fonction} en anglais). Le code utilisé pour cette étape s'appelle \textit{DP}.
-%TODO une présentation d'Abinit (done) et de DP
-
-Les fonctionnements des outils seront présentés au cours de ce chapitre.
-
-\include{abinit}
-
-\section{DP}
-%DP est un code qui permet de calculer le coefficient diélectrique en fonction de la fréquence de lumière absorbée par le matériau. Il implémente le calcul détaillé dans la section \ref{TDDFT}. Nous donnons une brève description de son fonctionnement par la suite.
-
-\section{Simulation}
-
-Pour toute étude $\textit{ab initio }$des matériaux, il faut trouver un optimum entre le temps de calcul et la précision de la convergeance. Il nous faut donc d'abord les différents échantillages de notre fonction de densité dans la première zone de Brouillon. Pour le cas du calcium oxalate, nous avons généré trois fichiers avec Abinit, qui contiennent respectivement 16 (avec symétries), 120 (avec symétries) et 480 (grillage translaté et sans symétries) points-k.
-
-
-
-
+\include{chapter3}
 
 \appendix
-\chapter{Paramètres d'entrée de DP}
+\chapter{Paramètres d'entrée}
+\section{Paramètres d'entré d'Abinit}
+Définition des points $k$ dans l'espace réciproque
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[ngkpt] Vecteur de taille 3 qui représente le nombre de points de grille dans les trois directions de translation dans l'espace réciproque.
+  \item[nshiftk] Nombre de directions dans lesquelle un décalage de point $k$ sera effectué.
+  \item[shiftk] Matrice de nshiftk*3 qui précise les directions et les quantité de décalage.
+\end{itemize}
+Définition de la maille élémentaire:
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[acell] Vecteur de taille 3 élément qui représente l'échelle de la taille de la maille élémentaire.
+  \item[rprim] Matrice de 3*3 qui représente les trois directions de translation.
+    Ensemble avec acell définit les trois vectors de translation dans l'espace réel.
+  \item[ntypat] Nombre de types d'atomes dans la maille élémentaire.
+  \item[znucl] Vecteur de taille 3 qui représente le charge nucléaire de chaque type d'atome.
+  \item[natom] Nombre d'atomes dans la maille élémentaire.
+  \item[typat] Vecteur de taille natom qui précise le type de chaque atome dans la maille élémentaire.
+  \item[xred] Matrice de natom*3 qui représente la coordonnée réduite de chaque atome,
+    par ordre cohérent avec typat.
+\end{itemize}
+Paramètres de convergence:
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[ecut] Seuil d'énergie qui correspont à l'énergie maximale des ondes planes utilisées dans le calcul à un point k donné.
+    Plus grande la ecut, plus précis et moin efficace le calcul.
+    Une étude sur la convergence en ecut est alors nécessaire pour avoir à la fois la précision et l'efficacité.
+  \item[nstep] Nombre maximal d'itération pour le calcul auto-consistente.
+    Ce paramètre assure la cessation du calcul, mais doit être suffisamment grande pour que le calcul converge avant de se terminer.
+  \item[tolfe] Seuil de la valeur absolue de la différence d'énergie totale entre deux itérations successives.
+    On dit que le calcul converge lorsque l'on passe au-dessous de ce seuil.
+\end{itemize}
 
 
-\begin{itemize}
-\item[rda, alda] La méthode d'approximation pour le terme du potentiel d'échange et corrélation, \textit{i.e.}, le terme $f_{xc}$ %TODO referer à l'expression de chi0
+\section{Paramètres d'entré de DP}
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+\item[rda, alda] La méthode d'approximation pour le terme du potentiel d'échange-corrélation, \textit{i.e.}, le terme $f_{xc}$ %TODO referer à l'expression de chi0
 \item[wfnsh] Le nombre de fonctions dont on a besoin pour faire la transformation de Fourier (wfnsh)%TODO ref to eq
 \item[nbands] Le nombre de bandes pour lesquelles les transitions sont autorisées (nbands)
 \item[matsh] Le nombre de fonctions dont on a besoin pour faire l'inversion de la matrice afin d'obtenir le coefficient $\chi_0$

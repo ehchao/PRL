@@ -1,3 +1,15 @@
+\chapter{Simulations numériques}
+\label{chapter-simulation}
+Nos travaux ont été réalisés en deux temps.
+Nous commençons par étudier l'état fondamental du calcium oxalate.
+Le code utilisé s'appelle \textit{Abinit}.
+Ensuite, nous utilisons le fichier décrivant la fonction de densité de l'état fondamental
+obtenu dans la première étape pour calculer le coefficient diélectrique
+dont on déduit la fonction de perte (\textit{Loss fonction} en anglais).
+Le code utilisé pour cette étape s'appelle \textit{DP}.
+
+Les fonctionnements des outils seront présentés au cours de ce chapitre.
+
 \section{Abinit}
 \label{sec-abinit}
 \textit{Abinit} est un logiciel qui implémente numériquement la théorie de la fonctionnelle de la densité.
@@ -33,7 +45,7 @@ La densité de charge s'exprime donc par
 \end{equation}
 avec la somme sur tous les états occupés.
 A la limite des cristaux idéals infinis, la taille de grille dans l'espace réciproque tend vers zéro,
-alors~\cref{eqn-den1} devient
+alors l'\cref{eqn-den1} devient
 \begin{equation}
   \label{eqn-den2}
   n(r) = \frac{\Omega_{maille}}{{(2\pi)}^3} \sum_n^{occ}\int_{ZB}d^3k|\phi_{n, k}(r)|^2.
@@ -48,9 +60,9 @@ Le temps de calcul étant proportionnel à $N_k$,
 il est donc nécessaire de choisir les poids $w_i$ et les points $k$ afin de reproduire le résultat
 de l'intégral avec la moindre erreur et le moindre nombre de point $k$.
 Une méthode beaucoup utilisée est l'échantillonage de Monkhorst-Pack,
-qui consiste en pricipal à prendre les points $k$ tels que chaque point ne peut pas être lié avec un autre par aucun opération de symétrie,%TODO:not clear enough
+qui consiste en pricipal à prendre les points $k$ tels que chaque point ne peut pas être lié avec un autre par aucun opération de symétrie, %TODO:not clear enough
 avec un certain décalage si nécessaire.
-La justification de la méthode est donnée dans.%TODO:find reference
+La justification de la méthode est donnée dans. %TODO:find reference
 Avec cette méthode, le nombre de points nécessaire pour évaluer l'intégral dans la première zone de Brillouin est reduit énoremément.
 
 \subsection{Base d'ondes planes}
@@ -92,38 +104,43 @@ I'idée essentielle du pseudo-potentiel est donc de simuler l'effet de l'atome e
 sur les électrons de conduction par un potentiel effectif qui donne aux électrons de conduction
 les même values propres et caractéristiques de ``scattering'' que le système réel.
 Un premier avantage de l'introduction de pseudo-potentiel est la réduction du nombre d'électrons dans l'hamiltonien.
-Un autre avantage moin évident mais aussi important est la réduction du seuil d'énergie des ondes planes introduit dans~\cref{subsec-planewave},
+Un autre avantage moin évident mais aussi important est la réduction du seuil d'énergie des ondes planes introduit dans la \cref{subsec-planewave},
 c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moin abrupts
 que les vrais potentiels d'atome qui diverge près de l'origine,
 ce qui signifie un moindre nombre de modes nécessaire dans la transformation de Fourier.
 Dans notre études, nous utilisons des pour tous les atomes les pseudo-potentiels fournis par le site d'Abinit. %TODO:Give explicite source.
 
-\section{l'Annexe}
-Définition des points $k$ dans l'espace réciproque
-\begin{itemize}[leftmargin=0em, font=\bfseries]
-  \item[ngkpt] Vecteur de taille 3 qui représente le nombre de points de grille dans les trois directions de translation dans l'espace réciproque.
-  \item[nshiftk] Nombre de directions dans lesquelle un décalage de point $k$ sera effectué.
-  \item[shiftk] Matrice de nshiftk*3 qui précise les directions et les quantité de décalage.
-\end{itemize}
-Définition de la maille élémentaire:
-\begin{itemize}[leftmargin=0em, font=\bfseries]
-  \item[acell] Vecteur de taille 3 élément qui représente l'échelle de la taille de la maille élémentaire.
-  \item[rprim] Matrice de 3*3 qui représente les trois directions de translation.
-    Ensemble avec acell définit les trois vectors de translation dans l'espace réel.
-  \item[ntypat] Nombre de types d'atomes dans la maille élémentaire.
-  \item[znucl] Vecteur de taille 3 qui représente le charge nucléaire de chaque type d'atome.
-  \item[natom] Nombre d'atomes dans la maille élémentaire.
-  \item[typat] Vecteur de taille natom qui précise le type de chaque atome dans la maille élémentaire.
-  \item[xred] Matrice de natom*3 qui représente la coordonnée réduite de chaque atome,
-    par ordre cohérent avec typat.
-\end{itemize}
-Paramètres de convergence:
-\begin{itemize}[leftmargin=0em, font=\bfseries]
-  \item[ecut] Seuil d'énergie qui correspont à l'énergie maximale des ondes planes utilisées dans le calcul à un point k donné.
-    Plus grande la ecut, plus précis et moin efficace le calcul.
-    Une étude sur la convergence en ecut est alors nécessaire pour avoir à la fois la précision et l'efficacité.
-  \item[nstep] Nombre maximal d'itération pour le calcul auto-consistente.
-    Ce paramètre assure la cessation du calcul, mais doit être suffisamment grande pour que le calcul converge avant de se terminer.
-  \item[tolfe] Seuil de la valeur absolue de la différence d'énergie totale entre deux itérations successives.
-    On dit que le calcul converge lorsque l'on passe au-dessous de ce seuil.
-\end{itemize}
+\subsection{Potentiel d'échange-corrélation}
+\label{subsec-xc}
+Une dernière approximation importante engagé dans l'implémentation numérique
+de la méthode de Kohn et Sham est celle sur l'énergie d'échange-corrélation (\cref{eqn-exc}).
+Par définition, $E_{xc}[n]$ contient tous les éffets au delà du formalisme de Hartree.
+L'\cref{eqn-exc} étant exacte, l'expression explicite de $E_{xc}[n]$ est toujours inconnue,
+d'où provient l'approximation.
+
+Il existe beaucoup de méthodes d'approximation,
+dont certaines sont présentées dans~\cite{Sot03} (Sect. 2.4 et 2.5).
+Dans nos études, l'approximation utilisée est celle de la densité locale (Local Density Approximation, LDA),
+l'idée principale de laquelle consiste à remplaçer la dépendance fonctionnelle de $E_{xc}[n]$
+sur la distribution de la densité par celle sur la valeur locale de la densité.
+Autrement dit, on suppose que l'énergie d'échange-corrélation du système à un point $r$
+est égale à celle d'un système homogène qui a la même valeur de la densité d'électrons au point $r$.
+Par conséquent, $E_{xc}[n]$ peut s'écrire sous la forme
+\begin{equation}
+  \label{eqn-exc-lda}
+  E_{xc}^{LDA}[n] = \int n(r)\epsilon_{xc}(n(r)) dr.
+\end{equation}
+L'intéret de cette forme est que $\epsilon_{xc}$ dans l'\cref{eqn-exc-lda} peut être obtenu avec
+une précision suffisante par la méthode de Monte-Carlo quantique.
+On attend un calcul exact par cette méthode pour un système homogène,
+et ainsi de bonne approximation pour les systèmes dont la variation spatiale de la densité d'électrons est faible.
+En fait, la portée de la méthode LDA va bien au delà de cette échelle,
+et elle s'applique bien dans le domaine du semi-conducteur.
+Une démonstration de cet applicabilité est présentée dans~\cite{Sot03} (Sect. 2.4).
+
+\section{DP}
+%DP est un code qui permet de calculer le coefficient diélectrique en fonction de la fréquence de lumière absorbée par le matériau. Il implémente le calcul détaillé dans la section \ref{TDDFT}. Nous donnons une brève description de son fonctionnement par la suite.
+
+\section{Schéma}
+
+%Pour toute étude $\textit{ab initio }$des matériaux, il faut trouver un optimum entre le temps de calcul et la précision de la convergeance. Il nous faut donc d'abord les différents échantillages de notre fonction de densité dans la première zone de Brouillon. Pour le cas du calcium oxalate, nous avons généré trois fichiers avec Abinit, qui contiennent respectivement 16 (avec symétries), 120 (avec symétries) et 480 (grillage translaté et sans symétries) points-k.
