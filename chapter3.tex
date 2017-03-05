@@ -160,8 +160,43 @@ définie dans la \cref{subsec-KS}:
 \end{equation}
 
 \section{Schéma}
+Le schéma de la simulation est divisé en deux étape.
+D'abord, pour le système donné, nous calculons la densité d'électrons de l'état fondamental
+en fonctions des orbites de Kohn et Sham,
+qui sont elles même représentées dans l'espace d'ondes plane tranché.
+Ensuite, nous utilisons ces résultats dans la deuxième étape pour calculer le coefficient
+diélectrique dont on déduit les spectres de perte d'énergie d'électron (\cref{subsec-eels}).
+\subsection{Etat fondamental, études de convergence}
+Le code utilisé dans cette première étape est Abinit.
+Tous d'abord, la structure cristalline du système est obtenue en référer aux littératures. %TODO:cite
+Pour toute étude ab initio des matériaux,
+il faut trouver un optimum entre le temps de calcul et la précision de la convergeance.
+Il nous faut donc une étude sur la convergence en différents paramètres,
+dont le premier est l'échantillonnage dans la première zone de Brouillon (\cref{subsec-reciprocal}).
+Etant donné la structure du système étudié et une fonction d'essai dont l'intégral est facile à calculer,
+Abinit peut nous donner une liste des échantillons avec pour chacun une valeur de présion
+qui est définie par le calcul de l'intégral approximé sur l'ensemble de points k dans l'échantillon
+par rapport au calcul exact.
+L'idée est de choisir un échantillon non seulement avec une précision suffisante,
+mais aussi avec un nombre de point k suffisant.
+Pour le cas du calcium oxalate, nous avons choisi dans cette liste trois échantillons,
+qui contiennent respectivement 16 (avec symétries),
+120 (avec symétries) et 480 (grillage translaté et sans symétries) points k.
 
-Ensuite, nous utilisons le fichier décrivant la fonction de densité de l'état fondamental
-obtenu dans la première étape pour calculer le coefficient diélectrique
-dont on déduit la fonction de perte (\textit{Loss fonction} en anglais).
-%Pour toute étude $\textit{ab initio }$ des matériaux, il faut trouver un optimum entre le temps de calcul et la précision de la convergeance. Il nous faut donc d'abord les différents échantillages de notre fonction de densité dans la première zone de Brouillon. Pour le cas du calcium oxalate, nous avons généré trois fichiers avec Abinit, qui contiennent respectivement 16 (avec symétries), 120 (avec symétries) et 480 (grillage translaté et sans symétries) points-k.
+Pour la suite de la simulation,
+nous choisons l'approximation LDA pour l'énergie d'échange-corrélation (\cref{subsec-xc}).
+Pour chaque échantillon, l'énergie total du système dans l'état fondamental est calculé
+en variant $E_{cut}$ (\cref{subsec-planewave}).
+Une valeur de $E_{cut}$ commune est choisie telle qu'elle est petite mais suffisante
+pour assurer la convergence du calcul dans les trois échantillons.
+
+Ensuite, le même calcul se fait en variant au tour de la valeur initiale
+la taille de maille du système et la position d'atomes pour assurer la fidélité
+des données de la structure cristalline du système.
+%TODO: Calcul de la bande avec Abinit ??
+Après les études de la convergence, les paramètres sont fixés et un calcul final est effectué
+pour générer les orbites de Kohn et Sham qui maintenant décrivent l'états fondamental du système.
+Nous somme donc près pour l'étape suivante.
+
+\subsection{Etats excités}
+
