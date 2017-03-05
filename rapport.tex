@@ -70,6 +70,7 @@ $$
 Or, le problème n'est toujours pas simple car la fonction d'onde $\Psi_e$ que l'on cherche est une fonction à plusieurs variables. La méthode proposée par Kohn et Sham~\cite{Koh65} que l'on va présenter dans la suite nous contournent alors le problème.
 
 \subsection{La méthode de Kohn et Sham}
+\label{subsec-KS}
 Si les électrons étaient non-interagissant entre eux, on pourrait écrire l'hamiltonien comme une somme de plusieurs hamiltoniens d'un seul électron, \textit{i.e.},
 
 $$
@@ -108,7 +109,7 @@ Cependant, il y a une approximation à faire pour le terme du potentiel d'échan
 
 
 %17/02/2017%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Théorie de la fonctionelle de la densité dépendente du temps}\label{TDDFT}
+\section{Théorie de la fonctionelle de la densité dépendente du temps}\label{sec-TDDFT}
 Dans les études de spectroscopie, nous étudions les comportements des matériaux sous exicitation. La constante diélectrique et son inverse sont par exemple des grandeurs physiques que l'on regarde souvent dans les expériences (déduites à partir de l'absorption et de la réflexion des lumières, cf.~\cite{Sot03} Chap. 1). Par conséquent, la simple étude de l'état fondamental ne suffit pas, il nous faut de plus des études sur les états excités.
 
 La méthode que nous allons présenter dans ce rapport, la théorie de la fonction de densité dépendente du temps (\textit{Time-Depending Density Functional Theory}), est utilisée dans le code à l'aide duquel on fait des simulations numériques \textit{ab initio}. Pour l'introduire, nous commençons par présenter les éléments de la théorie de la réponse linéaire.
@@ -180,13 +181,15 @@ $$
 
 Enfin, la relation entre $\chi^0$ et $\chi$ peut être donnée de façon plus explicite en utilisant la méthode variationnelle
 
-\begin{equation}\label{chi0chi}
-\chi = \frac{\delta n}{\delta V_{ext}} = \frac{\delta n}{\delta V_{tot}} \frac{\delta V_{tot}}{\delta n} = \chi^0 ( 1 + (v+f_{xc})\chi)
+\begin{equation}
+  \label{eqn-chi0chi}
+  \chi = \frac{\delta n}{\delta V_{ext}}
+       = \frac{\delta n}{\delta V_{tot}} \frac{\delta V_{tot}}{\delta n}
+       = \chi^0 ( 1 + (v+f_{xc})\chi)
 \end{equation}
 
 où nous avons utilisé l'expression de $V_{tot}$ de l'équation~\ref{Vtot}, $v = \frac{\delta V_H}{\delta n}$ pour la variation du deuxième terme dans l'expression de $V_{tot}$ (potentiel de Hatree) et $f_{xc} = \frac{\delta V_{xc}}{\delta n}$. À noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
 
-À nouveau, le terme d'échange-corrélation $f_{xc}$ doit être approximé. Les méthodes d'approximation que nous utilisons dans le cadre de ce projet est la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA).
 
 \subsection{Coefficient diélectrique et fonction de perte}
 Dans une vraie expérience de spectroscopie, on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron (\textit{Electron Energy Loss Spectra} en anglais, EELS). Ces deux grandeurs physiques sont données par (~\cite{Sot03}, Sect. 1.5)
