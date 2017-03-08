@@ -130,17 +130,19 @@ Ici, la densité dépendante du temps est la variable fondamentale exactement co
 
 la fonction diélectrique du système $\epsilon^{-1}$ est lié aux propriétés optiques et diélectriques d'un matériau.
 
-Nous allons étudier le comportement du coefficient diélectrique du système en présence d'une excitation extérieure. La relation entre le potentiel d'perturbation extérieure et le potentiel total à l'intérieur du système est donnée par (dans l'espace réciproque de transformation de Fourier temporelle)
+Nous allons étudier le comportement de la fonction diélectrique du système en présence d'une excitation extérieure en régime linéaire. La relation entre le potentiel d'perturbation extérieure et le potentiel total à l'intérieur du système est donnée par (dans l'espace réciproque de transformation de Fourier temporelle)
 
 \begin{equation}\label{VtotVext}
 V_{tot}(\textbf{r}, \omega) = \int d\textbf{r}' \epsilon^{-1}(\omega) V_{ext}(\textbf{r}', \omega)
 \end{equation}
 
-On notera $\chi^0$ et $\chi$ les fonctions de réponse linéaire pour $V_{tot}$ et $V_{ext}$ respectivement. On a les relations entre la fonctionelle de densité $n$ et ces deux potentiels
+On notera $\chi^0$ et $\chi$ les fonctions de réponse linéaire pour $V_{tot}$ et $V_{ext}$ respectivement (cf. Annexe~\ref{TRL} pour la définition de ces fonctions). On a les relations entre la fonctionelle de densité $n$ et ces deux potentiels
 
 $$
 n(\textbf{r}, t) = \int d\textbf{r}' dt' \chi^0(\textbf{r}, \textbf{r'}, t-t') V_{tot}(\textbf{r}', t) = \int d\textbf{r}' dt' \chi(\textbf{r}, \textbf{r'}, t-t') V_{ext}(\textbf{r}', t)
 $$
+
+%TODO l'expression de chi ??
 
 Enfin, la relation entre $\chi^0$ et $\chi$ peut être donnée de façon plus explicite en utilisant la méthode variationnelle
 
@@ -156,16 +158,16 @@ où nous avons utilisé l'expression de $V_{tot}$ de l'équation~\ref{Vtot}, $v 
 
 \subsection{Coefficient diélectrique et fonction de perte}
 \label{subsec-eels}
-Dans une vraie expérience de spectroscopie, on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron (\textit{Electron Energy Loss Spectra} en anglais, EELS). Ces deux grandeurs physiques sont données par (~\cite{Sot03}, Sect. 1.5)
+Dans une vraie expérience de spectroscopie, on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron (\textit{Electron Energy Loss Spectra} en anglais, EELS). Ces deux grandeurs physiques sont liées à la fonction diélectrique (~\cite{Sot03}, Sect. 1.5)
 
 $$
 Abs = \mathfrak{I}(\epsilon) \quad EELS = -\mathfrak{I}(\epsilon^{-1})
 $$
 
-En appliquant la méthode variationnelle sur l'équation~\ref{VtotVext}, on obtient
+Abs nous indique les fréquences de la lumière que le système peut absorber. EELS nous donne une idée sur les fréquences et les moments que le système peut échanger avec un projectile extérieur (photon ou électron). Les deux nous donnent donc les caractéristiques intrinsèques du système. Pour ces observables, la fonction diélectrique $\epsilon$ est liée à la fonction de la réponse linéaire par~\cite{Sot03}
 
 \begin{equation}\label{epsilon}
-  \epsilon^{-1} = 1+ (v + f_{xc})\chi
+  \epsilon^{-1} = 1+ (v)\chi
 \end{equation}
 
 L'intérêt principal de notre travail est donc de prédire le comportement de $\epsilon$ du matériau choisi quand des photos de certaines énergies y sont envoyés.
