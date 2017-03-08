@@ -36,37 +36,50 @@
 \tableofcontents
 
 \newpage
-\chapter{Introduction}
+\chapter{Introduction et motivation}
 \addcontentsline{toc}{section}{Introduction}
+Le calcium oxalate est un matériau riche dans la nature. Notamment, on peut le retrouver dans les calculs rénaux (communément appelés "pierres aux reins") qui sont formés par le calcium phosphalte, une plus grande structure qui contient les états hydratés du calcium oxalate. 
+Pour étudier un tel matériau sans changer sa structure ou le détruire, on fait souvent des études spectroscopiques.
+Cela consiste à étudier les propriétés optiques et diélectriques du matériau en analysant la réponse du matériau à une lumière incidente.
+Typiquement, on peut déduire des spectroscopies de perte et d'absorption la fonction diélectrique (ou plutôt son inverse).
+\\\\Dans le cadre du projet en laboratoire de l'École Polytechnique, nous avons choisi de faire le sujet proposé par M. Franceso Sottile du Laboratoire des Solides Iradiés de l'École Polytechnique (LSI), qui consiste à montrer des propriétés spectroscopiques du calcium oxalate par des calculs \textit{ab initio}. 
+Il s'agit donc de bien comprendre la théorie de la fonctionnelle de la densité (\textit{Density Functional Theory} en anglais, DFT) et la théorie de la fonctionnelle dépendante du temps (\textit{Time-Depending Density Functional Theory} en anglais, TDDFT) et de les appliquer avec les codes existants.
+La DFT et la TDDFT sont deux pilliers des calculs \textit{ab initio} qui donnent d'assez bonnes prédictions théoriques par rapport aux expériences réelles.
 
+L'intérêt de notre travail serait de fournir une prédiction théorique et numérique sur les caractéristiques du calcium oxalate en basse énergie qui pourrait être consultée par des expérimentateurs intéressés par ce matériau. 
+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Études théoriques des systèmes à plusieurs corps}
-\section{Approximation d'Oppenheimer}
+\section{Le problème électronique}
 Dans la physique des solides, on est ramené à étudier l'équation de Schrödinger d'un système à plusieurs corps ($N$ électrons et $M$ ions par exemple), ce qui consiste à résoudre une équation du type
 
-$$
+\begin{equation}
+\begin{split}
 (\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i} + \sum_{I=1}^M \frac{\textbf{P}_i^2}{2M_I}
 + \sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |} - \sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i
-- \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |} ) \Psi(\textbf{r}, \textbf{R}) = E_{tot} \Psi(\textbf{r}, \textbf{R})
-$$
-où les lettres en majuscule sont des quantités physiques pour les ions, les lettres en miniscule sont celles pour les électrons et $E_{tot}$ une certaine énergie propre du système qu'on voudra trouver.
+- \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |} ) \Psi = E_{tot} \Psi
+\end{split}
+\end{equation}
 
-Comme le système qu'on considère (les solides) comprend souvent un nombre très élevé d'électrons et d'ions, cette équation devient très difficile à résoudre numériquement. Ainsi, on doit appliquer certaines approximations au système afin de réduire le temps de calcul. La première approximation qu'on peut prendre, celle la plus intuitive, est celle de Born-Oppenheimer. En tenant compte du rapport de masse entre les électrons et les ions et en supposant que les ions sont quasiment figés par rapport aux électrons (ayant une longueur d'onde de De Broglie plus élevée), on peut réécrire l'hamiltonien du système comme
+où $(\textbf{r}, \textbf{p})$ et $(\textbf{R}, \textbf{P})$ sont respctivement la position et l'impulsion d'un éléctron et d'un proton, $E_{tot}$ est une certaine énergie propre du système qu'on voudra trouver et enfin, $\Psi = \Psi(\textbf{r}_1, \ldots, \textbf{r}_N,  \textbf{R}_1, \ldots \textbf{R}_M)$ est une fonction à $N+M $ variables.
+
+Comme le système qu'on considère (les solides) comprend un nombre très élevé d'électrons et d'ions, cette équation ne peut pas être résolue analytiquement, voire numériquement. On doit appliquer certaines approximations au système afin de réduire la complexité du calcul. La première approximation qu'on peut prendre, celle la plus intuitive, est celle de Born-Oppenheimer.~\cite{Bor27}
+En tenant compte du rapport de masse entre les électrons et les ions et en supposant que les ions sont quasiment figés par rapport aux électrons (ayant une longueur d'onde de De Broglie plus élevée), on peut réécrire l'hamiltonien du système d'électrons comme
 
 $$
 H = \underbrace{\sum_{i=1}^N \frac{\textbf{p}_i^2}{2m_i}}_{T}
 + \underbrace{\sum_{i<j}\frac{e^2}{| \textbf{r}_i - \textbf{r}_j |}}_{V}
-- \underbrace{\sum_{i, I}\frac{Z_I e^2}{| \textbf{r}_i - \textbf{R}_I |} + \sum_{I<J}\frac{Z_I Z_J e^2}{| \textbf{R}_i - \textbf{R}_j |}}_{V_{ext}}
+- \sum_i V_{ext}(\textbf{r}_i)
 $$
-où $T$ est l'énergie cinétique des électrons, $V$ leur énergie potentielle d'interaction et $V_{ext}$ l'énergie potentielle dûe à l'extérieur.
+où $T$ est l'énergie cinétique des électrons, $V$ leur énergie potentielle d'interaction et $V_{ext}$ l'énergie potentielle dûe à l'extérieur due aux ions fixés.
 Notre problème devient
 
 $$
 H \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N) = E_{tot} \Psi_e(\textbf{r}_1, \ldots \textbf{r}_N)
 $$
 
-Or, le problème n'est toujours pas simple car la fonction d'onde $\Psi_e$ que l'on cherche est une fonction à plusieurs variables. La méthode proposée par Kohn et Sham~\cite{Koh65} que l'on va présenter dans la suite nous contournent alors le problème.
+Or, le problème n'est toujours pas simple car la fonction d'onde $\Psi_e$ que l'on cherche est une fonction à plusieurs variables. 
 
 \subsection{Théorie de la fonctionnelle de la densité (\textit{DFT} en anglais)}
 \subsection{La méthode de Kohn et Sham}
@@ -167,7 +180,7 @@ $$
 Abs nous indique les fréquences de la lumière que le système peut absorber. EELS nous donne une idée sur les fréquences et les moments que le système peut échanger avec un projectile extérieur (photon ou électron). Les deux nous donnent donc les caractéristiques intrinsèques du système. Pour ces observables, la fonction diélectrique $\epsilon$ est liée à la fonction de la réponse linéaire par~\cite{Sot03}
 
 \begin{equation}\label{epsilon}
-  \epsilon^{-1} = 1+ (v)\chi
+  \epsilon^{-1} = 1+ v\chi
 \end{equation}
 
 L'intérêt principal de notre travail est donc de prédire le comportement de $\epsilon$ du matériau choisi quand des photos de certaines énergies y sont envoyés.
@@ -176,6 +189,8 @@ Dans la suite de ce rapport, nous allons présenter les aspects numériques de n
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{chapter3}
+
+\include{results}
 
 \appendix
 \chapter{Théorie de la réponse linéaire}\label{TRL}
@@ -205,7 +220,7 @@ Nous supposons que la structure de bande obtenue à partir de l'état fondamenta
 \chi (\textbf{r}, \textbf{r}', \omega) = \sum_j \frac{f_j(\textbf{r}) f_j^*(\textbf{r}') }{\omega - \Omega_j + i \eta} + \frac{f_j(\textbf{r}') f_j^*(\textbf{r}) }{\omega + \Omega_j + i \eta}
 \end{equation}
 
-où $f_j = \langle N | n(\textbf{r}, 0) | j_N \rangle$ le nombre d'occupation de l'état $j$, $\Omega_j \pm (E_0 - E_j)$ le \textit{gap} entre l'état $j$ qui et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening}) qui est à tendre vers 0 pour le calcul théorique.
+où $f_j = \langle N | n(\textbf{r}, 0) | j_N \rangle$, $\Omega_j = (E_0 - E_j)$ la différence d'énergie entre l'état $j$ et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening}) qui est à tendre vers 0 pour le calcul théorique.
 
 Notons $n$ la fonciton de densité. C'est un observable obtenu à partir de la relation suivante
 
@@ -285,6 +300,9 @@ Paramètres de convergence:
 
 \bibitem{Sot03}
     F. Sottile, thèse de doctorat (2003)
+
+\bibitem{Bor27}
+	M. Born et R. Oppenheimer, Annalen der Physik, 84, 457 (1927)
 
 \bibitem{Hoh64}
     P. Hohenberg et W. Kohn, Phys. Rev. Lett. 136, B864 (1964)

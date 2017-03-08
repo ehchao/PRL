@@ -5,7 +5,7 @@
 
 \paragraph{Structure moléculaire du calcium oxalate}
 %TODO add reference
-La cellule élémentaire de calcium oxalate ($Ca C_2 O_4$) contient 28 atomes. Il est de structure monoclique et de groupe de symétrie $P2/m$ ($#$10) (cf. figure \ref{BrillouinZone})
+La cellule élémentaire de calcium oxalate ($Ca C_2 O_4$) contient 28 atomes. Il est de structure monoclique et de groupe de symétrie $P2/m$ ($\#$10) (cf. figure \ref{BrillouinZone})
 %TODO add bilbao
 
 \begin{figure}[!h]\label{BrillouinZone}
@@ -41,7 +41,7 @@ La motivation est de pouvoir avoir un échantillonnage assez fin pour obtenir to
 %TODO verifier si les parametres sont bien mentionnes auparavant
 Pour connaître le meilleur échantillonnage à utiliser à notre disposition, on fait d'abord les calculs en prenant RPA (ramdom phase approximation) comme méthode d'approximation du terme d'échange et de corrélation.
 Les résultats sont montrés dans la figure \ref{kptCompare}. 
-On peut remarquer que les résultats pour 120 points-k et pour 480 points-k sont quasiment identiques en basses énergies (< 20 eV).
+On peut remarquer que les résultats pour 120 points-k et pour 480 points-k sont quasiment identiques en basses énergies ($<$ 20 eV).
 On choisit donc l'échantillonnage de 120 points-k pour continuer.
 
 \begin{figure}[!h]\label{kptCompare}
@@ -51,11 +51,11 @@ On choisit donc l'échantillonnage de 120 points-k pour continuer.
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{alda vs rpa}\label{aldaRPA}
 La méthode d'approximation RPA prend moins de temps pour le calcul mais pourrait perdre la précision. Il est donc judicieux de comparer les résultats obtenus en appliquant RPA avec ceux obtenus en appliquant ALDA (adiabatic local density approximation).
 Les deux approximations nous donnent des résultats assez proches en basses énergies.
 Dans le cadre de ce projet, on se contente d'étudier les caractéristiques de calcium oxalate en basses énergie en raison du délai.
 Il est donc tout à fait pertinent de faire notre calcul en RPA pour gagner en temps de calcul.
-\paragraph{alda vs rpa}\label{aldaRPA}
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{alda_vs_rpa}
@@ -67,14 +67,14 @@ Il est donc tout à fait pertinent de faire notre calcul en RPA pour gagner en t
 \begin{figure}[!h]\label{CVwfnshRPA}
     \centering
     \includegraphics[width=8cm]{cv_wfnsh_rpa}
-    \caption{alda}
+    \caption{convergence wfnsh rpa}
 \end{figure}
 
 \paragraph{q6}
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{q6}
-    \caption{}
+    \caption{q = (0, 0, 0.6)}
 \end{figure}
 
 
@@ -82,7 +82,7 @@ Il est donc tout à fait pertinent de faire notre calcul en RPA pour gagner en t
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{q8}
-    \caption{rp}
+    \caption{q = (0, 0.125, 0)}
 \end{figure}
 
 
@@ -90,5 +90,5 @@ Il est donc tout à fait pertinent de faire notre calcul en RPA pour gagner en t
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{q10}
-    \caption{rpa}
+    \caption{q = (0.1, 0, 0)}
 \end{figure}
