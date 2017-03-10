@@ -1,0 +1,99 @@
+\chapter{Théorie de la réponse linéaire}\label{TRL}
+Soit $n$ un observable. On suppose que $n$ varie en fonction de la perturbation $V$ de par
+
+$$
+n(\textbf{r}, t) = \int dt d\textbf{r'}  \chi (\textbf{r}, \textbf{r'}, t-t') V(\textbf{r'}, t')
+$$
+
+La fonction $\chi$ s'appelle la \textit{foncition de réponse linéaire}. Dans le cas où le hamiltonien de perturbation dépend aussi de $n$ par la relation suivante
+
+$$
+H = \int n(\textbf{r}, t) V(\textbf{r}, t) d\textbf{r}
+$$
+
+la fonction de réponse linéaire $\chi$ est donnée par la formule de Kubo~\cite{Abrikosov1963}
+
+\begin{equation}\label{kubo}
+  \chi (\textbf{r}, \textbf{r}', t-t') = -i \langle N | [n(\textbf{r}, t), n(\textbf{r}', t)] |N \rangle \Theta(t-t')
+\end{equation}
+
+où $|N \rangle $ désigne l'état dans lequel on mesure l'observable $n$.
+
+Nous supposons que la structure de bande obtenue à partir de l'état fondamental nous fournisse une base complète. Nous partons de $|N \rangle$ l'état fondamental constitué de $N$ électrons dans~\ref{kubo}. Notons $| j_N \rangle $ le j-ième état excité de notre système à $N$ électrons. En faisant la transformation de Fourier temporelle, la fonction de réponse linéaire s'écrit dans ce cas
+
+\begin{equation}
+\chi (\textbf{r}, \textbf{r}', \omega) = \sum_j \frac{f_j(\textbf{r}) f_j^*(\textbf{r}') }{\omega - \Omega_j + i \eta} + \frac{f_j(\textbf{r}') f_j^*(\textbf{r}) }{\omega + \Omega_j + i \eta}
+\end{equation}
+
+où $f_j = \langle N | n(\textbf{r}, 0) | j_N \rangle$, $\Omega_j = (E_0 - E_j)$ la différence d'énergie entre l'état $j$ et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening}) qui est à tendre vers 0 pour le calcul théorique.
+
+Notons $n$ la fonciton de densité. C'est un observable obtenu à partir de la relation suivante
+
+$$
+n = \psi^\dagger \psi
+$$
+
+où $\psi$ est l'opérateur d'annihilation et $\psi^\dagger$ l'opérateur de création de l'état que l'on considère (en analogie avec les oscillateurs harmoniques).
+
+On peut développer $\psi$ (et donc $\psi^\dagger$) dans la base des opérateurs de création
+pour un seul électron.
+
+$$
+\psi = \sum_\textbf{k} \phi_\textbf{k}(\textbf{r}) a_\textbf{k}
+$$
+
+où $\phi_\textbf{k}$ est la fonction d'onde de Bloch pour l'impulsion $\textbf{k}$ et $a_\textbf{k}$ l'opérateur de création correspondant. La fonction de réponse linéaire peut encore s'écrire
+
+\begin{equation}\label{chi}
+  \chi(\textbf{r}, \textbf{r}', \omega) = \sum_{vc} \frac{(f_v - f_c)\phi_v(\textbf{r}) \phi_c^*(\textbf{r}) \phi_v^*(\textbf{r}') \phi_c(\textbf{r}')}{\omega - (\epsilon_c - \epsilon_v) + i\eta} \quad + \quad \text{a.r.}
+\end{equation}
+
+où a.r.\ représente les termes d'anti-résonance et $v$ et $c$ pour bande de valence et bande de conduction respectivement.
+
+\chapter{Paramètres d'entrée}
+\section{Paramètres d'entré d'Abinit}
+Définition des points $k$ dans l'espace réciproque
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[ngkpt] Vecteur de taille 3 qui représente le nombre de points de grille dans les trois directions de translation dans l'espace réciproque.
+  \item[nshiftk] Nombre de directions dans lesquelle un décalage de point $k$ sera effectué.
+  \item[shiftk] Matrice de nshiftk*3 qui précise les directions et les quantité de décalage.
+\end{itemize}
+Définition de la maille élémentaire:
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[acell] Vecteur de taille 3 élément qui représente l'échelle de la taille de la maille élémentaire.
+  \item[rprim] Matrice de 3*3 qui représente les trois directions de translation.
+    Ensemble avec acell définit les trois vectors de translation dans l'espace réel.
+  \item[ntypat] Nombre de types d'atomes dans la maille élémentaire.
+  \item[znucl] Vecteur de taille 3 qui représente le charge nucléaire de chaque type d'atome.
+  \item[natom] Nombre d'atomes dans la maille élémentaire.
+  \item[typat] Vecteur de taille natom qui précise le type de chaque atome dans la maille élémentaire.
+  \item[xred] Matrice de natom*3 qui représente la coordonnée réduite de chaque atome,
+    par ordre cohérent avec typat.
+\end{itemize}
+Paramètres de convergence:
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+  \item[ecut] Seuil d'énergie qui correspont à l'énergie maximale des ondes planes utilisées dans le calcul à un point k donné.
+    Plus grande la ecut, plus précis et moin efficace le calcul.
+    Une étude sur la convergence en ecut est alors nécessaire pour avoir à la fois la précision et l'efficacité.
+  \item[nstep] Nombre maximal d'itération pour le calcul auto-consistente.
+    Ce paramètre assure la cessation du calcul, mais doit être suffisamment grande pour que le calcul converge avant de se terminer.
+  \item[tolfe] Seuil de la valeur absolue de la différence d'énergie totale entre deux itérations successives.
+    On dit que le calcul converge lorsque l'on passe au-dessous de ce seuil.
+\end{itemize}
+
+
+\section{Paramètres d'entré de DP}
+\begin{itemize}[leftmargin=0em, font=\bfseries]
+\item[rda, alda] La méthode d'approximation pour le terme du potentiel d'échange-corrélation, \textit{i.e.}, le terme $f_{xc}$ %TODO referer à l'expression de chi0
+\item[wfnsh] Le nombre de fonctions dont on a besoin pour faire la transformation de Fourier (wfnsh)%TODO ref to eq
+\item[nbands] Le nombre de bandes pour lesquelles les transitions sont autorisées (nbands)
+\item[matsh] Le nombre de fonctions dont on a besoin pour faire l'inversion de la matrice afin d'obtenir le coefficient $\chi_0$
+\item[lomo] La bande la plus basse à partir de laquelle on autorise les transitions
+\item[q] La direction des transitions
+\item[omegai] La limite basse de la plage d'énergie considérée
+\item[omegae] La limite haute de la plage d'énergie considérée
+\item[domega] Le pas de l'échantillonage de la plage d'énergie
+\item[broad] Le paramètre de lissage, qui correspond à $\eta$ dans l'expression de $\chi$. Ce paramètre est lié au temps de vie des états considérés. En effet, dans la théorie, on fait tendre ce terme-là vers 0, ce qui signifie que les états que l'on considère peuvent exister en permanant. Or, en pratique, il est très rare d'avoir des états permanants à cause des perturbations. On adjuste donc ce terme par rapport aux résultats expérimentaux. Plus ce terme est grand, plus le spectre va être lisse. L'importance de ce paramètre est surtout de donner des résultats qualitativement corrects.
+\item[novkb] Paramètre à mettre si le calcul du terme commutateur est omis. Plus précisément, %TODO
+\item[shiftk] Paramètre à mettre dans le cas où aucune symétrie n'est utilisée pour générer la grille des points-k dans le fichier décrivant la fonction de densité de l'état fondamental.
+\end{itemize}
