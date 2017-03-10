@@ -1,8 +1,8 @@
 \chapter{Simulations numériques}
-\label{chapter-simulation}
+\label{chap-simulation}
 Nos travaux ont été réalisés en deux temps.
-Nous commençons par étudier l'état fondamental du calcium oxalate à l'aide du logiciel \textit{Abinit}.
-Après, nous utilisons le code \textit{DP} pour étudier les états excités
+Nous commençons par étudier l'état fondamental du calcium oxalate à l'aide du logiciel \textit{Abinit}~\cite{Abinit}.
+Après, nous utilisons le code \textit{DP}~\cite{DP} pour étudier les états excités
 en servant des résultats obtenus dans l'étape précédente.
 
 Les fonctionnements des outils, aussi bien que les approximations impliquées,
@@ -15,7 +15,7 @@ Il nous permet de faire des calculs ab initio pour obtenir la densité électron
 et ainsi l'énergie fondamentale du système.
 Plus précisément, Abinit effectue la résolution auto-consistente pour le système d'équations de Kohn et Sham à l'aide une base d'ondes planes.
 A chaque itération, le point minimum d'énergie est calculé par la méthode du gradient conjugué,
-et l'approximation du pseudo-potentiel est introduite pour éliminer dans le systéme d'équations les électrons du cœur,
+et l'approximation du pseudo-potentiel est introduite pour éliminer dans le systéme d'équations les électrons de cœur,
 ce qui réduit considérablement la complexité du probleme.
 
 Avant de démarer le calcul,
@@ -30,50 +30,50 @@ Une liste complète des paramètres utilisés se trouve dans l'annexe.
 \subsection{Espace réciproque}
 \label{subsec-reciprocal}
 La partie éssentielle du calcul avec Abinit consiste à résoudre le système d'équations de Kohn et Sham,
-dont une quantité clée est la densité de charge $n$, qui est donnée par l'équation %TODO
+dont la quantité clée est la densité d'électrons $n(\V{r})$.
 Or les système étudiés sont souvent des matériaux cristallins,
 auxquels on applique la condition périodique aux limites.
 D'après le théorème de Bloch, les états propres, et ainsi les fonctions d'ondes correspondantes,
 sont caractérisés par deux nombres quantiques:
-le vecteur d'onde $k$ dans la première zone de Brillouin, et l'indice de bande $n$.
+le vecteur d'onde $\vb{k}$ dans la première zone de Brillouin, et l'indice de bande $n$.
 La densité de charge s'exprime donc par
 \begin{equation}
-  \label{eqn-den1}
-  n(r) = \frac{\Omega_{maille}}{{(2\pi)}^3} \sum_{n, k}^{occ}|\phi_{n, k}(r)|^2,
+  \label{eqn-den}
+  n(\vb{r}) = \sum_{n, \vb{k}}^\V{occ}\abs{\phi_{n, \vb{k}}(\vb{r})}^2,
 \end{equation}
 avec la somme sur tous les états occupés.
 A la limite des cristaux idéals infinis, la taille de grille dans l'espace réciproque tend vers zéro,
-alors l'\cref{eqn-den1} devient
-\begin{equation}
-  \label{eqn-den2}
-  n(r) = \frac{\Omega_{maille}}{{(2\pi)}^3} \sum_n^{occ}\int_{ZB}d^3k|\phi_{n, k}(r)|^2.
-\end{equation}
-Ensuite, à l'approximation numérique,
-l'intégral sur $k$ doit être discrétisée en somme sur $N_k$ point $k$ pondérés:
-\begin{equation}
-  \label{eqn-den3}
-  n(r) = \sum_n^{occ}\sum_{i=1}^{N_k}w_i|\phi_{n, k}(r)|^2.
-\end{equation}
-Le temps de calcul étant proportionnel à $N_k$,
-il est donc nécessaire de choisir les poids $w_i$ et les points $k$ afin de reproduire le résultat
-de l'intégral avec la moindre erreur et le moindre nombre de point $k$.
-Une méthode beaucoup utilisée est l'échantillonage de Monkhorst-Pack,
-qui consiste en pricipal à prendre les points $k$ tels que chaque point ne peut pas être lié avec un autre par aucun opération de symétrie, %TODO:not clear enough
-avec un certain décalage si nécessaire.
-La justification de la méthode est donnée dans. %TODO:find reference
-Avec cette méthode, le nombre de points nécessaire pour évaluer l'intégral dans la première zone de Brillouin est reduit énoremément.
+alors l'\cref{eqn-den} devient
+\begin{equation*}
+  n(\vb{r}) = \sum_n^\V{occ}\int_{\V{ZB}}\dd[3]{\vb{k}}\abs{\phi_{n, \vb{k}}(\vb{r})}^2
+\end{equation*}
+où ZB signifie la première zone de Brillouin. Ensuite, à l'approximation numérique,
+l'intégral sur $\vb{k}$ doit être discrétisée en somme sur $N_{\vb{k}}$ point $\vb{k}$ pondérés:
+\begin{equation*}
+  n(\vb{r}) = \sum_n^\V{occ}\sum_{i=1}^{N_{\vb{k}}}\abs{\phi_{n, \vb{k}}(\vb{r})}^2.
+\end{equation*}
+Le temps de calcul étant proportionnel à $N_{\vb{k}}$,
+il est donc nécessaire de choisir les points $\vb{k}$ afin de reproduire le résultat
+de l'intégral avec la moindre erreur et le moindre nombre de point $\vb{k}$.
+Une méthode très utilisée est basée sur les travaux de Monkhorst et Pack~\cite{Monkhorst1976}.
+L'idée est d'abord de prendre une grille homogène de points $\vb{k}$ dans la zone de Brillouin
+qui respecte les symétries du réseau cristallin,
+et ensuite d'augmenter la densité du grillage (et ainsi celle du nombre total de point $\vb{k}$)
+jusqu'à la convergence, par example, de l'énergie totale du système.
 
 \subsection{Base d'ondes planes}
 \label{subsec-planewave}
 La transformation de Fourier est très souvent lié avec la périodicité du système étudié.
 Il est alors naturel de choisir, dans le contexte de l'approximation numérique,
-la base d'ondes planes pour approximer les fonctions d'onde des états propres $\phi_i = \phi_{n,k_i}$.
+la base d'ondes planes pour approximer les fonctions d'onde des états propres $\phi_i = \phi_{n,\vb{k}_i}$.
 La théorème de Bloch nous donne:
-\begin{equation}
-  \phi_{n,k_i} = \frac{1}{\Omega_{maille}}e^{ik_i\cdot r}\sum_G c_{n,k_i}(G)e_{iG\cdot r} = e^{ik_i\cdot r} u_{n,k_i}(r)
-\end{equation}
-où $u_{n,k_i}(r)$ a la même périodicité que la structure cristalline
-et $G$ est un vecteur de réseau dans l'espace réciproque.
+\begin{equation*}
+  \phi_{n,\vb{k}_i}
+  = \frac{1}{\sqrt{\Omega_{\V{maille}}}}e^{i\vb{k}_i\vdot\vb{r}}\sum_{\vb{G}} c_{n,\vb{k}_i}(\vb{G})e^{i\vb{G}\vdot\vb{r}}
+  = e^{i\vb{k}_i\vdot\vb{r}} u_{n,\vb{k}_i}(\vb{r})
+\end{equation*}
+où $u_{n,\vb{k}_i}(\vb{r})$ a la même périodicité que la structure cristalline
+et $\vb{G}$ est un vecteur de réseau dans l'espace réciproque.
 La base d'ondes planes nous donne les avantages suivants:
 \begin{itemize}
   \item[-] La simplification des calculs de dérivé et d'intégral,
@@ -81,13 +81,13 @@ La base d'ondes planes nous donne les avantages suivants:
   \item[-] Elle nous permet la méthode FFT pour des transformations rapides entre l'espace réel et l'espace réciproque.
   \item[-] L'ensemble d'ondes planes est complèt et orthonormal.
   \item[-] La base est de dimension infinie, mais le coupage de la dimension peut être réalisé facilement
-    par la définition d'un seuil d'énergie $E_{cut}$:
+    par la définition d'un seuil d'énergie $E_{\V{cut}}$:
     \begin{equation}
-      \frac{1}{2}|k+G|^2 \leq E_{cut}
+      \frac{1}{2}|\vb{k}+G|^2 \leq E_{\V{cut}}
     \end{equation}
-    qui relie le nombre d'ondes planes dans la base et $E_{cut}$ par
+    qui relie le nombre d'ondes planes dans la base et $E_{\V{cut}}$ par
     \begin{equation}
-      N_{op}\propto \Omega_{maille}{(E_{cut})}^{\frac{3}{2}}.
+      N_{\V{op}}\propto E_{\V{cut}}^{\frac{3}{2}}.
     \end{equation}
     Une étude de la convergence de l'énergie totale du système par rapport à ce seuil de coupage est alors nécessaire.
 \end{itemize}
@@ -95,50 +95,56 @@ La base d'ondes planes nous donne les avantages suivants:
 \subsection{Pseudo-potentiel}
 \label{subsec-pseudo}
 Le nombre total d'électrons du système étudié étant souvent énorme,
-beaucoup d'entre eux se trouvent proche de l'atome dans la bonde de valence.
-Ensemble avec les atomes, ces électrons dits ``gelé'' contribuent peu àux caractéristiques chimiques du système.
+beaucoup d'entre eux se trouvent proche des ions.
+Ensemble avec les ions, ces électrons de cœur contribuent seulement de façon paramétrique
+àux caractéristiques chimiques du système.
 Cependant, ils apparaissent dans les termes d'interaction entre électrons avec les électrons de conduction.
-I'idée essentielle du pseudo-potentiel est donc de simuler l'effet de l'atome et des électrons gelés
-sur les électrons de conduction par un potentiel effectif qui donne aux électrons de conduction
+I'idée essentielle du pseudo-potentiel est donc de simuler l'effet des ions et des électrons de cœur
+sur les électrons de valence par un potentiel effectif qui donne aux électrons de valence
 les même values propres et caractéristiques de ``scattering'' que le système réel.
 Un premier avantage de l'introduction de pseudo-potentiel est la réduction du nombre d'électrons dans l'hamiltonien.
 Un autre avantage moin évident mais aussi important est la réduction du seuil d'énergie des ondes planes introduit dans la \cref{subsec-planewave},
 c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moin abrupts
 que les vrais potentiels d'atome qui diverge près de l'origine,
 ce qui signifie un moindre nombre de modes nécessaire dans la transformation de Fourier.
-Dans notre études, nous utilisons des pour tous les atomes les pseudo-potentiels fournis par le site d'Abinit. %TODO:Give explicite source.
+Dans notre études, nous utilisons les pseudo-potentiels fournis par le site d'Abinit pour toute les
+quatre espèces d'atome (Ca, C, O, H)~\cite{Pseudo}.
 
 \subsection{Potentiel d'échange-corrélation}
 \label{subsec-xc}
 Une dernière approximation importante engagé dans l'implémentation numérique
 de la méthode de Kohn et Sham est celle sur l'énergie d'échange-corrélation (\cref{eqn-exc}).
-Par définition, $E_{xc}[n]$ contient tous les éffets au delà du formalisme de Hartree.
-L'\cref{eqn-exc} étant exacte, l'expression explicite de $E_{xc}[n]$ est toujours inconnue,
+Par définition, $E_{\V{xc}}[n]$ contient tous les éffets au delà du formalisme de Hartree.
+L'\cref{eqn-exc} étant exacte, l'expression explicite de $E_{\V{xc}}[n]$ est toujours inconnue,
 d'où provient l'approximation.
 
 Il existe beaucoup de méthodes d'approximation,
-dont certaines sont présentées dans~\cite{Sottile2003} (Sect. 2.4 et 2.5).
-Dans nos études, l'approximation utilisée est celle de la densité locale (Local Density Approximation, LDA),
-l'idée principale de laquelle consiste à remplaçer la dépendance fonctionnelle de $E_{xc}[n]$
+dont certaines sont présentées dans~\cite{Sottile2003}.
+Dans nos études, l'approximation utilisée est celle de la densité locale (\textit{Local Density Approximation}, LDA),
+l'idée principale de laquelle consiste à remplaçer la dépendance fonctionnelle de $E_{\V{xc}}[n]$
 sur la distribution de la densité par celle sur la valeur locale de la densité.
-Autrement dit, on suppose que l'énergie d'échange-corrélation du système à un point $r$
-est égale à celle d'un système homogène qui a la même valeur de la densité d'électrons au point $r$.
-Par conséquent, $E_{xc}[n]$ peut s'écrire sous la forme
+Autrement dit, on suppose que l'énergie d'échange-corrélation du système à un point $\vb{r}$
+est égale à celle d'un système homogène qui a la même valeur de la densité d'électrons au point $\vb{r}$.
+Par conséquent, $E_{\V{xc}}[n]$ peut s'écrire sous la forme
 \begin{equation}
   \label{eqn-exc-lda}
-  E_{xc}^{LDA}[n] = \int n(r)\epsilon_{xc}(n(r)) dr.
+  E_{\V{xc}}^{\V{LDA}}[n] = \int n(\vb{r})\epsilon_{\V{xc}}(n(\vb{r})) \dd{\vb{r}}.
 \end{equation}
-L'intéret de cette forme est que $\epsilon_{xc}$ dans l'\cref{eqn-exc-lda} peut être obtenu avec
-une précision suffisante par la méthode de Monte-Carlo quantique.
+L'intéret de cette forme est que $\epsilon_{\V{xc}}$ dans l'\cref{eqn-exc-lda} peut être obtenu avec
+une précision suffisante par la méthode de Monte-Carlo quantique~\cite{ceperley1980}.
 On attend un calcul exact par cette méthode pour un système homogène,
 et ainsi de bonne approximation pour les systèmes dont la variation spatiale de la densité d'électrons est faible.
 En fait, la portée de la méthode LDA va bien au delà de cette échelle,
 et elle s'applique bien dans le domaine du semi-conducteur.
-Une démonstration de cet applicabilité est présentée dans~\cite{Sottile2003} (Sect. 2.4).
+Une démonstration de cet applicabilité est présentée dans~\cite{Sottile2003}.
 
 \section{DP}
 DP est un code qui permet de calculer le coefficient diélectrique
-en fonction de la fréquence de la lumière absorbée par le matériau.
+en fonction de la fréquence et du moment transféré.
+Dans le cas d'une simulation d'absorption,
+$\vb{q}=0 \text{et} \omega = \text{la fréquence du photon absorbé}$.
+Alors que dans le cas d'une simulation de perte d'énergie,
+$\vb{q}= \text{le moment transféré et} \omega = \text{la perte d'énergie du projectile}$.
 Il implémente la théorie détaillée dans la \cref{sec-TDDFT}.
 
 \subsection{Noyau d'échange-corrélation}
@@ -155,9 +161,10 @@ néglige donc les effets mentionnés ci-dessus.
 La seconde approche, qui est largement utilisée,
 prend le noyau comme la dérivée fonctionnelle du potentiel d'échange-corrélation
 définie dans la \cref{subsec-KS}:
-\begin{equation}
-  f_{xc}^{ALDA}(r, r') = \delta(r, r')\frac{\partial V_{xc}^{LDA}(n(r), r)}{\partial n(r)}.
-\end{equation}
+\begin{equation*}
+  f_{\V{xc}}^{\V{ALDA}}(\vb{r}, \vb{r}')
+  = \delta(\vb{r}, \vb{r}')\pdv{V_{\V{xc}}^{\V{LDA}}(n(\vb{r}), \vb{r})}{n(\vb{r})}.
+\end{equation*}
 
 \section{Schéma}
 Le schéma de la simulation est divisé en deux étape.
@@ -175,19 +182,19 @@ Il nous faut donc une étude sur la convergence en différents paramètres,
 dont le premier est l'échantillonnage dans la première zone de Brouillon (\cref{subsec-reciprocal}).
 Etant donné la structure du système étudié et une fonction d'essai dont l'intégral est facile à calculer,
 Abinit peut nous donner une liste des échantillons avec pour chacun une valeur de présion
-qui est définie par le calcul de l'intégral approximé sur l'ensemble de points k dans l'échantillon
+qui est définie par le calcul de l'intégral approximé sur l'ensemble de points $\vb{k}$ dans l'échantillon
 par rapport au calcul exact.
 L'idée est de choisir un échantillon non seulement avec une précision suffisante,
-mais aussi avec un nombre de point k suffisant.
+mais aussi avec un nombre de point $\vb{k}$ suffisant.
 Pour le cas du calcium oxalate, nous avons choisi dans cette liste trois échantillons,
 qui contiennent respectivement 16 (avec symétries),
-120 (avec symétries) et 480 (grillage translaté et sans symétries) points k.
+120 (avec symétries) et 480 (grillage translaté et sans symétries) points $\vb{k}$.
 
 Pour la suite de la simulation,
 nous choisons l'approximation LDA pour l'énergie d'échange-corrélation (\cref{subsec-xc}).
 Pour chaque échantillon, l'énergie total du système dans l'état fondamental est calculé
-en variant $E_{cut}$ (\cref{subsec-planewave}).
-Une valeur de $E_{cut}$ commune est choisie telle qu'elle est petite mais suffisante
+en variant $E_{\V{cut}}$ (\cref{subsec-planewave}).
+Une valeur de $E_{\V{cut}}$ commune est choisie telle qu'elle est petite mais suffisante
 pour assurer la convergence du calcul dans les trois échantillons.
 
 Ensuite, le même calcul se fait en variant au tour de la valeur initiale
