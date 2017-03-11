@@ -1,13 +1,12 @@
 \chapter{Resultats}
 
-
 \label{Chap-Res}
 
 \section{État fondamental du calcium oxalate}
+Les calculs numériques qui seront présentés dans cette section ont été faits avec \textit{Abinit}.
+
 \subsection{Structure moléculaire}
-%TODO add reference
-La cellule élémentaire de calcium oxalate ($Ca C_2 O_4$) contient 28 atomes. Il est de structure monoclique et de groupe de symétrie $P2/m$ ($\#$10) (cf. figure \ref{BrillouinZone})
-%TODO add bilbao
+La cellule élémentaire de calcium oxalate ($Ca C_2 O_4$) contient 28 atomes (cf. \cref{Kolezynski2010}). Il est de structure monoclique et de groupe de symétrie $P2/m$ ($\#$10) (cf. figure \cref{BrillouinZone})
 
 \begin{figure}[!h]\label{BrillouinZone}
     \centering
@@ -16,7 +15,13 @@ La cellule élémentaire de calcium oxalate ($Ca C_2 O_4$) contient 28 atomes. I
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Énergie de seuil}
-Pour commencer, on étudie la convergence du calcul de l'état fondamental de calcium oxalate. On fait varier le seuil d'énergie $E_{cut}$ entre 20 et 100 Hatree. 
+D'abord, nous calculons la densité d'électrons de l'état fondamental
+en fonctions des orbites de Kohn et Sham,
+qui sont elles même représentées dans l'espace d'ondes plane tranché.
+Pour chaque échantillonnage, l'énergie total du système dans l'état fondamental est calculé
+en variant $E_{\V{cut}}$ (\cref{subsec-planewave}).
+Le but du jeux est d'assurer la convergence du calcul en prenant le moins de fonctions d'onde possible. (\cref{subsec-planewave})
+On fait varier le seuil d'énergie $E_{cut}$ entre 20 et 100 Hatree. 
 On constate que pour tous ces seuils d'énergies, on obtient bien une convergence au bout de 15 itérations. La relation entre l'énergie totale du système à la convergence en fonction de l'énergie de seuil est tracée dans la figure \ref{Ecut}. 
 À partir de $E_{cut} = 40$ Hatree, l'énergie totale du système est bien minimisée. On choisit donc cette énergie de seuil pour la suite du calcul de l'état fondamental. 
 
@@ -26,19 +31,67 @@ On constate que pour tous ces seuils d'énergies, on obtient bien une convergenc
     \caption{Ecut}
 \end{figure}
 
-%Dans un premier temps, avant de passer à l'état exicité, on peut construire sa structure de bandes à l'aide du calcul d'Abinit (cf. figure \ref{BrillouinZone}). 
-%Il est à remarquer que la structure de bande des états exicités seront différents que celle de l'état fondamental. 
-%Cependant, on pourrait avoir des idées sur celle des états excités. 
-%Notamment, le gap de la structure de bande montre que le calcium oxalate n'est pas un conducteur. 
-%Par ailleurs, comme le gap n'est pas direct, on peut donc observer des lumières émises dans des directions non parallèles à la lumière incidente. 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Spectres de perte d'énergie (EELS)}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Convergence avec les points-k}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convergence avec les points-k: I}
+Etant donnée la structure du système étudié et une fonction d'essai dont l'intégrale est facile à calculer,
+Abinit peut nous donner une liste des échantillons avec pour chacun une valeur de présion
+qui est définie par le calcul de l'intégral approximé sur l'ensemble de points $\vb{k}$ dans l'échantillon
+par rapport au calcul exact.
 La motivation de ce test de convergence est de pouvoir avoir un échantillonnage assez fin pour obtenir tous les états d'excitation possibles sans avoir trop de points-k, ce qui augmentera considérablement la compléxité du calcul.
+
+La table \cref{etotPK} montre que le système est déjà convergé avec peu de points-k (16) dans la première zone de Brillouin.
+Ce résultat est dû au fait que la première zone de Brillouin est petite (donc la maille élémentaire est grande).
+\begin{table}[ht]\label{etotPK}
+\caption{Énergie totale du système en fonction du nombre de points-k}
+\centering
+\begin{tabular}{c c}
+\hline
+
+Nombre de points-k  &  $E_{tot}$ à la convergence (Hatree)
+\\
+16    &  -466.66501448840
+\\
+28    &  -466.66501224916
+\\
+40    &  -466.66501098806
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Approximation du potentiel d'échange et de corrélation}
+Nous avons aussi examiné la qualité de l'approximation du potentiel d'échange et de corrélation par la méthode LDA en la comparant avec la méthode GGA, qui est censé être plus précise (cf. \cref{subsec-KS}).
+
+Pour le cas de 16 points-k, nous avons obtenu la même valeur d'énergie totale pour les deux méthodes d'approximation.
+
+\begin{table}[ht]\label{etotPK}
+\caption{Énergie totale du système en fonction du nombre de points-k}
+\centering
+\begin{tabular}{c c}
+\hline
+
+Méthode d'approximation &  $E_{tot}$ à la convergence (Hatree)
+\\
+LDA    &  -466.66501448840
+\\
+GGA   &   -466.66501448840
+\end{tabular}
+\end{table}
+
+Comme le nombre de points-k n'est pas élevé, il est tout à fait possible que le résultat dépende peu de la méthode d'approximation pour le terme d'échange et de corrélation.
+\\\\Dans la suite, nous utiliserons ces résultats pour calculer la fonction diélectrique dont on déduit les spectres de perte d'énergie d'électron (\cref{subsec-eels}).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Spectres de perte d'énergie (EELS)}
+Les calculs de cette section ont été fait avec le code de \textit{DP}. 
+L'objectif de cette section est de présenter les caractéritiques spectroscopiques auxquelles on peut s'attendre dans une vraie expérience,
+à l'aide des calculs \textit{ab initio}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convergence avec les points-k: II}
 Même si les calculs de convergence avec les nombres de points-k différents ont été faits pour l'état fondamental, il faut s'assurer que l'échantillonnage que l'on a privilégié soit aussi assez fin pour les calculs de réponse de la matériau sous une excitation extérieure. 
 On crée des fichiers décrivant la densité de l'état fondamental avec des échantillonnages de la première zone de Brillouin différents, où dans la première zone de Brouillin, il y a respectivement 16, 120 et 480 points-k. 
 Pour connaître le meilleur échantillonnage à utiliser à notre disposition, on fait d'abord les calculs en prenant RPA (ramdom phase approximation) comme méthode d'approximation du terme d'échange et de corrélation.
+Pour le cas du calcium oxalate, nous avons choisi dans cette liste trois échantillons,
+qui contiennent respectivement 16 (avec symétries),
+120 (avec symétries) et 480 (grillage translaté et sans symétries) points $\vb{k}$.
 On montre dans la figure \ref{kptCompare} que le choix du 120 points-k dans la première zone de Brillouin donne déjà de bons résultats pour le calcul de EELS (par rapport à 480 points-k). On peut donc se contenter de prendre l'échantillonnage avec 120 points-k pour la suite du calcul.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,11 +141,18 @@ La différence entre les différentes valeurs trouvées est dûe à l'anisotropi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %picture missing
 \subsection{EELS et la fonction diélectrique}
-\begin{figure}[!h]\label{dispersion}
+
+\begin{figure}[!h]\label{epsilon_compare}
     \centering
-    \includegraphics[width=12cm]{E_cut}
-    \caption{Ecut}
+    \includegraphics[width=12cm]{epsilon_compare}
+    \caption{Relation entre les parties réelle et imaginaire de la fonction diélectrique $\epsilon$ et EELS}
 \end{figure}
+
+On se rappelle que la relation entre EELS et la fonction diélectrique est donnée par \ref{EELS}.
+On peut constater que, dans la figure \ref{epsilon_compare}, la partie de réelle et la partie imaginaire de la fonction diélectrique ont des sens de croissance opposés. 
+On pourrait donc s'attendre à un pic de résonance de EELS à l'endroit où elles se croisent (aux alentours de 5 eV).
+Ensuite, les deux parties prennent des valeurs bien supérieures à zéro, la croissance de EELS dépend cette fois-ci plus de la partie imaginaire de la fonction diélectrique.
+Le continuum du spectre pour le régime d'énergie supérieure à 7 eV est dû au fait qu'il n'y a pas de croisement entre les parties réelle et imaginaire à valeur près de zéro.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dispersion}
