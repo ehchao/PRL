@@ -52,14 +52,14 @@ où a.r.\ représente les termes d'anti-résonance et $v$ et $c$ pour bande de v
 
 \chapter{Paramètres d'entrée}
 \section{Paramètres d'entré d'Abinit}
-Définition des points $k$ dans l'espace réciproque
-\begin{itemize}[leftmargin=0em, font=\bfseries]
+\subsection{Définition des points $\vb{k}$ dans l'espace réciproque}
+\begin{itemize}[labelwidth=\widthof{\bfseries nshiftk}, leftmargin=\labelwidth+\labelsep, font=\bfseries]
   \item[ngkpt] Vecteur de taille 3 qui représente le nombre de points de grille dans les trois directions de translation dans l'espace réciproque.
   \item[nshiftk] Nombre de directions dans lesquelle un décalage de point $k$ sera effectué.
   \item[shiftk] Matrice de nshiftk*3 qui précise les directions et les quantité de décalage.
 \end{itemize}
-Définition de la maille élémentaire:
-\begin{itemize}[leftmargin=0em, font=\bfseries]
+\subsection{Définition de la maille élémentaire}
+\begin{itemize}[labelwidth=\widthof{\bfseries nshiftk}, leftmargin=\labelwidth+\labelsep, font=\bfseries]
   \item[acell] Vecteur de taille 3 élément qui représente l'échelle de la taille de la maille élémentaire.
   \item[rprim] Matrice de 3*3 qui représente les trois directions de translation.
     Ensemble avec acell définit les trois vectors de translation dans l'espace réel.
@@ -70,8 +70,8 @@ Définition de la maille élémentaire:
   \item[xred] Matrice de natom*3 qui représente la coordonnée réduite de chaque atome,
     par ordre cohérent avec typat.
 \end{itemize}
-Paramètres de convergence:
-\begin{itemize}[leftmargin=0em, font=\bfseries]
+\subsection{Paramètres de convergence}
+\begin{itemize}[labelwidth=\widthof{\bfseries nshiftk}, leftmargin=\labelwidth+\labelsep, font=\bfseries]
   \item[ecut] Seuil d'énergie qui correspont à l'énergie maximale des ondes planes utilisées dans le calcul à un point k donné.
     Plus grande la ecut, plus précis et moin efficace le calcul.
     Une étude sur la convergence en ecut est alors nécessaire pour avoir à la fois la précision et l'efficacité.
@@ -83,7 +83,7 @@ Paramètres de convergence:
 
 
 \section{Paramètres d'entré de DP}
-\begin{itemize}[leftmargin=0em, font=\bfseries]
+\begin{itemize}[labelwidth=\widthof{\bfseries rda, alda}, leftmargin=\labelwidth+\labelsep, font=\bfseries]
 \item[rda, alda] La méthode d'approximation pour le terme du potentiel d'échange-corrélation, \textit{i.e.}, le terme $f_{xc}$ %TODO referer à l'expression de chi0
 \item[wfnsh] Le nombre de fonctions dont on a besoin pour faire la transformation de Fourier (wfnsh)%TODO ref to eq
 \item[nbands] Le nombre de bandes pour lesquelles les transitions sont autorisées (nbands)
