@@ -25,7 +25,7 @@ Nous supposons que la structure de bande obtenue à partir de l'état fondamenta
 \chi (\textbf{r}, \textbf{r}', \omega) = \sum_j \frac{f_j(\textbf{r}) f_j^*(\textbf{r}') }{\omega - \Omega_j + i \eta} + \frac{f_j(\textbf{r}') f_j^*(\textbf{r}) }{\omega + \Omega_j + i \eta}
 \end{equation}
 
-où $f_j = \langle N | n(\textbf{r}, 0) | j_N \rangle$, $\Omega_j = (E_0 - E_j)$ la différence d'énergie entre l'état $j$ et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening}) qui est à tendre vers 0 pour le calcul théorique.
+où $f_j = \langle N | n(\textbf{r}, 0) | j_N \rangle$, $\Omega_j = E_0 - E_j$ la différence d'énergie entre l'état $j$ et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening}) qui est à tendre vers 0 pour le calcul théorique.
 
 Notons $n$ la fonciton de densité. C'est un observable obtenu à partir de la relation suivante
 
@@ -49,6 +49,12 @@ où $\phi_\textbf{k}$ est la fonction d'onde de Bloch pour l'impulsion $\textbf{
 \end{equation}
 
 où a.r.\ représente les termes d'anti-résonance et $v$ et $c$ pour bande de valence et bande de conduction respectivement.
+
+Dans certains cas, il est plus conforme d'utiliser son expression dans l'espace de Fourier
+
+\begin{equation}\label{chi_q}
+\chi(q, \textbf{G}, \textbf{G}', \omega) = \frac{2}{\Omega}\sum_{v,c,\textbf{k}}(f_{c,\textbf{k}+\textbf{q}} - f_{v,\textbf{k}}) \frac{\langle v, \textbf{k} | e^{-i(\textbf{q}+\textbf{G})\cdot\textbf{r}} |c , \textbf{k}+\textbf{q} \rangle  \langle c, \textbf{k}+\textbf{q} | e^{-i(\textbf{q}+\textbf{G}')\cdot\textbf{r}} |v , \textbf{q}\rangle}{\omega - (\epsilon_{c, \textbf{k}+\textbf{q}} - \epsilon_{v,\textbf{k}}) + i\eta}
+\end{equation}
 
 \chapter{Paramètres d'entrée}
 \section{Paramètres d'entré d'Abinit}
