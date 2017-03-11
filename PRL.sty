@@ -2,11 +2,14 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{babel}
+\RequirePackage[markboth, twoside]{polytechniquePRL}
 \RequirePackage{amsmath, amsthm, amssymb}
 \RequirePackage{mathrsfs}
 \RequirePackage{physics}
 \RequirePackage{enumitem}
-\RequirePackage{calc}
+\RequirePackage{tabularx}
+\RequirePackage{calc}  % allow command \widthof{}
+\RequirePackage{emptypage}  % remove header and footer for all emptypages
 \RequirePackage{graphicx}
 \RequirePackage[colorlinks=true, allcolors=blue]{hyperref}
 \RequirePackage{cleveref}
@@ -15,3 +18,5 @@
 \newcommand{\ie}{i.e.}
 % markup for non-variable subscripts/superscripts which should be non-italic
 \newcommand{\V}[1]{\textnormal{#1}}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}

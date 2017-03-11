@@ -130,7 +130,7 @@ est aujourd'hui la méthode la plus couramment utilisée pour étudier
 les propriétés de l'état fondamental d'un système
 (module d'élasticité, stabilité de la structure, vibrations phononiques, etc.)~\cite{Martin2004}.
 
-\section{Théorie de la fonctionelle de la densité dépendante du temps}
+\section[TDDFT]{Théorie de la fonctionelle de la densité dépendante du temps}
 \label{sec-TDDFT}
 Dans les études de spectroscopie,
 nous étudions les comportements des matériaux sous perturbation externe.
@@ -144,8 +144,6 @@ La méthode que nous allons présenter dans la suite,
 la théorie de la fonctionelle de la densité dépendante du temps
 (\textit{Time-Dependent Density Functional Theory}, TDDFT),
 est utilisée dans le code à l'aide duquel les simulations numériques \textit{ab initio} sont effectués.
-
-\subsection{TDDFT}
 La TDDFT est une extension de la DFT\@.
 Grâce au théorème de Runge et Gross~\cite{Runge1984},
 il est possible d'affirmer que l'espérance de toute observable $\hat{O}$ dépendante du temps
@@ -159,12 +157,12 @@ La dépendence du temps de la densité provient du fait que le système est soum
 La TDDFT est valable pour n'importe quel type de potentiel extérieur.
 Ici, nous nous intéressons en particulier aux cas où le potentiel extérieur est ``petit'',
 ce qui nous permet de rentrer dans le cadre de la \textbf{réponse linéaire} (\cref{TRL}).
-En fait, comme ce qui est mentionné dans l'introduction,
-%TODO vérifier si on l'a bien mis dans l'intro
-la fonction diélectrique du système $\epsilon^{-1}$ est liée aux propriétés optiques et diélectriques d'un matériau.
 
 \subsection{Coefficient diélectrique et fonction de perte}
 \label{subsec-eels}
+Comme ce qui est mentionné dans l'introduction,
+%TODO vérifier si on l'a bien mis dans l'intro
+la fonction diélectrique du système $\epsilon^{-1}$ est liée aux propriétés optiques et diélectriques d'un matériau.
 En fait, dans une vraie expérience de spectroscopie,
 on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron
 (\textit{Electron Energy Loss Spectra}, EELS).
