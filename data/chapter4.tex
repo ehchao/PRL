@@ -95,6 +95,8 @@ L'objectif de cette section est de présenter les caractéritiques spectroscopiq
 auxquelles on peut s'attendre dans une vraie expérience,
 à l'aide des calculs \textit{ab initio}
 \subsection{Convergence avec les points-k: II}
+
+
 Même si les calculs de convergence avec les nombres de points-k différents ont été faits pour l'état fondamental,
 il faut s'assurer que l'échantillonnage que l'on a privilégié soit aussi assez fin pour les calculs de réponse de la matériau sous une excitation extérieure.
 On crée des fichiers décrivant la densité de l'état fondamental avec des échantillonnages
@@ -106,7 +108,13 @@ comme méthode d'approximation du terme d'échange et de corrélation.
 Pour le cas du calcium oxalate, nous avons choisi dans cette liste trois échantillons,
 qui contiennent respectivement 16 (avec symétries),
 120 (avec symétries) et 480 (grillage translaté et sans symétries) points $\vb{k}$.
-%TODO: where is the kptCompare?
+
+\begin{figure}[!h]\label{kptCompare}
+    \centering
+    \includegraphics[width=12cm]{kpt_compare}
+    \caption{Convergence pour des nombres de points-k différents}
+\end{figure}
+
 On montre dans la \cref{kptCompare} que le choix du 120 points-k dans la première zone de Brillouin
 donne déjà de bons résultats pour le calcul de EELS (par rapport à 480 points-k).
 On peut donc se contenter de prendre l'échantillonnage avec 120 points-k pour la suite du calcul.
@@ -120,7 +128,7 @@ On peut donc se contenter de prendre l'échantillonnage avec 120 points-k pour l
 \end{figure}
 
 Pour le calcul de $\epsilon^{-1}$ (l'inverse de la fonction diélectrique, qui servira à calculer EELS),
-%TODO: where is TRL?
+%TODO: where is TRL? (it is the Appendix A
 il faut passer par le calcul de la fonction de réponse linéaire (cf. \cref{TRL}).
 Pour ce calcul, on doit considérer toutes les transitions possibles
 (excitation d'un électron de la bande de valence vers une bande de conduction).
@@ -166,7 +174,7 @@ Les calculs de EELS en $\vb{q} = 0$ selon les trois axes
 (par exemple, $\vb{q}=(0+,0,0)$ pour le premier axe de la zone de Brillouin)
 sont montrés dans la \cref{fig-anisotropie}.
 La différence entre les différentes valeurs trouvées est dûe à l'anisotropie de la structure.
-%picture missing
+
 \subsection{EELS et la fonction diélectrique}
 
 \begin{figure}[!h]\label{fig-epsilon_compare}
