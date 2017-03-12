@@ -156,7 +156,7 @@ Ici, la densité dépendante du temps est la variable fondamentale comme $n$ pou
 La dépendence du temps de la densité provient du fait que le système est soumis à un champ extérieur dépendant du temps.
 La TDDFT est valable pour n'importe quel type de potentiel extérieur.
 Ici, nous nous intéressons en particulier aux cas où le potentiel extérieur est ``petit'',
-ce qui nous permet de rentrer dans le cadre de la \textbf{réponse linéaire} (\cref{TRL}).
+ce qui nous permet de rentrer dans le cadre de la \textbf{réponse linéaire} (\cref{chap-TRL}).
 
 \subsection{Coefficient diélectrique et fonction de perte}
 \label{subsec-eels}
@@ -167,11 +167,12 @@ En fait, dans une vraie expérience de spectroscopie,
 on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron
 (\textit{Electron Energy Loss Spectra}, EELS).
 Ces deux grandeurs physiques sont liées à la fonction diélectrique par~\cite{Sottile2003}
-\begin{equation*}
+\begin{equation}
+  \label{eqn-EELS}
   \textnormal{Abs} = \imaginary\qty{\epsilon},
   \quad
   \textnormal{EELS} = -\imaginary\qty{\epsilon^{-1}}.
-\end{equation*}
+\end{equation}
 Abs nous indique les fréquences de la lumière que le système peut absorber.
 EELS nous donne une idée sur les fréquences et les moments
 que le système peut échanger avec un projectile extérieur (photon ou électron).
@@ -195,7 +196,7 @@ ou par
 \end{equation}
 
 On notera $\chi^0$ et $\chi$ les fonctions de réponse linéaire pour
-$V_{\V{tot}}$ et $V_{\V{ext}}$ respectivement (cf. \cref{TRL} pour la définition de ces fonctions).
+$V_{\V{tot}}$ et $V_{\V{ext}}$ respectivement (cf. \cref{chap-TRL} pour la définition de ces fonctions).
 Les relations entre la fonctionelle de densité $n(\vb{r}, t)$ et les deux potentiels sont
 
 \begin{equation}
