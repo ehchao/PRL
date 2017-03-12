@@ -6,7 +6,7 @@ Les calculs numériques qui seront présentés dans cette section ont été fait
 
 \subsection{Structure moléculaire}
 La cellule élémentaire de calcium oxalate ($\V{Ca} \V{C}_2 \V{O}_4$) contient 28 atomes.
-Il est de structure monoclique et de groupe de symétrie $P2/m$ ($\#$10)~\cite{Kolezynski2010} (\cref{BrillouinZone}).
+Il est de structure monoclique et de groupe de symétrie $P2/m$ ($\#$10)~\cite{Kolezynski2010} (cf. \cref{BrillouinZone}).
 
 \begin{figure}[!h]
   \centering
@@ -19,7 +19,7 @@ D'abord, nous calculons la densité d'électrons de l'état fondamental
 en fonctions des orbites de Kohn et Sham,
 qui sont elles même représentées dans l'espace d'ondes plane tranché.
 Pour chaque échantillonnage, l'énergie total du système dans l'état fondamental est calculé
-en variant $E_{\V{cut}}$ (\cref{subsec-planewave}).
+en variant $E_{\V{cut}}$ (cf. \cref{subsec-planewave}).
 Le but du jeux est d'assurer la convergence du calcul en prenant le moins de fonctions d'onde possible.
 On fait varier le seuil d'énergie $E_{cut}$ entre 20 et 100 Hatree.
 On constate que pour tous ces seuils d'énergies, on obtient bien une convergence au bout de 15 itérations.
@@ -51,7 +51,7 @@ Ce résultat est dû au fait que la première zone de Brillouin est petite (car 
   \centering
   \begin{tabular}{c c}
     \toprule
-    Nombre de points-$\vb{k}$  &  $E_{tot}$ à la convergence (Hatree)
+    Nombre de points-$\vb{k}$  &  $E_{\V{tot}}$ à la convergence (Hatree)
     \\
     \midrule
     16    &  -466.66501448840
@@ -67,7 +67,7 @@ Ce résultat est dû au fait que la première zone de Brillouin est petite (car 
 \subsection{Approximation du potentiel d'échange et de corrélation}
 Nous avons aussi examiné la qualité de l'approximation du potentiel d'échange et de corrélation
 par la méthode LDA en la comparant avec la méthode GGA,
-qui est censé être plus précise (\cref{subsec-KS}).
+qui est censé être plus précise (cf. \cref{subsec-KS}).
 
 Pour le cas de 16 points-$\vb{k}$, nous avons obtenu la même valeur d'énergie totale pour les deux méthodes d'approximation.
 
@@ -77,7 +77,7 @@ Pour le cas de 16 points-$\vb{k}$, nous avons obtenu la même valeur d'énergie 
   \centering
   \begin{tabular}{c c}
     \toprule
-    Méthode d'approximation &  $E_{tot}$ à la convergence (Hatree)
+    Méthode d'approximation &  $E_{\V{tot}}$ à la convergence (Hatree)
     \\
     \midrule
     LDA    &  -466.66501448840
@@ -93,12 +93,12 @@ il est tout à fait possible que le résultat dépende peu de la méthode d'appr
 pour le terme d'échange et de corrélation.
 
 Dans la suite, nous utiliserons ces résultats pour calculer la fonction diélectrique
-dont on déduit les spectres de perte d'énergie d'électron (\cref{subsec-eels}).
+dont on déduit les spectres de perte d'énergie d'électron (cf. \cref{subsec-eels}).
 
 \section{Spectres de perte d'énergie (EELS)}
 Les calculs de cette section ont été fait avec le code de \textit{DP}.
 L'objectif de cette section est de présenter les caractéritiques spectroscopiques
-auxquelles on peut s'attendre dans une vraie expérience,
+auxquelles on peut s'attendre dans une vraie expérience.
 
 \subsection{Convergence avec les points-$\vb{k}$: II}
 Même si les calculs de convergence avec les nombres de points-$\vb{k}$ différents ont été faits pour l'état fondamental,
@@ -207,7 +207,7 @@ qu'il n'y a pas de croisement entre les parties réelle et imaginaire à valeur 
 Enfin, on s'intéresse à la dispersion des spectres EELS\@.
 Il s'agit de changer la valeur de $\vb{q}$ dans l'\cref{eqn-chi_q} (non proche de 0 cette fois-ci).
 Il est intéressant de remarquer que la stabilité de la position du premier pique de résonance
-pour les trois différentes directions de dispersion (\cref{fig-q6,fig-q8,fig-q10}).
+pour les trois différentes directions de dispersion (cf. \cref{fig-q6,fig-q8,fig-q10}).
 Bien que la valeur de EELS obtenue pour le premier pique change en fonction de $\vb{q}$,
 le pique se trouve toujours en même énergie d'excitation
 quand on fait varier la valeur de $\vb{q}$ dans une direction donnée.
