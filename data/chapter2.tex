@@ -1,7 +1,7 @@
 \chapter{Études théoriques des systèmes à plusieurs corps}
 \label{chap-theory}
 \section{Le problème électronique}
-Dans la physique des solides, on est ramené à étudier l'équation de Schrödinger d'un système
+Dans la physique des solides, on est amené à étudier l'équation de Schrödinger d'un système
 à plusieurs corps ($N$ électrons et $M$ ions par exemple),
 ce qui consiste à résoudre une équation du type
 \begin{equation}
@@ -12,13 +12,14 @@ ce qui consiste à résoudre une équation du type
   - \sum_{i,I}\frac{Z_I e^2}{\abs{\vb{r}_i - \vb{R}_I}}
   + \sum_{I<J}\frac{Z_I Z_J e^2}{\abs{\vb{R}_i - \vb{R}_j}} )\Psi = E_{\V{tot}}\Psi,
 \end{equation}
-où $(\vb{r}, \vb{p})$ et $(\vb{R}, \vb{P})$ sont respctivement la position et l'impulsion d'un éléctron et d'un proton,
-$E_{\V{tot}}$ est une certaine énergie propre du système à déterminer et enfin,
+où $(\vb{r}, \vb{p})$ et $(\vb{R}, \vb{P})$ sont respctivement la position et l'impulsion d'un éléctron et d'un ion,
+$E_{\V{tot}}$ est une certaine énergie propre du système à déterminer et enfin, la fonction d'onde
 $\Psi = \Psi(\vb{r}_1, \ldots, \vb{r}_N,  \vb{R}_1, \ldots \vb{R}_M)$ est une fonction à $N+M$ variables.
 
-Comme le système étudié (les solides) comprend un nombre très élevé d'électrons et d'ions,
+Comme le système étudié (un état solide par exemple)
+peut comprendre un nombre très élevé d'électrons et d'ions,
 l'\cref{eqn-schrodinger} ne peut pas être résolue analytiquement, voire numériquement.
-Certaines approximations doivent donc être appliqué au système afin de réduire la complexité du calcul.
+Certaines approximations doivent être appliquées au système afin de réduire la complexité du calcul.
 La première approximation que l'on peut prendre, celle la plus intuitive,
 est celle de Born-Oppenheimer, que l'on connait par~\cite{Born1927}.
 En tenant compte du rapport de masse entre les électrons et les ions
@@ -56,9 +57,9 @@ la vraie solution en passant par un système auxiliaire d'électrons non-interag
   de la densité d'électrons.
 \end{theoreme}
 
-La preuve de ce théorème peut être trouvée dans.
+La preuve de ce théorème peut être trouvée dans~\cite{Hohenberg1964}.
 Ce résultat implique que l'espérance de l'hamiltonien à l'état fondamental,
-et ainsi l'énergie totale du système, est une fonctionnelle de la densité d'électrons
+et donc l'énergie totale du système, est une fonctionnelle de la densité d'électrons
 \begin{equation*}
 n(\vb{r}) = \sum_i \int \abs{\Psi_e(\vb{r}_1, \ldots \vb{r}_N)}^2 \delta(\vb{r} - \vb{r}_i) \prod_{j=1}^N \dd{\vb{r}_j}.
 \end{equation*}
@@ -71,14 +72,14 @@ La résolution va être plus simple à implémenter par rapport à la recherche 
 \begin{theoreme}[Kohn-Sham~\cite{Kohn1965}]
   %TODO: à vérifier
 \label{thm-ks}
-  Pour tous les systèmes qui contiennent les termes d'interactions entre électrons,
-  il existe un système auxiliaire non-interagissant ayant le même densité d'électrons.
+  Pour tout système qui contient des termes d'interactions entre électrons,
+  il existe un système auxiliaire non-interagissant ayant la même densité d'électrons.
 \end{theoreme}
 
 Ce théorème fournit un autre pillier de la DFT\@.
-Pour un système du hamiltonian $H = T + V + V_{\V{ext}}$,
+Pour un système de hamiltonian $H = T + V + V_{\V{ext}}$,
 la méthode de Kohn et Sham proprose un système auxiliaire de hamiltonien $H' = T' + V'_{\V{tot}}$,
-avec le même densité d'électrons que le vrai système.
+avec la même densité d'électrons que le vrai système.
 Ce système auxiliaire étant non-interagissant, sa densité peut s'exprimer sous la forme
 $n(\vb{r}) = n'(\vb{r}) = \sum_i \abs{\phi_i(\vb{r})}^2$\footnote{Pour être précis,
   la fonction d'onde de l'espace réel est donnée par le déterminant de Slater
@@ -107,7 +108,8 @@ avec
 pour chacun des électrons $i$.
 Le problème devient un problème simple de $N$ équations à une variable (en $\phi_i(\vb{r})$) séparées.
 On pourra ensuite faire une résolution auto-consistente en réinjectant
-$n = \sum_i \abs{\phi_i^{(p)}(\vb{r})}^2 $ après chaque itération $p$.
+$n = \sum_i \abs{\phi_i^{(p)}(\vb{r})}^2 $ dans l'hamiltonien avec $\phi_i^{(p)}$
+la fonction d'onde obtenue à la fin de la p-ième itération.
 (Remarquons que le critère de convergence de cette méthode n'a toujours pas été trouvé.)
 Cependant, il y a une approximation à faire pour le terme du potentiel d'échange-corrélation
 $V_{\V{xc}}(\vb{r}) = \frac{\delta E_{\V{xc}}}{\delta n(\vb{r})}$, où
@@ -116,12 +118,12 @@ $V_{\V{xc}}(\vb{r}) = \frac{\delta E_{\V{xc}}}{\delta n(\vb{r})}$, où
   E_{\V{xc}} = T[n] + V[n] - \frac{1}{2}\int \dd{\vb{r}}
   \int \dd{\vb{r}'} v(\vb{r}, \vb{r}') n(\vb{r}) n(\vb{r'}) - T'[n]
 \end{equation}
-Les approximations les plus couramment utilisées pour $E_{\V{xc}}$, et ainsi pour $V_{\V{xc}}$,
+Les approximations les plus couramment utilisées pour $E_{\V{xc}}$, et ainsi que pour $V_{\V{xc}}$,
 sont celle des gradients généralisées (Generalized Gradient Approximations, GGA)~\cite{Langreth1980, Perdew1986, Perdew1992}
 et celle de la densité locale (\textit{Local Density Approximation}, LDA)~\cite{Kohn1965},
 dont nous explicitons dans la \cref{subsec-xc}.
 
-Une fois que l'énergie totale du système auxiliaire $\ev{H'}{\Psi_e}$ est minimisée,
+Une fois l'énergie totale du système auxiliaire $\ev{H'}{\Psi_e}$ minimisée,
 le \cref{thm-ks} nous permettra d'obtenir la densité exacte $n(\vb{r})$ du vrai système,
 ce qui détermine ensuite l'énergie de l'état fondamental.
 
@@ -133,38 +135,39 @@ les propriétés de l'état fondamental d'un système
 \section[TDDFT]{Théorie de la fonctionelle de la densité dépendante du temps}
 \label{sec-TDDFT}
 Dans les études de spectroscopie,
-nous étudions les comportements des matériaux sous perturbation externe.
-La constante diélectrique et son inverse sont, par exemple,
-des grandeurs physiques que l'on regarde souvent dans les expériences
-qui sont déduites à partir de l'absorption et de la réflexion des lumières~\cite{Sottile2003}.
-Par conséquent, la simple étude de l'état fondamental ne suffit pas,
+nous étudions les comportements des matériaux sous des perturbations externes.
+Par exemple, 
+la fonction diélectrique et son inverse,
+qui sont déduits de l'absorption et de la réflexion des lumières~\cite{Sottile2003}
+sont des grandeurs physiques auxquelles l'on s'intéresse beaucoup dans les expériences.
+Par conséquent, une simple étude de l'état fondamental ne suffit pas,
 il nous faut de plus des études sur les états excités.
 
 La méthode que nous allons présenter dans la suite,
 la théorie de la fonctionelle de la densité dépendante du temps
 (\textit{Time-Dependent Density Functional Theory}, TDDFT),
-est utilisée dans le code à l'aide duquel les simulations numériques \textit{ab initio} sont effectués.
+est utilisée dans le code à l'aide duquel nos simulations numériques \textit{ab initio} sont effectués.
 La TDDFT est une extension de la DFT\@.
 Grâce au théorème de Runge et Gross~\cite{Runge1984},
 il est possible d'affirmer que l'espérance de toute observable $\hat{O}$ dépendante du temps
-est la fonctionelle unique de la densité d'électrons dépendants du temps.
+est la fonctionelle unique de la densité d'électrons dépendante du temps.
 Ceci s'exprime mathématiquement par
 \begin{equation}
   \ev{\hat{O}}{\Psi(\vb{r}_1, \ldots, \vb{r}_N, t)} = \hat{O}[n(t)].
 \end{equation}
-Ici, la densité dépendante du temps est la variable fondamentale comme $n$ pour l'état statique.
-La dépendence du temps de la densité provient du fait que le système est soumis à un champ extérieur dépendant du temps.
-La TDDFT est valable pour n'importe quel type de potentiel extérieur.
-Ici, nous nous intéressons en particulier aux cas où le potentiel extérieur est ``petit'',
+Ici, la densité dépendante du temps est la variable fondamentale,
+comme la fonctionelle de la densité dans le cadre de la DFT\@.
+La dépendance du temps de la densité provient du fait que le système est soumis à un champ externe dépendant du temps.
+La TDDFT est valable pour n'importe quel type de potentiel externe.
+Ici, nous nous intéressons en particulier aux cas où le potentiel externe est ``petit'',
 ce qui nous permet de rentrer dans le cadre de la \textbf{réponse linéaire} (cf. \cref{chap-TRL}).
 
 \subsection{Coefficient diélectrique et fonction de perte}
 \label{subsec-eels}
-Comme ce qui est mentionné dans l'introduction,
-%TODO vérifier si on l'a bien mis dans l'intro
+Comme mentionné dans l'introduction,
 la fonction diélectrique du système $\epsilon^{-1}$ est liée aux propriétés optiques et diélectriques d'un matériau.
 En fait, dans une vraie expérience de spectroscopie,
-on mesure l'absorption (Abs) et les spectres de perte d'énergie d'électron
+on mesure l'absorption (Abs) et le spectre des pertes en énergie des électrons
 (\textit{Electron Energy Loss Spectra}, EELS).
 Ces deux grandeurs physiques sont liées à la fonction diélectrique par~\cite{Sottile2003}
 \begin{equation}
@@ -175,18 +178,18 @@ Ces deux grandeurs physiques sont liées à la fonction diélectrique par~\cite{
 \end{equation}
 Abs nous indique les fréquences de la lumière que le système peut absorber.
 EELS nous donne une idée sur les fréquences et les moments
-que le système peut échanger avec un projectile extérieur (photon ou électron).
+que le système peut échanger avec un projectile venant de l'extérieur (photon ou électron).
 Les deux nous donnent donc les caractéristiques intrinsèques du système.
-%Pour ces observables, la fonction diélectrique $\epsilon$ est liée à la fonction de la réponse linéaire par~\cite{Sottile2003}
-La question devient alors de calculer la fonction diélectrique. La réponse est que
-$\epsilon^{-1}$ est liée à une autre fonction de réponse linéaire,
-la polarisabilité $\chi$ que l'on peut calculer directement
+Étant donné que l'inverse de la fonction diélectrique
+$\epsilon^{-1}$ est liée à une fonction de réponse linéaire,
+la polarisabilité $\chi$, que l'on peut calculer directement
 avec la TDDFT~\cite{Martin2004, Sottile2003}:
 \begin{equation}
   \label{epsilon}
   \epsilon^{-1} = 1+ v\chi.
 \end{equation}
-En suite, la densité du système et la perturbation externe sont liées par $\chi$ par
+
+La densité du système et la perturbation externe sont liées par $\chi$ par
 \begin{equation}
   \delta n(\vb{r}, t) = \chi(\vb{r}, \vb{r}', t-t')\delta V_{\V{ext}}(\vb{r}', t'),
 \end{equation}
@@ -204,8 +207,6 @@ Les relations entre la fonctionelle de densité $n(\vb{r}, t)$ et les deux poten
                = \int \dd{\vb{r}'} \dd{t'} \chi(\vb{r}, \vb{r}', t-t') V_{\V{ext}}(\vb{r}', t)
 \end{equation}
 
-%TODO l'expression de chi ??
-
 Enfin, la relation entre $\chi^0$ et $\chi$ peut être donnée de façon plus explicite
 en utilisant la méthode variationnelle:
 \begin{equation}
@@ -217,10 +218,10 @@ en utilisant la méthode variationnelle:
 où nous avons utilisé l'expression de $V_{\V{tot}}$ dans l'\cref{eqn-Vtot},
 $v = \frac{\delta V_H}{\delta n}$ pour la variation du deuxième terme dans l'expression de $V_{\V{tot}}$
 (potentiel de Hatree) et $f_{\V{xc}} = \frac{\delta V_{\V{xc}}}{\delta n}$.
-A noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
+À noter que les convolutions sont remplacées par les multiplications ici pour la raison de simplicité d'écriture.
 
 L'intérêt principal de notre travail est donc de prédire le comportement de $\epsilon$ du matériau choisi,
-c'est-à-dire de comprendre à quelle énergie et comment le système réagit à la perturbation externe.
+c'est-à-dire de comprendre à quelle énergie et comment le système réagit à une perturbation externe.
 
 Dans la suite de ce rapport, nous allons présenter les aspects numériques de notre projet,
 dont les codes qui exploitent les relations décrites dans ce chapitre.
