@@ -42,7 +42,7 @@ La densité de charge s'exprime donc par
   n(\vb{r}) = \sum_{n, \vb{k}}^\V{occ}\abs{\phi_{n, \vb{k}}(\vb{r})}^2,
 \end{equation}
 avec la somme sur tous les états occupés.
-À la limite des cristaux idéals infinis, la taille de grille dans l'espace réciproque (de Fourier) tend vers zéro,
+À la limite des cristaux idéals infinis, la densité de points $\vb{k}$ dans l'espace réciproque (de Fourier) tend vers l'infini,
 alors l'\cref{eqn-den} devient
 \begin{equation*}
   n(\vb{r}) = \sum_n^\V{occ}\int_{\V{ZB}}\dd[3]{\vb{k}}\abs{\phi_{n, \vb{k}}(\vb{r})}^2
@@ -54,7 +54,7 @@ l'intégrale sur $\vb{k}$ doit être discrétisée en somme sur $N_{\vb{k}}$ poi
 \end{equation*}
 Le temps de calcul étant proportionnel à $N_{\vb{k}}$,
 il est donc nécessaire de choisir les points $\vb{k}$ afin de reproduire le résultat
-de l'intégrale avec la moindre erreur et le moindre nombre de point $\vb{k}$.
+de l'intégrale avec la moindre erreur et le moindre nombre de points $\vb{k}$.
 Une méthode très utilisée est basée sur les travaux de Monkhorst et Pack~\cite{Monkhorst1976}.
 Dans notre cas,
 l'idée est de prendre d'abord une grille homogène de points $\vb{k}$ dans la zone de Brillouin
@@ -83,7 +83,7 @@ L'utilisation d'une telle base d'ondes planes a les avantages suivants:
   \item[-] La base est de dimension infinie mais peut être réduite facilement
     en définissant une énergie de seuil $E_{\V{cut}}$:
     \begin{equation}
-      \frac{1}{2}|\vb{k}+G|^2 \leq E_{\V{cut}}
+      \frac{1}{2}|\vb{k}+\vb{G}|^2 \leq E_{\V{cut}}
     \end{equation}
     qui relie le nombre des ondes planes dans la base et $E_{\V{cut}}$ par
     \begin{equation}
@@ -111,24 +111,24 @@ Un autre avantage moins évident mais aussi important est la baisse de l'énergi
 %TODO : I don't know whether we say abrupt in this case, to be verified
 c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moins abrupts
 que les vrais potentiels d'atome qui diverge près de l'origine,
-ce qui signifie que le nombre de modes nécessaires pour la transformation de Fourier est moindre.
+ce qui signifie que moins de modes sont nécessaires pour la transformation de Fourier.
 Dans nos études, nous avons utilisé les pseudo-potentiels fournis par le site d'Abinit pour tous les
 quatre types d'atome (Ca, C, O, H)~\cite{Pseudo}.
 
 \subsection{Potentiel d'échange-corrélation}
 \label{subsec-xc}
 La dernière approximation importante engagée dans l'implémentation numérique
-de la méthode de Kohn et Sham est celle sur l'énergie d'échange-corrélation (cf. \cref{eqn-exc}).
-Par définition, $E_{\V{xc}}[n]$ contient tous les effets au-delà du formalisme de Hartree.
-L'\cref{eqn-exc} étant exacte, l'expression explicite de $E_{\V{xc}}[n]$ est toujours inconnue,
+de la méthode de Kohn et Sham est celle sur le potentiel d'échange-corrélation (cf. \cref{eqn-Vtot}).
+Par définition, $V_{\V{xc}}[n]$ contient tous les effets au-delà du formalisme de Hartree.
+L'\cref{eqn-Vtot} étant exacte, l'expression explicite de $V_{\V{xc}}[n]$ est toujours inconnue,
 d'où provient la nécessité l'approximation.
 
-%TODO should be rewritten 'cauz we have used GGA instead
 Il existe beaucoup de méthodes d'approximation,
 dont certaines sont présentées dans~\cite{Sottile2003}.
-Dans nos études, l'approximation utilisée est celle de la densité locale (\textit{Local Density Approximation}, LDA),
-l'idée principale de laquelle consiste à remplaçer la dépendance fonctionnelle de $E_{\V{xc}}[n]$
-sur la distribution de la densité par celle sur la valeur locale de la densité.
+À titre d'exemple, 
+nous avions la possibilité d'utiliser l'approximation de la densité locale (\textit{Local Density Approximation}, LDA).
+L'idée principale de cette dernière consiste à remplaçer la dépendance fonctionnelle de $E_{\V{xc}}[n]$
+de la distribution de la densité par celle sur la valeur locale de la densité.
 Autrement dit, on suppose que l'énergie d'échange-corrélation du système à un point $\vb{r}$
 est égale à celle d'un système homogène qui a la même valeur de la densité d'électrons au point $\vb{r}$.
 Par conséquent, $E_{\V{xc}}[n]$ peut s'écrire sous la forme
@@ -143,14 +143,15 @@ et ainsi de bonne approximation pour les systèmes dont la variation spatiale de
 En fait, la portée de la méthode LDA va bien au delà de cette échelle,
 et elle s'applique bien dans le domaine du semi-conducteur.
 Une démonstration de cet applicabilité est présentée dans~\cite{Sottile2003}.
+Les résultats de nos calculs d'Abinit qui seront présentés dans le chapitre suivant sont obtenus avec une autre approximation, la \textit{Generalized Gradient Approximation}, développée par Perdew et ses collègues~\cite{Perdew1986}.
 
 \section{DP}
 DP est un code qui permet de calculer la fonction diélectrique
 en fonction de la fréquence et du moment transféré.
 Dans une simulation d'absorption,
-$\vb{q}=0 \text{et} \omega = \text{la fréquence du photon absorbé}$.
+$\vb{q}=0 \text{ et } \omega = \text{la fréquence du photon absorbé}$.
 Alors que dans une simulation de perte d'énergie,
-$\vb{q}= \text{le moment transféré et} \omega = \text{la perte d'énergie du projectile}$.
+$\vb{q}= \text{le moment transféré et } \omega = \text{la perte d'énergie du projectile}$.
 Il implémente la théorie détaillée dans la \cref{sec-TDDFT}.
 
 \subsection{Noyau d'échange-corrélation}

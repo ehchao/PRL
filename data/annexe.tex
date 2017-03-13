@@ -1,11 +1,11 @@
 \chapter{Théorie de la réponse linéaire}\label{chap-TRL}
-Soit $n$ un observable. On suppose que $n$ varie en fonction de la perturbation $V$ de par
+Soit $n$ une observable. On suppose que $n$ varie en fonction de la perturbation $V$ par
 
 \begin{equation*}
   n(\vb{r}, t) = \int \dd{t} \dd{\vb{r}'}  \chi (\vb{r}, \vb{r}', t-t') V(\vb{r}', t').
 \end{equation*}
 La fonction $\chi$ s'appelle la \textit{foncition de réponse linéaire}.
-Dans le cas où le hamiltonien de perturbation dépend aussi de $n$ par la relation suivante
+Dans le cas où l'hamiltonien de la perturbation dépend aussi de $n$ par la relation suivante
 
 \begin{equation*}
   H = \int n(\vb{r}, t) V(\vb{r}, t) \dd{\vb{r}},
@@ -17,21 +17,19 @@ la fonction de réponse linéaire $\chi$ est donnée par la formule de Kubo~\cit
 \end{equation}
 où $\ket{N}$ désigne l'état dans lequel on mesure l'observable $n$.
 
-Nous supposons que la structure de bande obtenue
-à partir de l'état fondamental nous fournisseune base complète.
-Nous partons de $\ket{N}$ l'état fondamental constitué de $N$ électrons dans l'\cref{eqn-kubo}.
+Partons de $\ket{N}$ l'état fondamental constitué de $N$ électrons dans l'\cref{eqn-kubo}.
 Notons $\ket{j_N}$ le j-ième état excité de notre système à $N$ électrons.
 En faisant la transformation de Fourier temporelle,
 la fonction de réponse linéaire s'écrit dans ce cas
 
-\begin{equation}
+\begin{equation}\label{eqn-chi-appendix}
  \chi (\vb{r}, \vb{r}', \omega) = \sum_j \frac{f_j(\vb{r}) f_j^*(\vb{r}') }{\omega - \Omega_j + i \eta} + \frac{f_j(\vb{r}') f_j^*(\vb{r}) }{\omega + \Omega_j + i \eta}
 \end{equation}
 où $f_j = \bra{N}n(\vb{r}, 0)\ket{j_N}$, $\Omega_j = E_0 - E_j$ la différence d'énergie
 entre l'état $j$ et l'état fondamental et enfin $\eta$ le terme de lissage (\textit{broadening})
 qui est à tendre vers 0 pour le calcul théorique.
 
-Notons $n$ la fonciton de densité. C'est un observable obtenu à partir de la relation suivante
+Notons $n$ la fonction de densité. C'est une observable obtenue à partir de la relation suivante
 
 \begin{equation*}
 n = \psi^\dagger \psi
@@ -42,16 +40,17 @@ que l'on considère (en analogie avec les oscillateurs harmoniques).
 Ensuite, on peut développer $\psi$ (et donc $\psi^\dagger$)
 dans la base des opérateurs de création pour un seul électron.
 
-\begin{equation*}
+\begin{equation}\label{eqn-psi-appendix}
   \psi = \sum_{\vb{k}} \phi_{\vb{k}}(\vb{r}) a_{\vb{k}}
-\end{equation*}
+\end{equation}
 
 où $\phi_{\vb{k}}$ est la fonction d'onde de Bloch pour l'impulsion $\vb{k}$
-et $a_{\vb{k}}$ l'opérateur de création correspondant.
-La fonction de réponse linéaire peut encore s'écrire
+et $a_{\vb{k}}$ l'opérateur d'annihilation correspondant.
+Si le système est fait d'électrons non interagissants (\cref{eqn-H-1e}),
+la fonction de réponse linéaire peut s'écrire facilement en réinjectant \cref{eqn-psi-appendix} dans \cref{eqn-chi-appendix} 
 
 \begin{equation}\label{eqn-chi}
-  \chi(\vb{r}, \vb{r}', \omega) = \sum_{vc} \frac{(f_v - f_c)\phi_v(\vb{r}) \phi_c^*(\vb{r}) \phi_v^*(\vb{r}') \phi_c(\vb{r}')}{\omega - (\epsilon_c - \epsilon_v) + i\eta} \quad + \quad \text{a.r.}
+  \chi^0(\vb{r}, \vb{r}', \omega) = \sum_{vc} \frac{(f_v - f_c)\phi_v(\vb{r}) \phi_c^*(\vb{r}) \phi_v^*(\vb{r}') \phi_c(\vb{r}')}{\omega - (\epsilon_c - \epsilon_v) + i\eta} \quad + \quad \text{a.r.}
 \end{equation}
 où a.r.\ représente les termes d'anti-résonance et $v$ et $c$
 pour bande de valence et bande de conduction respectivement.
@@ -59,7 +58,7 @@ pour bande de valence et bande de conduction respectivement.
 Dans certains cas, il est plus conforme d'utiliser son expression dans l'espace de Fourier
 
 \begin{equation}\label{eqn-chi_q}
-  \chi(q, \vb{G}, \vb{G}', \omega) = \frac{2}{\Omega}\sum_{v,c,\vb{k}}(f_{c,\vb{k}+\vb{q}} - f_{v,\vb{k}}) \frac{\bra{v, \vb{k}}e^{-i(\vb{q}+\vb{G})\vdot\vb{r}} \ket{c , \vb{k}+\vb{q}}\bra{c, \vb{k}+\vb{q}} e^{-i(\vb{q}+\vb{G}')\vdot\vb{r}} \ket{v , \vb{q}}}{\omega - (\epsilon_{c, \vb{k}+\vb{q}} - \epsilon_{v,\vb{k}}) + i\eta}
+  \chi^0(q, \vb{G}, \vb{G}', \omega) = \frac{2}{\Omega}\sum_{v,c,\vb{k}}(f_{c,\vb{k}+\vb{q}} - f_{v,\vb{k}}) \frac{\bra{v, \vb{k}}e^{-i(\vb{q}+\vb{G})\vdot\vb{r}} \ket{c , \vb{k}+\vb{q}}\bra{c, \vb{k}+\vb{q}} e^{-i(\vb{q}+\vb{G}')\vdot\vb{r}} \ket{v , \vb{q}}}{\omega - (\epsilon_{c, \vb{k}+\vb{q}} - \epsilon_{v,\vb{k}}) + i\eta}
 \end{equation}
 
 \chapter{Paramètres d'entrée}

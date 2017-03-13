@@ -21,7 +21,7 @@ peut comprendre un nombre très élevé d'électrons et d'ions,
 l'\cref{eqn-schrodinger} ne peut pas être résolue analytiquement, voire numériquement.
 Certaines approximations doivent être appliquées au système afin de réduire la complexité du calcul.
 La première approximation que l'on peut prendre, celle la plus intuitive,
-est celle de Born-Oppenheimer, que l'on connait par~\cite{Born1927}.
+est celle de Born-Oppenheimer~\cite{Born1927}.
 En tenant compte du rapport de masse entre les électrons et les ions
 et en supposant que les ions sont quasiment figés dans leur positions par rapport aux électrons
 (ayant une longueur d'onde de De Broglie plus élevée),
@@ -45,7 +45,7 @@ que l'on cherche est une fonction à plusieurs variables.
 \label{subsec-KS}
 Si les électrons étaient non-interagissant entre eux,
 on pourrait écrire l'hamiltonien comme une somme de plusieurs hamiltoniens d'un seul électron, \ie{}
-\begin{equation}
+\begin{equation}\label{eqn-H-1e}
   H = \sum_i H_i^{(1e)} = \sum_i (-\frac{\hslash^2}{2m}\laplacian_i + V_{\V{eff}}(\vb{r}_i)).
 \end{equation}
 
@@ -57,7 +57,7 @@ la vraie solution en passant par un système auxiliaire d'électrons non-interag
   de la densité d'électrons.
 \end{theoreme}
 
-La preuve de ce théorème peut être trouvée dans~\cite{Hohenberg1964}.
+La preuve de ce théorème peut être trouvée dans~\cite{Martin2004, Sottile2003}.
 Ce résultat implique que l'espérance de l'hamiltonien à l'état fondamental,
 et donc l'énergie totale du système, est une fonctionnelle de la densité d'électrons
 \begin{equation*}
@@ -70,7 +70,6 @@ La résolution va être plus simple à implémenter par rapport à la recherche 
 à plusieurs variable $\Psi (\vb{r}_1, \ldots, \vb{r}_N)$ du problème initial.
 
 \begin{theoreme}[Kohn-Sham~\cite{Kohn1965}]
-  %TODO: à vérifier
 \label{thm-ks}
   Pour tout système qui contient des termes d'interactions entre électrons,
   il existe un système auxiliaire non-interagissant ayant la même densité d'électrons.
@@ -81,19 +80,9 @@ Pour un système de hamiltonian $H = T + V + V_{\V{ext}}$,
 la méthode de Kohn et Sham proprose un système auxiliaire de hamiltonien $H' = T' + V'_{\V{tot}}$,
 avec la même densité d'électrons que le vrai système.
 Ce système auxiliaire étant non-interagissant, sa densité peut s'exprimer sous la forme
-$n(\vb{r}) = n'(\vb{r}) = \sum_i \abs{\phi_i(\vb{r})}^2$\footnote{Pour être précis,
-  la fonction d'onde de l'espace réel est donnée par le déterminant de Slater
-  \begin{equation*}
-    \Psi(\vb{r}_1 \ldots \vb{r}_N) =
-    \begin{vmatrix}
-      \phi_1(\vb{r}_1) & \phi_2(\vb{r}_1) & \cdots & \phi_N(\vb{r}_1) \\
-      \phi_1(\vb{r}_2) & \phi_2(\vb{r}_2) & \cdots & \phi_N(\vb{r}_2) \\
-      \vdots           & \vdots           &        & \vdots           \\
-      \phi_1(\vb{r}_N) & \phi_2(\vb{r}_N) & \cdots & \phi_N(\vb{r}_N) \\
-    \end{vmatrix}
-  \end{equation*}
-  qui assure l'antisymétrie de la fonction d'onde totale.}
-On peut donc considérer le système d'équation suivant
+$n(\vb{r}) = n'(\vb{r}) = \sum_i \abs{\phi_i(\vb{r})}^2$
+
+On peut donc considérer le système d'équations suivant
 \begin{equation}
   \label{eqn-kseqns}
   (-\frac{1}{2}\laplacian_i + V_{\V{tot}}[n](\vb{r}))\phi_i(\vb{r}) = \epsilon_i\phi_i(\vb{r})
@@ -101,9 +90,9 @@ On peut donc considérer le système d'équation suivant
 avec
 \begin{equation}
   \label{eqn-Vtot}
-  V_{\V{tot}}(\vb{r}) = V_{\V{ext}}(\vb{r})
-  + \int \dd{\vb{r}'} \frac{n(\vb{r}')}{\abs{\vb{r} - \vb{r}'}}
-  + V_{\V{xc}}([n], \vb{r})
+  V_{\V{tot}}(\vb{r}) = \underbrace{V_{\V{ext}}(\vb{r})}_\text{potentiel créé par les ions}
+  + \underbrace{\int \dd{\vb{r}'} \frac{n(\vb{r}')}{\abs{\vb{r} - \vb{r}'}}}_\text{potentiel de Hatree}
+  + \underbrace{V_{\V{xc}}([n], \vb{r})}_\text{potentiel d'échange-corrélation}
 \end{equation}
 pour chacun des électrons $i$.
 Le problème devient un problème simple de $N$ équations à une variable (en $\phi_i(\vb{r})$) séparées.
@@ -111,19 +100,13 @@ On pourra ensuite faire une résolution auto-consistente en réinjectant
 $n = \sum_i \abs{\phi_i^{(p)}(\vb{r})}^2 $ dans l'hamiltonien avec $\phi_i^{(p)}$
 la fonction d'onde obtenue à la fin de la p-ième itération.
 (Remarquons que le critère de convergence de cette méthode n'a toujours pas été trouvé.)
-Cependant, il y a une approximation à faire pour le terme du potentiel d'échange-corrélation
-$V_{\V{xc}}(\vb{r}) = \frac{\delta E_{\V{xc}}}{\delta n(\vb{r})}$, où
-\begin{equation}
-  \label{eqn-exc}
-  E_{\V{xc}} = T[n] + V[n] - \frac{1}{2}\int \dd{\vb{r}}
-  \int \dd{\vb{r}'} v(\vb{r}, \vb{r}') n(\vb{r}) n(\vb{r'}) - T'[n]
-\end{equation}
+Cependant, il y a une approximation à faire pour le terme de potentiel d'échange-corrélation qui est dû au passage au système auxiliaire dans le \cref{thm-ks}.
 Les approximations les plus couramment utilisées pour $E_{\V{xc}}$, et ainsi que pour $V_{\V{xc}}$,
 sont celle des gradients généralisées (Generalized Gradient Approximations, GGA)~\cite{Langreth1980, Perdew1986, Perdew1992}
 et celle de la densité locale (\textit{Local Density Approximation}, LDA)~\cite{Kohn1965},
 dont nous explicitons dans la \cref{subsec-xc}.
 
-Une fois l'énergie totale du système auxiliaire $\ev{H'}{\Psi_e}$ minimisée,
+Une fois l'énergie totale du système auxiliaire $E[n]$ minimisée,
 le \cref{thm-ks} nous permettra d'obtenir la densité exacte $n(\vb{r})$ du vrai système,
 ce qui détermine ensuite l'énergie de l'état fondamental.
 
@@ -164,18 +147,24 @@ ce qui nous permet de rentrer dans le cadre de la \textbf{réponse linéaire} (c
 
 \subsection{Coefficient diélectrique et fonction de perte}
 \label{subsec-eels}
+\begin{wrapfigure}[25]{r}{0.4\textwidth}
+  \centering
+  \includegraphics[width=0.2\textwidth]{eels}
+  \caption{Dispersion des spectres}\label{fig-dispersion}
+\end{wrapfigure}
 Comme mentionné dans l'introduction,
 la fonction diélectrique du système $\epsilon^{-1}$ est liée aux propriétés optiques et diélectriques d'un matériau.
 En fait, dans une vraie expérience de spectroscopie,
-on mesure l'absorption (Abs) et le spectre des pertes en énergie des électrons
+on mesure entre autres l'absorption (Abs) et le spectre des pertes en énergie des électrons
 (\textit{Electron Energy Loss Spectra}, EELS).
 Ces deux grandeurs physiques sont liées à la fonction diélectrique par~\cite{Sottile2003}
 \begin{equation}
   \label{eqn-EELS}
-  \textnormal{Abs} = \imaginary\qty{\epsilon},
+  \textnormal{Abs} = \imaginary\qty{\epsilon(\omega, \vb{q})},
   \quad
-  \textnormal{EELS} = -\imaginary\qty{\epsilon^{-1}}.
+  \textnormal{EELS} = -\imaginary\qty{\epsilon(\omega, \vb{q})^{-1}}.
 \end{equation}
+On remarque que la fonction diélectrique est elle-même une fonction de la pulsation de la perturbation externe et du moment de transféré (illustré dans \cref{fig-dispersion}).
 Abs nous indique les fréquences de la lumière que le système peut absorber.
 EELS nous donne une idée sur les fréquences et les moments
 que le système peut échanger avec un projectile venant de l'extérieur (photon ou électron).
@@ -190,15 +179,15 @@ avec la TDDFT~\cite{Martin2004, Sottile2003}:
 \end{equation}
 L'inversion de ce dernier nous donnera la fonction diélectrique $\epsilon$.
 
-La densité du système et la perturbation externe sont liées par $\chi$ par
+La densité du système et la perturbation externe sont liées via $\chi$ par
 \begin{equation}
-  \delta n(\vb{r}, t) = \chi(\vb{r}, \vb{r}', t-t')\delta V_{\V{ext}}(\vb{r}', t'),
+  \delta n(\vb{r}, t) = \int \dd{\vb{r}'} \dd{t'} \chi(\vb{r}, \vb{r}', t-t')\delta V_{\V{ext}}(\vb{r}', t'),
 \end{equation}
 ou par
 \begin{equation}
   \delta n(\vb{r}, \omega) = \int\dd{\vb{r}'}\chi(\vb{r}, \vb{r}', \omega)\delta V_{\V{ext}}(\vb{r}', \omega).
 \end{equation}
-
+dans l'espace de Fourier réciproque.
 On notera $\chi^0$ et $\chi$ les fonctions de réponse linéaire pour
 $V_{\V{tot}}$ et $V_{\V{ext}}$ respectivement (cf. \cref{chap-TRL} pour la définition de ces fonctions).
 Les relations entre la fonctionelle de densité $n(\vb{r}, t)$ et les deux potentiels sont
