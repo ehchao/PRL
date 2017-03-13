@@ -2,48 +2,45 @@
 \label{chap-results}
 
 \section{État fondamental du calcium oxalate}
-Les calculs numériques qui seront présentés dans cette section ont été faits avec \textit{Abinit}.
+Les calculs numériques qui seront présentés dans cette section sont faits avec \textit{Abinit}.
 
 \subsection{Structure moléculaire}
-La cellule élémentaire de calcium oxalate ($\V{Ca} \V{C}_2 \V{O}_4$) contient 28 atomes.
-Il est de structure monoclique et de groupe de symétrie $P2/m$ ($\#$10)~\cite{Kolezynski2010} (cf. \cref{BrillouinZone}).
+La cellule élémentaire de l'oxalate de calcium ($\V{Ca} \V{C}_2 \V{O}_4$) contient 28 atomes.
+Il est de structure monoclinique et de groupe de symétrie $P2/m$ ($\#$10)~\cite{Kolezynski2010} (cf. \cref{BrillouinZone}).
 
 \begin{figure}[!h]
   \centering
   \includegraphics[height=0.4\textheight]{co_structure}
-  \caption{La cellule élémentaire de l'oxalate de calcium}\label{BrillouinZone}
+  \caption{La cellule élémentaire de l'oxalate de calcium avec $\V{Ca}$ en bleu, $\V{O}$ en rouge et $\V{C}$ en marron.}\label{BrillouinZone}
 \end{figure}
 
 \subsection{Energie de seuil}
-D'abord, nous calculons la densité d'électrons de l'état fondamental
-en fonctions des orbites de Kohn et Sham,
-qui sont elles même représentées dans l'espace d'ondes plane tranché.
-Pour chaque échantillonnage, l'énergie total du système dans l'état fondamental est calculé
+D'abord, nous avons calculé la densité d'électrons de l'état fondamental
+à l'aide des fonctions d'onde de Kohn et Sham,
+qui sont elles-même représentées dans l'espace d'ondes planes tranché.
+Pour chaque échantillonnage, l'énergie totale du système à l'état fondamental a été calculée
 en variant $E_{\V{cut}}$ (cf. \cref{subsec-planewave}).
 Le but du jeux est d'assurer la convergence du calcul en prenant le moins de fonctions d'onde possible.
-On fait varier le seuil d'énergie $E_{cut}$ entre 20 et 100 Hatree.
-On constate que pour tous ces seuils d'énergies, on obtient bien une convergence au bout de 15 itérations.
+Nous avons fait varier le seuil d'énergie $E_{cut}$ entre 20 et 100 Hatree.
 La relation entre l'énergie totale du système à la convergence
 en fonction de l'énergie de seuil est tracée dans la \cref{fig-Ecut}.
 À partir de $E_{cut} = 40$ Hatree, l'énergie totale du système est bien minimisée.
-On choisit donc cette énergie de seuil pour la suite du calcul de l'état fondamental.
+Nous avons choisi donc cette énergie de seuil pour la suite du calcul de l'état fondamental.
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{E_cut}
-    \caption{Ecut}\label{fig-Ecut}
+    \caption{L'énergie totale du système (en eV) en fonction de l'énergie de seuil (en Hatree).}\label{fig-Ecut}
 \end{figure}
 
 \subsection{Convergence avec les points-$\vb{k}$: I}
 Etant donnée la structure du système étudié et une fonction d'essai dont l'intégrale est facile à calculer,
-Abinit peut nous donner une liste des échantillons avec pour chacun une valeur de présion
-qui est définie par le calcul de l'intégral approximé sur l'ensemble de points $\vb{k}$ dans l'échantillon
-par rapport au calcul exact.
+Abinit peut nous donner une liste des échantillonnages pertinents pour la structure du matériau.
 La motivation de ce test de convergence est de pouvoir avoir un échantillonnage
 assez fin pour obtenir tous les états d'excitation possibles sans avoir trop de points-$\vb{k}$,
 ce qui augmentera considérablement la compléxité du calcul.
 
-Le \cref{tab-etotPK} montre que le système est déjà convergé avec peu de points-$\vb{k}$ (16) dans la première zone de Brillouin.
+Le \cref{tab-etotPK} montre que le système converge déjà avec peu de points-$\vb{k}$ (16) dans la première zone de Brillouin.
 Ce résultat est dû au fait que la première zone de Brillouin est petite (car la maille élémentaire est grande).
 \begin{table}[ht]
   \captionsetup{width=0.6\textwidth}
@@ -63,56 +60,24 @@ Ce résultat est dû au fait que la première zone de Brillouin est petite (car 
     \bottomrule
   \end{tabular}
 \end{table}
-
-\subsection{Approximation du potentiel d'échange et de corrélation}
-Nous avons aussi examiné la qualité de l'approximation du potentiel d'échange et de corrélation
-par la méthode LDA en la comparant avec la méthode GGA,
-qui est censé être plus précise (cf. \cref{subsec-KS}).
-
-Pour le cas de 16 points-$\vb{k}$, nous avons obtenu la même valeur d'énergie totale pour les deux méthodes d'approximation.
-
-\begin{table}[ht]
-  \captionsetup{width=0.6\textwidth}
-  \caption{Énergie totale du système\\ sous différentes approximations.}\label{tab-LDAGGA}
-  \centering
-  \begin{tabular}{c c}
-    \toprule
-    Méthode d'approximation &  $E_{\V{tot}}$ à la convergence (Hatree)
-    \\
-    \midrule
-    LDA    &  -466.66501448840
-    \\
-    GGA   &   -466.66501448840
-    \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-Comme le nombre de points-$\vb{k}$ n'est pas élevé,
-il est tout à fait possible que le résultat dépende peu de la méthode d'approximation
-pour le terme d'échange et de corrélation.
-
-Dans la suite, nous utiliserons ces résultats pour calculer la fonction diélectrique
-dont on déduit les spectres de perte d'énergie d'électron (cf. \cref{subsec-eels}).
-
 \section{Spectres de perte d'énergie (EELS)}
-Les calculs de cette section ont été fait avec le code de \textit{DP}.
+Les calculs de cette section sont faits avec le code de \textit{DP}.
 L'objectif de cette section est de présenter les caractéritiques spectroscopiques
 auxquelles on peut s'attendre dans une vraie expérience.
 
 \subsection{Convergence avec les points-$\vb{k}$: II}
-Même si les calculs de convergence avec les nombres de points-$\vb{k}$ différents ont été faits pour l'état fondamental,
-il faut s'assurer que l'échantillonnage que l'on a privilégié soit aussi assez fin pour les calculs de réponse de la matériau sous une excitation extérieure.
-On crée des fichiers décrivant la densité de l'état fondamental avec des échantillonnages
+Bien que les calculs de convergence avec les nombres de points-$\vb{k}$ différents aient été faits pour l'état fondamental,
+il faut s'assurer que l'échantillonnage que l'on a privilégié soit aussi assez fin pour calculer la réponse du matériau sous une excitation externe.
+Nous avons créé des fichiers décrivant la densité de l'état fondamental avec des échantillonnages
 de la première zone de Brillouin différents,
 où dans la première zone de Brouillin, il y a respectivement 16, 120 et 480 points-$\vb{k}$.
 Pour connaître le meilleur échantillonnage à utiliser à notre disposition,
-on fait d'abord les calculs en prenant RPA (ramdom phase approximation)
+on fait d'abord les calculs en prenant RPA (random phase approximation)
 comme méthode d'approximation du terme d'échange et de corrélation.
-Pour le cas du calcium oxalate, nous avons choisi dans cette liste trois échantillons,
+Pour le cas de l'oxalate de calcium, nous avons choisi dans cette liste trois échantillonnages,
 qui contiennent respectivement 16 (avec symétries),
 120 (avec symétries) et 480 (grillage translaté et sans symétries) points-$\vb{k}$.
-%TODO:Redraw kpt_compare if we have time, too small the captions and legends
+
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{kpt_compare}
@@ -121,22 +86,22 @@ qui contiennent respectivement 16 (avec symétries),
 
 On montre dans la \cref{fig-kptCompare} que le choix du 120 points-$\vb{k}$ dans la première zone de Brillouin
 donne déjà de bons résultats pour le calcul de EELS (par rapport à 480 points-$\vb{k}$).
-On peut donc se contenter de prendre l'échantillonnage avec 120 points-$\vb{k}$ pour la suite du calcul.
+On peut donc se contenter de prendre l'échantillonnage avec 120 points-$\vb{k}$ pour la suite.
 
 \subsection{Convergence avec les bandes}
 Pour le calcul de $\epsilon^{-1}$ (l'inverse de la fonction diélectrique, qui servira à calculer EELS),
-il faut passer par le calcul de la fonction de réponse linéaire (cf. \cref{chap-TRL}).
+il faut passer par le calcul de la fonction de polarisation $\chi^0$ (cf. \cref{chap-TRL}).
 Pour ce calcul, on doit considérer toutes les transitions possibles
 (excitation d'un électron de la bande de valence vers une bande de conduction).
-Il est donc nécessaire de converger le calcul de EELS par rapport au nombre de bandes de valence
+Il est donc nécessaire de faire converger le calcul de EELS par rapport au nombre de bandes de valence
 et de conduction (cf. \cref{eqn-chi}).
 Le but est de considérer seulement les transitions pour les énergies qui nous intéressent
 afin de gagner en temps de calcul sans perdre des informations.
-Nous nous intéressons notamment aux transitions en basse énergie (< 20 eV).
+Nous nous intéressons notamment aux transitions à basse énergie (< 20 eV).
+Par conséquent, nous avons fait des calculs de EELS en variant le nombre de bandes de valence et le nombre de bandes de conduction.
 Le résultat montré dans la \cref{fig-cv_nbd} montre qu'il suffit de prendre en compte
-les transitions entre la bande remplie numéro 33
-(en comptant à partir de la bande d'énergie la plus basse) et la bande numéro 180.
-
+les transitions entre 46 bandes de valence et 92 bandes de conduction pour avoir le comportement du matériau pour la plage d'énergie qui nous intéresse.\footnote{
+En effet, par l'étude de l'état fondamental, on sait qu'il y a un grand écart d'énergie entre la quarante-sixième et la quarante-septième bande de valence en comptant à partir de la surface de Fermi du matériau.}
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{nbd_compare}
@@ -144,16 +109,15 @@ les transitions entre la bande remplie numéro 33
 \end{figure}
 
 \subsection{RPA vs ALDA}
-La méthode d'approximation du terme d'échange-corrélation RPA prend moins de temps
+La méthode RPA prend moins de temps
 pour le calcul mais pourrait perdre la précision.
-Il est donc judicieux de comparer les résultats obtenus en appliquant RPA avec ceux obtenus
+Il est donc judicieux de comparer ces résultats obtenus avec ceux obtenus
 en appliquant ALDA (adiabatic local density approximation).
 On voit dans la \cref{fig-alda_vs_rpa} que
-les deux approximations nous donnent des résultats assez proches en basses énergies.
+les deux approximations nous donnent des résultats assez proches à basse énergie.
 Dans le cadre de ce projet, on se contente d'étudier les caractéristiques
-de calcium oxalate en basse énergie en raison du délai.
-Il est donc tout à fait pertinent de faire notre calcul en RPA pour gagner en temps de calcul.
-%TODO: redraw this figure, bad legend
+de l'oxalate de calcium à basse énergie.
+Il est donc tout à fait pertinent de faire nos calculs en RPA pour gagner en temps de calcul.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{alda_vs_rpa}
@@ -166,13 +130,12 @@ Cette étude consiste à examiner l'isotropie du système.
 En effet, les transitions peuvent avoir lieu dans les directions différentes.
 Un électron peut changer son vecteur d'onde en allant d'une bande à une autre.
 Ce type de transition est pris en compte dans l'\cref{eqn-chi_q} qui nous donne la polarizabilité
-que l'on est censé observer dans une direction donnée ($\vb{q}$ dans l'\cref{eqn-chi_q}).
-Or, comme certains termes sont négligés dans le calcul numérique,
-on peut avoir des valeurs différentes en $\vb{q} = 0$ en fonction de la direction par laquelle on s'y rapproche.
+que l'on est censé mesurer dans une direction donnée ($\vb{q}$ dans l'\cref{eqn-chi_q}).
+Or, même à $\vb{q}$ petit, les fonctions de polarisabilité pour $\vb{q}$ de directions différentes peuvent être distinctes.
 Les calculs de EELS en $\vb{q} = 0$ selon les trois axes
 (par exemple, $\vb{q}=(0+,0,0)$ pour le premier axe de la zone de Brillouin)
 sont montrés dans la \cref{fig-anisotropie}.
-La différence entre les différentes valeurs trouvées est dûe à l'anisotropie de la structure.
+La différence entre les valeurs trouvées est dûe à l'anisotropie de la structure.
 
 \begin{figure}[!h]
     \centering
@@ -182,7 +145,7 @@ La différence entre les différentes valeurs trouvées est dûe à l'anisotropi
 
 \subsection{EELS et la fonction diélectrique}
 On se rappelle que la relation entre EELS et la fonction diélectrique est donnée par l'\cref{eqn-EELS}.
-On peut constater que, dans la \cref{fig-epsilon_compare}, la partie de réelle et
+On peut constater que, dans la \cref{fig-epsilon_compare}, la partie réelle et
 la partie imaginaire de la fonction diélectrique ont des sens de croissance opposés.
 On pourrait donc s'attendre à un pic de résonance de EELS à l'endroit où elles se croisent
 (aux alentours de 5 eV).
@@ -199,23 +162,18 @@ qu'il n'y a pas de croisement entre les parties réelle et imaginaire à valeur 
 \clearpage
 
 \subsection{Dispersion}
-\begin{wrapfigure}[25]{r}{0.4\textwidth}
-  \centering
-  \includegraphics[width=0.2\textwidth]{eels}
-  \caption{Dispersion des spectres}\label{fig-dispersion}
-\end{wrapfigure}
-Enfin, on s'intéresse à la dispersion des spectres EELS\@.
+Enfin, nous nous intéressons à la dispersion des spectres EELS\@.
 Il s'agit de changer la valeur de $\vb{q}$ dans l'\cref{eqn-chi_q} (non proche de 0 cette fois-ci).
 Il est intéressant de remarquer que la stabilité de la position du premier pique de résonance
-pour les trois différentes directions de dispersion (cf. \cref{fig-q6,fig-q8,fig-q10}).
+pour les trois directions de dispersion différentes(cf. \cref{fig-q6,fig-q8,fig-q10}).
 Bien que la valeur de EELS obtenue pour le premier pique change en fonction de $\vb{q}$,
 le pique se trouve toujours en même énergie d'excitation
 quand on fait varier la valeur de $\vb{q}$ dans une direction donnée.
 
-Dans une vraie expérience, on est limité par la résolution des l'appareils.
+Dans une vraie expérience, on est limité par la résolution des appareils.
 Il est donc difficile à déterminer, en général, si une réponse forte est due
-à une résonance ou à une superposition de réponses pour différentes valeurs de $\vb{q}$.
-Pour l'oxalate de calcium, un expérimentateur pourra se convaincre que la réponse qu'il obtiendra
+à une résonance ou à une superposition de réponses pour des valeurs de $\vb{q}$ différente.
+Pour l'oxalate de calcium, un expérimentateur pourra se convaincre que la réponse qu'il obtient
 pour une énergie qui correspond à un pique de EELS est une vraie résonance.
 
 \begin{figure}[!b]
