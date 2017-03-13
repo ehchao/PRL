@@ -1,38 +1,38 @@
 \chapter{Simulations numériques}
 \label{chap-simulation}
 Nos travaux ont été réalisés en deux temps.
-Nous commençons par étudier l'état fondamental du calcium oxalate à l'aide du logiciel \textit{Abinit}~\cite{Abinit}.
-Après, nous utilisons le code \textit{DP}~\cite{DP} pour étudier les états excités
-en servant des résultats obtenus dans l'étape précédente.
+Nous avons commencé par étudier l'état fondamental du calcium oxalate à l'aide du logiciel \textit{Abinit}~\cite{Abinit}.
+Ensuite, nous avons utilisé le code \textit{DP}~\cite{DP} pour étudier les états excités
+en nous servant des résultats obtenus dans l'étape précédente.
 
 Les fonctionnements des outils, aussi bien que les approximations impliquées,
-seront présentées au cours de ce chapitre, suivies par l'explicitation du schéma de la simulation.
+seront présentés au cours de ce chapitre.
 
 \section{Abinit}
 \label{sec-abinit}
 Abinit est un logiciel qui implémente numériquement la théorie de la fonctionnelle de la densité.
-Il nous permet de faire des calculs ab initio pour obtenir la densité électronique,
+Il nous permet de faire des calculs \textit{ab initio} pour obtenir la densité électronique,
 et ainsi l'énergie fondamentale du système.
-Plus précisément, Abinit effectue la résolution auto-consistente pour le système d'équations de Kohn et Sham à l'aide une base d'ondes planes.
-A chaque itération, le point minimum d'énergie est calculé par la méthode du gradient conjugué,
-et l'approximation du pseudo-potentiel est introduite pour éliminer dans le systéme d'équations les électrons de cœur,
-ce qui réduit considérablement la complexité du probleme.
+Plus précisément, Abinit résout le système d'équations de Kohn et Sham de façon auto-consistente à l'aide d'une base d'ondes planes.
+À chaque itération, le point d'énergie minimale est calculé par la méthode du gradient conjugué.
+L'approximation du pseudo-potentiel est introduite pour éliminer les électrons de cœur dans le système d'équations ,
+ce qui réduit considérablement la complexité du problème.
 
-Avant de démarer le calcul,
+Avant de démarrer le calcul,
 plusieurs paramètres doivent être spécifiés pour la résolution numérique.
 Du côté physique, le système étudié étant cristallin,
 il faut d'abord définir la maille élémentaire.
-Du côté technique, il faut préciser les méthodes utilisées et des valuers critiques qui gouvernent le comportement du calcul.
-Dans la suite, nous proposons d'abord quelques approximations importantes. Ensuite,
-Nous présentons les paramètres principaux qui nous servent dans notre études.
+Du côté technique, il faut préciser les méthodes utilisées et les valuers critiques qui gouvernent le comportement du calcul.
+Dans la suite, nous proposerons d'abord quelques approximations importantes. Après,
+nous présenterons les paramètres principaux qui nous servent dans nos études.
 Une liste complète des paramètres utilisés se trouve dans l'annexe.
 
 \subsection{Espace réciproque}
 \label{subsec-reciprocal}
-La partie éssentielle du calcul avec Abinit consiste à résoudre le système d'équations de Kohn et Sham,
+La partie essentielle du calcul avec Abinit consiste à résoudre le système d'équations de Kohn et Sham,
 dont la quantité clée est la densité d'électrons $n(\V{r})$.
-Or les système étudiés sont souvent des matériaux cristallins,
-auxquels on applique la condition périodique aux limites.
+Si le système étudié est un matériau cristallin,
+on pourra y appliquer les conditions périodiques aux limites.
 D'après le théorème de Bloch, les états propres, et ainsi les fonctions d'ondes correspondantes,
 sont caractérisés par deux nombres quantiques:
 le vecteur d'onde $\vb{k}$ dans la première zone de Brillouin, et l'indice de bande $n$.
@@ -42,31 +42,31 @@ La densité de charge s'exprime donc par
   n(\vb{r}) = \sum_{n, \vb{k}}^\V{occ}\abs{\phi_{n, \vb{k}}(\vb{r})}^2,
 \end{equation}
 avec la somme sur tous les états occupés.
-A la limite des cristaux idéals infinis, la taille de grille dans l'espace réciproque tend vers zéro,
+À la limite des cristaux idéals infinis, la taille de grille dans l'espace réciproque (de Fourier) tend vers zéro,
 alors l'\cref{eqn-den} devient
 \begin{equation*}
   n(\vb{r}) = \sum_n^\V{occ}\int_{\V{ZB}}\dd[3]{\vb{k}}\abs{\phi_{n, \vb{k}}(\vb{r})}^2
 \end{equation*}
 où ZB signifie la première zone de Brillouin. Ensuite, à l'approximation numérique,
-l'intégral sur $\vb{k}$ doit être discrétisée en somme sur $N_{\vb{k}}$ point $\vb{k}$ pondérés:
+l'intégrale sur $\vb{k}$ doit être discrétisée en somme sur $N_{\vb{k}}$ points $\vb{k}$ pondérés:
 \begin{equation*}
   n(\vb{r}) = \sum_n^\V{occ}\sum_{i=1}^{N_{\vb{k}}}\abs{\phi_{n, \vb{k}}(\vb{r})}^2.
 \end{equation*}
 Le temps de calcul étant proportionnel à $N_{\vb{k}}$,
 il est donc nécessaire de choisir les points $\vb{k}$ afin de reproduire le résultat
-de l'intégral avec la moindre erreur et le moindre nombre de point $\vb{k}$.
+de l'intégrale avec la moindre erreur et le moindre nombre de point $\vb{k}$.
 Une méthode très utilisée est basée sur les travaux de Monkhorst et Pack~\cite{Monkhorst1976}.
-L'idée est d'abord de prendre une grille homogène de points $\vb{k}$ dans la zone de Brillouin
-qui respecte les symétries du réseau cristallin,
-et ensuite d'augmenter la densité du grillage (et ainsi celle du nombre total de point $\vb{k}$)
-jusqu'à la convergence, par example, de l'énergie totale du système.
+Dans notre cas,
+l'idée est de prendre d'abord une grille homogène de points $\vb{k}$ dans la zone de Brillouin
+qui respecte les symétries du réseau cristallin et d'augmenter ensuite la densité du grillage (et ainsi le nombre total de points $\vb{k}$)
+jusqu'à la convergence de l'énergie totale du système.
 
 \subsection{Base d'ondes planes}
 \label{subsec-planewave}
-La transformation de Fourier est très souvent lié avec la périodicité du système étudié.
+La transformation de Fourier est très souvent liée avec la périodicité du système étudié.
 Il est alors naturel de choisir, dans le contexte de l'approximation numérique,
-la base d'ondes planes pour approximer les fonctions d'onde des états propres $\phi_i = \phi_{n,\vb{k}_i}$.
-La théorème de Bloch nous donne:
+une base d'ondes planes pour approximer les fonctions d'onde des états propres $\phi_i = \phi_{n,\vb{k}_i}$.
+Le théorème de Bloch nous donne:
 \begin{equation*}
   \phi_{n,\vb{k}_i}
   = \frac{1}{\sqrt{\Omega_{\V{maille}}}}e^{i\vb{k}_i\vdot\vb{r}}\sum_{\vb{G}} c_{n,\vb{k}_i}(\vb{G})e^{i\vb{G}\vdot\vb{r}}
@@ -74,50 +74,56 @@ La théorème de Bloch nous donne:
 \end{equation*}
 où $u_{n,\vb{k}_i}(\vb{r})$ a la même périodicité que la structure cristalline
 et $\vb{G}$ est un vecteur de réseau dans l'espace réciproque.
-La base d'ondes planes nous donne les avantages suivants:
+L'utilisation d'une telle base d'ondes planes a les avantages suivants:
 \begin{itemize}
-  \item[-] La simplification des calculs de dérivé et d'intégral,
-    qui apparaissent dans le calcul des éléments de l'hamiltonien.
-  \item[-] Elle nous permet la méthode FFT pour des transformations rapides entre l'espace réel et l'espace réciproque.
-  \item[-] L'ensemble d'ondes planes est complèt et orthonormal.
-  \item[-] La base est de dimension infinie, mais le coupage de la dimension peut être réalisé facilement
-    par la définition d'un seuil d'énergie $E_{\V{cut}}$:
+  \item[-] Simplifier les calculs des dérivées et des intégrales pour obtenir les éléments de l'hamiltonien.
+  \item[-] Permettre la méthode FFT pour effectuer des transformations rapides entre l'espace réel et l'espace réciproque.
+  \item[-] L'ensemble des ondes planes est complèt et orthonormal.
+%TODO so what?
+  \item[-] La base est de dimension infinie mais peut être réduite facilement
+    en définissant une énergie de seuil $E_{\V{cut}}$:
     \begin{equation}
       \frac{1}{2}|\vb{k}+G|^2 \leq E_{\V{cut}}
     \end{equation}
-    qui relie le nombre d'ondes planes dans la base et $E_{\V{cut}}$ par
+    qui relie le nombre des ondes planes dans la base et $E_{\V{cut}}$ par
     \begin{equation}
       N_{\V{op}}\propto E_{\V{cut}}^{\frac{3}{2}}.
     \end{equation}
-    Une étude de la convergence de l'énergie totale du système par rapport à ce seuil de coupage est alors nécessaire.
+    Une étude de convergence de l'énergie totale du système par rapport à ce seuil de coupure est alors nécessaire.
 \end{itemize}
 
 \subsection{Pseudo-potentiel}
 \label{subsec-pseudo}
 Le nombre total d'électrons du système étudié étant souvent énorme,
-beaucoup d'entre eux se trouvent proche des ions.
+beaucoup d'entre ces électrons se trouvent proche des ions (appelés électrons de cœur).
+%TODO : what does parametrique mean exactly? 
 Ensemble avec les ions, ces électrons de cœur contribuent seulement de façon paramétrique
-àux caractéristiques chimiques du système.
+aux caractéristiques chimiques du système.
+%TODO :??
 Cependant, ils apparaissent dans les termes d'interaction entre électrons avec les électrons de conduction.
-I'idée essentielle du pseudo-potentiel est donc de simuler l'effet des ions et des électrons de cœur
+
+L'idée essentielle du pseudo-potentiel est donc de simuler l'effet des ions et des électrons de cœur
 sur les électrons de valence par un potentiel effectif qui donne aux électrons de valence
-les même values propres et caractéristiques de ``scattering'' que le système réel.
-Un premier avantage de l'introduction de pseudo-potentiel est la réduction du nombre d'électrons dans l'hamiltonien.
-Un autre avantage moin évident mais aussi important est la réduction du seuil d'énergie des ondes planes introduit dans la \cref{subsec-planewave},
-c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moin abrupts
+%TODO : which eigen vector?
+les mêmes valeurs propres et caractéristiques de ``scattering'' que le système réel.
+Le premier avantage de l'introduction de pseudo-potentiel est la réduction du nombre de varibles dans l'hamiltonien.
+Un autre avantage moins évident mais aussi important est la baisse de l'énergie de seuil des ondes planes introduite dans la \cref{subsec-planewave},
+%TODO : I don't know whether we say abrupt in this case, to be verified
+c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moins abrupts
 que les vrais potentiels d'atome qui diverge près de l'origine,
-ce qui signifie un moindre nombre de modes nécessaire dans la transformation de Fourier.
-Dans notre études, nous utilisons les pseudo-potentiels fournis par le site d'Abinit pour toute les
-quatre espèces d'atome (Ca, C, O, H)~\cite{Pseudo}.
+ce qui signifie que le nombre de modes nécessaires pour la transformation de Fourier est moindre.
+Dans nos études, nous avons utilisé les pseudo-potentiels fournis par le site d'Abinit pour tous les
+quatre types d'atome (Ca, C, O, H)~\cite{Pseudo}.
 
 \subsection{Potentiel d'échange-corrélation}
 \label{subsec-xc}
-Une dernière approximation importante engagé dans l'implémentation numérique
+La dernière approximation importante engagée dans l'implémentation numérique
 de la méthode de Kohn et Sham est celle sur l'énergie d'échange-corrélation (cf. \cref{eqn-exc}).
-Par définition, $E_{\V{xc}}[n]$ contient tous les éffets au delà du formalisme de Hartree.
+Par définition, $E_{\V{xc}}[n]$ contient tous les effets au-delà du formalisme de Hartree.
 L'\cref{eqn-exc} étant exacte, l'expression explicite de $E_{\V{xc}}[n]$ est toujours inconnue,
-d'où provient l'approximation.
+d'où provient la nécessité l'approximation.
 
+%TODO should be rewritten 'cauz we have used GGA instead
 Il existe beaucoup de méthodes d'approximation,
 dont certaines sont présentées dans~\cite{Sottile2003}.
 Dans nos études, l'approximation utilisée est celle de la densité locale (\textit{Local Density Approximation}, LDA),
@@ -139,28 +145,28 @@ et elle s'applique bien dans le domaine du semi-conducteur.
 Une démonstration de cet applicabilité est présentée dans~\cite{Sottile2003}.
 
 \section{DP}
-DP est un code qui permet de calculer le coefficient diélectrique
+DP est un code qui permet de calculer la fonction diélectrique
 en fonction de la fréquence et du moment transféré.
-Dans le cas d'une simulation d'absorption,
+Dans une simulation d'absorption,
 $\vb{q}=0 \text{et} \omega = \text{la fréquence du photon absorbé}$.
-Alors que dans le cas d'une simulation de perte d'énergie,
+Alors que dans une simulation de perte d'énergie,
 $\vb{q}= \text{le moment transféré et} \omega = \text{la perte d'énergie du projectile}$.
 Il implémente la théorie détaillée dans la \cref{sec-TDDFT}.
 
 \subsection{Noyau d'échange-corrélation}
 Comme dans la méthode de Kohn et Sham (cf. \cref{subsec-KS}),
-un terme dit le noyau d'échange-corrélation est introduit (cf. \cref{eqn-chi0chi})
+un terme appelé le noyau d'échange-corrélation est introduit (cf. \cref{eqn-chi0chi})
 pour tenir en compte tous les effets dynamiques d'échange et de corrélation
 exercés par le potentiel externe.
 À nouveau, ce terme doit être approximé car son expression explicite est inconnue.
-Les méthodes d'approximation que nous utilisons dans le cadre de ce projet est
+Les méthodes d'approximation que nous avons utilisées dans le cadre de ce projet sont
 la \textit{Random Phase Approximation} (RPA) et
 la \textit{Adiabatic Local Density Approximation} (ALDA).
 La première approche, qui est aussi la plus simplifiée, prend un noyau nulle et
-néglige donc les effets mentionnés ci-dessus.
+néglige donc les effets d'échange et de corrélation mentionnés ci-dessus.
 La seconde approche, qui est largement utilisée,
-prend le noyau comme la dérivée fonctionnelle du potentiel d'échange-corrélation
-définie dans la \cref{subsec-KS}:
+prend comme noyau la dérivée fonctionnelle du potentiel d'échange-corrélation
+défini dans la \cref{subsec-KS}:
 \begin{equation*}
   f_{\V{xc}}^{\V{ALDA}}(\vb{r}, \vb{r}')
   = \delta(\vb{r}, \vb{r}')\pdv{V_{\V{xc}}^{\V{LDA}}(n(\vb{r}), \vb{r})}{n(\vb{r})}.
