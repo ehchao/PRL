@@ -15,7 +15,7 @@ Il nous permet de faire des calculs \textit{ab initio} pour obtenir la densité 
 et ainsi l'énergie fondamentale du système.
 Plus précisément, Abinit résout le système d'équations de Kohn et Sham de façon auto-consistente à l'aide d'une base d'ondes planes.
 À chaque itération, le point d'énergie minimale est calculé par la méthode du gradient conjugué.
-L'approximation du pseudo-potentiel est introduite pour éliminer les électrons de cœur dans le système d'équations ,
+L'approximation du pseudo-potentiel est introduite pour éliminer les électrons de cœur dans le système d'équations,
 ce qui réduit considérablement la complexité du problème.
 
 Avant de démarrer le calcul,
@@ -96,7 +96,7 @@ L'utilisation d'une telle base d'ondes planes a les avantages suivants:
 \label{subsec-pseudo}
 Le nombre total d'électrons du système étudié étant souvent énorme,
 beaucoup d'entre ces électrons se trouvent proche des ions (appelés électrons de cœur).
-%TODO : what does parametrique mean exactly? 
+%TODO : what does parametrique mean exactly?
 Ensemble avec les ions, ces électrons de cœur contribuent seulement de façon paramétrique
 aux caractéristiques chimiques du système.
 %TODO :??
@@ -125,7 +125,7 @@ d'où provient la nécessité l'approximation.
 
 Il existe beaucoup de méthodes d'approximation,
 dont certaines sont présentées dans~\cite{Sottile2003}.
-À titre d'exemple, 
+À titre d'exemple,
 nous avions la possibilité d'utiliser l'approximation de la densité locale (\textit{Local Density Approximation}, LDA).
 L'idée principale de cette dernière consiste à remplaçer la dépendance fonctionnelle de $E_{\V{xc}}[n]$
 de la distribution de la densité par celle sur la valeur locale de la densité.
@@ -143,7 +143,9 @@ et ainsi de bonne approximation pour les systèmes dont la variation spatiale de
 En fait, la portée de la méthode LDA va bien au delà de cette échelle,
 et elle s'applique bien dans le domaine du semi-conducteur.
 Une démonstration de cet applicabilité est présentée dans~\cite{Sottile2003}.
-Les résultats de nos calculs d'Abinit qui seront présentés dans le chapitre suivant sont obtenus avec une autre approximation, la \textit{Generalized Gradient Approximation}, développée par Perdew et ses collègues~\cite{Perdew1986}.
+Les résultats de nos calculs d'Abinit qui seront présentés dans le chapitre suivant sont obtenus
+avec une autre approximation, l'approximation des gradients généralisée,
+développée par Perdew et ses collègues~\cite{Langreth1980, Perdew1986, Perdew1992}.
 
 \section{DP}
 DP est un code qui permet de calculer la fonction diélectrique

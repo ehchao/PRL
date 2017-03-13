@@ -102,7 +102,7 @@ la fonction d'onde obtenue à la fin de la p-ième itération.
 (Remarquons que le critère de convergence de cette méthode n'a toujours pas été trouvé.)
 Cependant, il y a une approximation à faire pour le terme de potentiel d'échange-corrélation qui est dû au passage au système auxiliaire dans le \cref{thm-ks}.
 Les approximations les plus couramment utilisées pour $E_{\V{xc}}$, et ainsi que pour $V_{\V{xc}}$,
-sont celle des gradients généralisées (Generalized Gradient Approximations, GGA)~\cite{Langreth1980, Perdew1986, Perdew1992}
+sont celle des gradients généralisée (Generalized Gradient Approximations, GGA)~\cite{Langreth1980, Perdew1986, Perdew1992}
 et celle de la densité locale (\textit{Local Density Approximation}, LDA)~\cite{Kohn1965},
 dont nous explicitons dans la \cref{subsec-xc}.
 
@@ -119,7 +119,7 @@ les propriétés de l'état fondamental d'un système
 \label{sec-TDDFT}
 Dans les études de spectroscopie,
 nous étudions les comportements des matériaux sous des perturbations externes.
-Par exemple, 
+Par exemple,
 la fonction diélectrique et son inverse,
 qui sont déduits de l'absorption et de la réflexion des lumières~\cite{Sottile2003}
 sont des grandeurs physiques auxquelles l'on s'intéresse beaucoup dans les expériences.
@@ -147,7 +147,7 @@ ce qui nous permet de rentrer dans le cadre de la \textbf{réponse linéaire} (c
 
 \subsection{Coefficient diélectrique et fonction de perte}
 \label{subsec-eels}
-\begin{wrapfigure}[25]{r}{0.4\textwidth}
+\begin{wrapfigure}{r}{0.4\textwidth}
   \centering
   \includegraphics[width=0.2\textwidth]{eels}
   \caption{Dispersion des spectres}\label{fig-dispersion}
@@ -160,9 +160,9 @@ on mesure entre autres l'absorption (Abs) et le spectre des pertes en énergie d
 Ces deux grandeurs physiques sont liées à la fonction diélectrique par~\cite{Sottile2003}
 \begin{equation}
   \label{eqn-EELS}
-  \textnormal{Abs} = \imaginary\qty{\epsilon(\omega, \vb{q})},
+  \V{Abs} = \imaginary\qty{\epsilon(\omega, \vb{q})},
   \quad
-  \textnormal{EELS} = -\imaginary\qty{\epsilon(\omega, \vb{q})^{-1}}.
+  \V{EELS} = -\imaginary\qty{{\epsilon(\omega, \vb{q})}^{-1}}.
 \end{equation}
 On remarque que la fonction diélectrique est elle-même une fonction de la pulsation de la perturbation externe et du moment de transféré (illustré dans \cref{fig-dispersion}).
 Abs nous indique les fréquences de la lumière que le système peut absorber.
