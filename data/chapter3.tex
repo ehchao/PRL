@@ -79,7 +79,6 @@ L'utilisation d'une telle base d'ondes planes a les avantages suivants:
   \item[-] Simplifier les calculs des dérivées et des intégrales pour obtenir les éléments de l'hamiltonien.
   \item[-] Permettre la méthode FFT pour effectuer des transformations rapides entre l'espace réel et l'espace réciproque.
   \item[-] L'ensemble des ondes planes est complèt et orthonormal.
-%TODO so what?
   \item[-] La base est de dimension infinie mais peut être réduite facilement
     en définissant une énergie de seuil $E_{\V{cut}}$:
     \begin{equation}
@@ -96,21 +95,16 @@ L'utilisation d'une telle base d'ondes planes a les avantages suivants:
 \label{subsec-pseudo}
 Le nombre total d'électrons du système étudié étant souvent énorme,
 beaucoup d'entre ces électrons se trouvent proche des ions (appelés électrons de cœur).
-%TODO : what does parametrique mean exactly?
-Ensemble avec les ions, ces électrons de cœur contribuent seulement de façon paramétrique
+Ces électrons et les ions contribuent seulement de façon paramétrique
 aux caractéristiques chimiques du système.
-%TODO :??
-Cependant, ils apparaissent dans les termes d'interaction entre électrons avec les électrons de conduction.
+Ils apparaissent dans les termes d'interaction avec les électrons de conduction.
 
-L'idée essentielle du pseudo-potentiel est donc de simuler l'effet des ions et des électrons de cœur
+L'idée essentielle du pseudo-potentiel est donc de simuler les effets des ions et des électrons de cœur
 sur les électrons de valence par un potentiel effectif qui donne aux électrons de valence
-%TODO : which eigen vector?
-les mêmes valeurs propres et caractéristiques de ``scattering'' que le système réel.
+les mêmes énergies et caractéristiques de dispersion (``\textit{scattering}'') que le système réel.
 Le premier avantage de l'introduction de pseudo-potentiel est la réduction du nombre de varibles dans l'hamiltonien.
 Un autre avantage moins évident mais aussi important est la baisse de l'énergie de seuil des ondes planes introduite dans la \cref{subsec-planewave},
-%TODO : I don't know whether we say abrupt in this case, to be verified
-c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels sont beaucoup moins abrupts
-que les vrais potentiels d'atome qui diverge près de l'origine,
+c'est-à-dire l'augmentation de l'efficacité du calcul, car les pseudo-potentiels ne divergent pas aussi rapidement que les vrais potentiels d'atome près de l'origine,
 ce qui signifie que moins de modes sont nécessaires pour la transformation de Fourier.
 Dans nos études, nous avons utilisé les pseudo-potentiels fournis par le site d'Abinit pour tous les
 quatre types d'atome (Ca, C, O, H)~\cite{Pseudo}.
