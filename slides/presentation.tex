@@ -2,14 +2,20 @@
 \usetheme{Warsaw}
 \usepackage{color}
 \usepackage{listings}
-\usepackage{physics, amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx, amscd, yfonts, mathrsfs}
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx, amscd, yfonts, mathrsfs}
 \usepackage[utf8]{inputenc}
 %\usepackage[hmargin={3.5cm,3.5cm},top=4cm,bottom=4cm]{geometry} %problem...
 \graphicspath{ {../images/} }
-\usepackage{physics}
+%\usepackage{physics}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{babel}
+
+\newcommand{\vb}[1]{\textbf{#1}}	
+\newcommand{\V}[1]{\textrm{#1}}	
+\newcommand{\dd}[0]{\textrm{d}}
+
+\setbeamertemplate{footline}[frame number]
 
 \RequirePackage{cleveref}
 \newtheorem{theoreme}{Théorème}
@@ -34,7 +40,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Propriétés spectroscopique}
+\title{Propriétés spectroscopiques de l'oxalate de calcium}
 \author{En-Hung CHAO, Honghao LI}
 \institute{École Polytechnique}
 \date{\today}
@@ -65,7 +71,7 @@
 \framesubtitle{}
 \begin{itemize}
 \item Les études spectroscopiques
-\item Les calculs $ab initio$
+\item Les calculs $ab initio$ et auto-consistents
 \item Le choix du matériau: l'oxalate de calcium
 \item Les calculs numériques
 \end{itemize}
@@ -115,7 +121,7 @@ avec
 
 \begin{equation}
   V_{tot}(\textbf{r}) = \underbrace{V_{ext}(r)}_\text{ions}
-  + \underbrace{\int d \textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r}'|}}_\text{potentiel de Hatree}
+  + \underbrace{\int \dd \textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r}'|}}_\text{potentiel de Hatree}
   + \underbrace{V_{xc}([n], \textbf{r})}_\text{échange-corrélation}
 \end{equation}
 
@@ -212,29 +218,134 @@ Théorème de Bloch
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Études de l'état fondamental}
-\framesubtitle{DFT}
+\framesubtitle{TDDFT}
 \begin{itemize}
-%TODO reformulate this
-\item Relation entre la polarisabilité  et la fonction diélectrique
+\item Fonctions de polarisation
+\begin{equation*}
+\begin{split}
+\delta n(\vb{r}, t) &= \int \dd{\vb{r}'} \dd{t'} \chi(\vb{r}, \vb{r}', t-t')\delta V_{\V{ext}}(\vb{r}', t')\\
+ &= \int \dd {\vb{r}'} \dd{t'} \chi(\vb{r}, \vb{r}', t-t') V_{\V{ext}}(\vb{r}', t)
+\end{split}
+\end{equation*}
+\item Relation entre $\chi$, $\chi^0$ et $\epsilon$
+
 \begin{equation*}
   \epsilon^{-1} = 1+ v\chi.
-\end{equation*}
-\item Relation entre $\chi$ et $\chi^0$
+\end{equation*} 
 \begin{equation*}
 \chi = \chi^0 ( 1 + (v+f_{\textrm{xc}})\chi)
 \end{equation*}
-$\Longrightarrow$ terme d'échange-corrélation à approximer.
+$\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA) dans notre cas
 \end{itemize}
  
 \end{frame}
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\newpage
-%\addcontentsline{toc}{section}{Bibliographie}
-%\begin{thebibliography}{99}
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Convergence de l'échantillonnage}
+À nouveau, il faut bien discrétiser l'espace de Fourier de la zone de Brillouin pour faire converger le calcul
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{kpt_compare}
+    \caption{Convergence pour des nombres de points-$\vb{k}$ différents}
+\end{figure}
 
-%\bibitem{Unity}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Convergence avec les bandes}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{nbd_compare}
+    \caption{Convergence en bande}\label{fig-cv_nbd}
+\end{figure}
 
-%\end{thebibliography}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Comparaison entre RPA et ALDA}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{alda_vs_rpa}
+    \caption{alda}\label{fig-alda_vs_rpa}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Anisotropie du système}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{anisotropy}
+    \caption{L'anisotropie du système}\label{fig-anisotropie}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{EELS et la fonction diélectrique}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{epsilon_compare}
+    \caption{Relation entre les parties réelle et imaginaire de la fonction diélectrique $\epsilon$ et EELS}\label{fig-epsilon_compare}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Dispersion}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{q6}
+    \caption{EELS pour différents $\vb{q}$ dans la direction (0, 0, 1) dans la première zone de Brillouin}\label{fig-q6}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Dispersion}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{q8}
+        \caption{EELS pour différents $\vb{q}$ dans la direction (0, 1, 0) dans la première zone de Brillouin}\label{fig-q6}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Dispersion}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{q10}
+    \caption{EELS pour différents $\vb{q}$ dans la direction (1, 0,0) dans la première zone de Brillouin}\label{fig-q6}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Conclusion}
+\begin{itemize}
+\item Un premier aperçu sur le travail de recherche en laboratoire
+\item Fournir une référence aux expérimentateurs
+\item Perspective
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
