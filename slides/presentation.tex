@@ -1,26 +1,30 @@
-\documentclass[a4paper, 12pt, twoside, titlepage, french]{beamer}
+\documentclass[french]{beamer}
 \usetheme{Warsaw}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
 \usepackage{color}
 \usepackage{listings}
-\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx, amscd, yfonts, mathrsfs}
-\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{amsmath,amsthm,amssymb,graphicx,mathrsfs}
 %\usepackage[hmargin={3.5cm,3.5cm},top=4cm,bottom=4cm]{geometry} %problem...
-\graphicspath{ {../images/} }
-%\usepackage{physics}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{babel}
 
-\newcommand{\vb}[1]{\textbf{#1}}	
-\newcommand{\V}[1]{\textrm{#1}}	
+\newcommand{\vb}[1]{\mathbf{#1}}
+\newcommand{\V}[1]{\textnormal{#1}}
 \newcommand{\dd}[0]{\textrm{d}}
+\newcommand{\bra}[1]{\langle#1 |}
+\newcommand{\ket}[1]{| #1 \rangle}
+\newcommand{\vdot}[0]{\boldsymbol\cdot}
 
-\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{footline}[frame number]{}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
 
 \RequirePackage{cleveref}
 \newtheorem{theoreme}{Théorème}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lstset{ %
+\lstset{%
   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
   basicstyle=\small,        % the size of the fonts that are used for the code
   commentstyle=\color{blue},    % comment style
@@ -33,7 +37,7 @@
   showstringspaces=false,          % underline spaces within strings only
   showtabs=false,                  % show tabs within strings adding particular underscores
   stringstyle=\color{green},     % string literal style
-  tabsize=2,	                   % sets default tabsize to 2 spaces
+  tabsize=2,                       % sets default tabsize to 2 spaces
   frame=single
 }
 
@@ -47,10 +51,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
+\graphicspath{{../images/}}
 
 \begin{frame}
-\titlepage
+\titlepage%
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,23 +65,60 @@
 \item Introduction
 \item Études de l'état fondamental
 \item Études des états excités
-\item Conclusion 
+\item Conclusion
 \end{enumerate}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Introduction}
-\framesubtitle{}
+\framesubtitle{Études spectroscopiques}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{absorption}
+    \vspace{3em}
+    \caption{Absorption}
+    \end{figure}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{eels}
+    \caption{Dispersion et moment tranféré}
+    \end{figure}
+  \end{column}
+\end{columns}
+\end{frame}
+\newpage
+
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{Calcul \textit{ab initio}}
 \begin{itemize}
-\item Les études spectroscopiques
-\item Les calculs $ab initio$ et auto-consistents
-\item Le choix du matériau: l'oxalate de calcium
-\item Les calculs numériques
+  \item Équation de Schrödinger
+  \item Potentiel coulombien
 \end{itemize}
 \end{frame}
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{Oxalade de Calcium}
+\begin{itemize}
+  \item Très présent dans la nature.
+  \item En médicine et biologie: Le sang, les calculs rénaux.
+  \item Expériences en cours au Laboratoire de la Physique des Solides (LPS) à Orsay.
+\end{itemize}
+\begin{figure}[!h]
+  \centering
+  \includegraphics[height=0.4\textheight]{calcium-oxalate-kidney-stone}
+  \caption{Calculs rénaux, communément appelés ``pierres aux reins''}
+\end{figure}
+\end{frame}
+\newpage
 
 \begin{frame}
 \frametitle{Études de l'état fondamental}
@@ -91,11 +132,24 @@ La cellule élémentaire de l'oxalate de calcium ($CaC_2O_4$) contient 28 atomes
 \end{frame}
 \newpage
 
+\begin{frame}
+\frametitle{Études de l'état fondamental}
+\framesubtitle{}
+Fonction d'onde du système:
+\begin{equation*}
+  \Psi(\vb{r}_1, \vb{r}_2, \ldots, \vb{r}_N)
+\end{equation*}
+où $N=256$ pour le cas de $CaC_2O_4$.
+
+$\Rightarrow $ l'espace de dimension $768$ à considérer.
+
+\end{frame}
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5555
 \begin{frame}
 \frametitle{Études de l'état fondamental}
-\framesubtitle{DFT}
-\begin{theoreme}[Hohnenberg-Kohn]
+\framesubtitle{Théorie de la fonctionnelle de la densité, DFT en anglais}
+\begin{theoreme}[Hohenberg-Kohn]
   L'espérance d'un observable dans l'état fondamental est une fonctionnelle unique
   de la densité d'électrons.
 \end{theoreme}
@@ -111,21 +165,27 @@ La cellule élémentaire de l'oxalate de calcium ($CaC_2O_4$) contient 28 atomes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Études de l'état fondamental}
-\framesubtitle{Théorie de la fonctionnelle de la densité, DFT en anglais}
+\framesubtitle{DFT}
 Le nouveau système d'équations à considérer
 
-\begin{equation}
+\begin{equation*}
   (-\frac{1}{2}\nabla_i + V_{tot}[n](\textbf{r}))\phi_i(\textbf{r}) = \epsilon_i\phi_i(\textbf{r})
-\end{equation}
+\end{equation*}
 avec
 
-\begin{equation}
+\begin{equation*}
   V_{tot}(\textbf{r}) = \underbrace{V_{ext}(r)}_\text{ions}
-  + \underbrace{\int \dd \textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r}'|}}_\text{potentiel de Hatree}
+  + \underbrace{\int \dd \textbf{r}' \frac{n(\textbf{r}')}{|\textbf{r} - \textbf{r}'|}}_\text{potentiel de Hartree}
   + \underbrace{V_{xc}([n], \textbf{r})}_\text{échange-corrélation}
-\end{equation}
+\end{equation*}
+\textbf{Remarque} un terme d'échange-corrélation apparaît
 
-\textbf{Remarque} un terme d'échange-corrélation apparaît $\Longrightarrow$ approximations nécesitées (avec l'approximation des gradients généralisés, GGA en anglais)
+$\Rightarrow$ Approximations nécesitées (avec l'approximation des gradients généralisés, GGA en anglais)
+
+Solution du système d'équations: $\phi_i(\vb{r})$. Processus itératif:
+\begin{equation*}
+  n(\vb{r}) = \sum_i^N |\phi_i(\vb{r})|^2
+\end{equation*}
 \end{frame}
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -133,23 +193,24 @@ avec
 \frametitle{Études de l'état fondamental}
 \framesubtitle{Calculs numériques}
 \begin{itemize}
-\item Réalisé avec le code d'\textit{Abinit}.
-\item Fonctionnement:
-Théorème de Bloch
-\begin{equation*}
-  \phi_{n,\textbf{k}_i}
-  = \frac{1}{\sqrt{\Omega_{maille}}}e^{i\textbf{k}_i\cdot\textbf{r}}\sum_{\textbf{G}} c_{n,\textbf{k}_i}(\textbf{G})e^{i\textbf{G}\cdot\textbf{r}}
-  = e^{i\textbf{k}_i\cdot\textbf{r}} u_{n,\textbf{k}_i}(\textbf{r})
-\end{equation*}
-\item Réduction de la dimension de la base d'ondes planes en définissant une énergie de seuil $E_{cut}$:
-   	\begin{equation}
-      \frac{1}{2}|\textbf{k}+\textbf{G}|^2 \leq E_{cut}
-	\end{equation}    
-    avec relation entre les ondes planes dans la base et $E_{cut}$:
+  \item Réalisé avec le code d'\textit{Abinit}.
+  \item Fonctionnement:
+    Théorème de Bloch
+    \begin{equation*}
+      \phi_{n,\textbf{k}_i}
+      = \frac{1}{\sqrt{\Omega_{maille}}}e^{i\textbf{k}_i\cdot\textbf{r}}\sum_{\textbf{G}} c_{n,\textbf{k}_i}(\textbf{G})e^{i\textbf{G}\cdot\textbf{r}}
+      = e^{i\textbf{k}_i\cdot\textbf{r}} u_{n,\textbf{k}_i}(\textbf{r})
+    \end{equation*}
+  \item Réduction de la dimension de la base d'ondes planes en définissant une énergie de seuil $E_{cut}$:
     \begin{equation}
-      N_{op}\propto E_{cut}^{\frac{3}{2}}.
+      \frac{1}{2}|\textbf{k}+\textbf{G}|^2 \leq E_{cut}
     \end{equation}
- 
+
+  \item Résultat obtenu:
+
+    La densité d'électrons $n(\vb{r})$ dans l'état fondamental
+
+    $\Rightarrow$ l'espérance d'observable: e.g.\ l'énergie totale
 
 \end{itemize}
 
@@ -162,7 +223,7 @@ Théorème de Bloch
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{E_cut}
-    \caption{L'énergie totale du système (en eV) en fonction de l'énergie de seuil (en Hatree).}\label{fig-Ecut}
+    \caption{L'énergie totale du système (en eV) en fonction de l'énergie de seuil (en Hartree).}\label{fig-Ecut}
 \end{figure}
 \end{frame}
 
@@ -170,6 +231,11 @@ Théorème de Bloch
 \begin{frame}
 \frametitle{Études de l'état fondamental}
 \framesubtitle{Convergence de l'échantillonnage}
+
+\begin{equation*}
+  n(\vb{r}) = \sum_{n, \vb{k}}^{\V{occ}} |\phi_{n, \vb{k}}(\vb{r})|^2
+\end{equation*}
+
 \begin{itemize}
 \item Calul discrétisé dans l'espace de Fourier $\Longrightarrow$ échantillonnage de la première zone de Brillouin
 \item Choix d'échantillonnage pertinents (respectant les symétries du problème)
@@ -179,17 +245,17 @@ Théorème de Bloch
   \caption{Énergie totale du système en fonction du nombre de points-$\textbf{k}$}
   \centering
   \begin{tabular}{c c}
-    \hline
-    Nombre de points-$\textbf{k}$  &  $E_{tot}$ à la convergence (Hatree)
+    \toprule
+    Nombre de points-$\textbf{k}$  &  $E_{tot}$ à la convergence (Hartree)
     \\
-    \hline
+    \midrule
     16    &  -466.66501448840
     \\
     28    &  -466.66501224916
     \\
     40    &  -466.66501098806
     \\
-    \hline
+    \bottomrule
   \end{tabular}
 \end{table}
 
@@ -201,12 +267,13 @@ Théorème de Bloch
 \framesubtitle{TDDFT}
 \begin{itemize}
 \item Théorie de la fonctionelle de la densité dépendante du temps
+\item $\vb{E} = \epsilon^{-1}\vb{D}$
 \item Absorption et spectre de pertes en énergie (EELS)
-\begin{equation}
-  \textrm{Abs} = \mathcal{I}\{\epsilon(\omega, \textbf{q})\},
+\begin{equation*}
+  \textrm{Abs} = \Im\{\epsilon(\omega, \textbf{q})\},
   \quad
-  \textrm{EELS} = -\mathcal{I}\{\epsilon(\omega, \textbf{q})^{-1}\}.
-\end{equation}
+  \textrm{EELS} = -\Im\{\epsilon^{-1}(\omega, \textbf{q})\}.
+\end{equation*}
 
 \begin{figure}[!h]
   \includegraphics[width=0.2\textwidth]{eels}
@@ -217,27 +284,39 @@ Théorème de Bloch
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Études de l'état fondamental}
+\frametitle{Études des états excités}
 \framesubtitle{TDDFT}
 \begin{itemize}
-\item Fonctions de polarisation
-\begin{equation*}
-\begin{split}
-\delta n(\vb{r}, t) &= \int \dd{\vb{r}'} \dd{t'} \chi(\vb{r}, \vb{r}', t-t')\delta V_{\V{ext}}(\vb{r}', t')\\
- &= \int \dd {\vb{r}'} \dd{t'} \chi(\vb{r}, \vb{r}', t-t') V_{\V{ext}}(\vb{r}', t)
-\end{split}
-\end{equation*}
-\item Relation entre $\chi$, $\chi^0$ et $\epsilon$
-
+\item Relation entre $\chi$ et $\epsilon$:
 \begin{equation*}
   \epsilon^{-1} = 1+ v\chi.
-\end{equation*} 
+\end{equation*}
+\item Fonctions de polarisation:
+\begin{equation*}
+\begin{split}
+\delta n(\vb{r}, \omega) &= \int \dd{\vb{r}'} \chi(\vb{r}, \vb{r}', \omega)\delta V_{\V{ext}}(\vb{r}',\omega)\\
+\end{split}
+\end{equation*}
+\item Relation entre $\chi$ et $\chi^0$:
 \begin{equation*}
 \chi = \chi^0 ( 1 + (v+f_{\textrm{xc}})\chi)
 \end{equation*}
 $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{Random Phase Approximation} (RPA) et la \textit{Adiabatic Local Density Approximation} (ALDA) dans notre cas
 \end{itemize}
- 
+\end{frame}
+\newpage
+
+\begin{frame}[shrink=20]
+\frametitle{Études des états excités}
+\framesubtitle{TDDFT}
+\begin{equation*}
+  \chi^0(q, \vb{G}, \vb{G}', \omega) = \frac{2}{\Omega}\sum_{v,c,\vb{k}}(f_{c,\vb{k}+\vb{q}} - f_{v,\vb{k}}) \frac{\bra{v, \vb{k}}e^{-i(\vb{q}+\vb{G})\vdot\vb{r}} \ket{c , \vb{k}+\vb{q}}\bra{c, \vb{k}+\vb{q}} e^{-i(\vb{q}+\vb{G}')\vdot\vb{r}} \ket{v , \vb{q}}}{\omega - (\epsilon_{c, \vb{k}+\vb{q}} - \epsilon_{v,\vb{k}}) + i\eta}
+\end{equation*}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{transition}
+    \caption{Transitions entre bandes}
+\end{figure}
 \end{frame}
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,11 +335,69 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 \begin{frame}
 \frametitle{Études des états excités}
 \framesubtitle{Convergence avec les bandes}
-\begin{figure}[!h]
+\begin{columns}
+  \begin{column}{\dimexpr0.3\paperwidth-10pt}
+    \begin{figure}[!h]
     \centering
-    \includegraphics[width=8cm]{nbd_compare}
-    \caption{Convergence en bande}\label{fig-cv_nbd}
-\end{figure}
+    \vspace{10pt}
+    \includegraphics[width=0.9\textwidth]{band_structure_1}
+    \caption{\centering Structure de bandes}\label{fig-band_1}
+    \end{figure}
+  \end{column}
+  \begin{column}{\dimexpr0.7\paperwidth-10pt}
+    \begin{figure}[!h]
+   \centering
+    \includegraphics[width=\textwidth]{nbd_1}
+    \caption{Convergence en bande}\label{fig-cv_nbd_1}
+    \end{figure}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Convergence avec les bandes}
+\begin{columns}
+  \begin{column}{\dimexpr0.3\paperwidth-10pt}
+    \begin{figure}[!h]
+    \centering
+    \vspace{10pt}
+    \includegraphics[width=0.9\textwidth]{band_structure_2}
+    \caption{\centering Structure de bandes}\label{fig-band_2}
+    \end{figure}
+  \end{column}
+  \begin{column}{\dimexpr0.7\paperwidth-10pt}
+    \begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{nbd_2}
+    \caption{Convergence en bande}\label{fig-cv_nbd_2}
+    \end{figure}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Études des états excités}
+\framesubtitle{Convergence avec les bandes}
+\begin{columns}
+  \begin{column}{\dimexpr0.3\paperwidth-10pt}
+    \begin{figure}[!h]
+    \centering
+    \vspace{10pt}
+    \includegraphics[width=0.9\textwidth]{band_structure}
+    \caption{\centering Structure de bandes}\label{fig-band_3}
+    \end{figure}
+  \end{column}
+  \begin{column}{\dimexpr0.7\paperwidth-10pt}
+    \begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{nbd_compare}
+    \caption{Convergence en bande}\label{fig-cv_nbd_3}
+    \end{figure}
+  \end{column}
+\end{columns}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -272,7 +409,7 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{alda_vs_rpa}
-    \caption{alda}\label{fig-alda_vs_rpa}
+    \caption{Approximation ALDA vs. RPA}\label{fig-alda_vs_rpa}
 \end{figure}
 
 \end{frame}
@@ -280,7 +417,7 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 
 
 \begin{frame}
-\frametitle{Études des états excités}
+\frametitle{Analyse des résultats}
 \framesubtitle{Anisotropie du système}
 \begin{figure}[!h]
     \centering
@@ -292,7 +429,7 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
-\frametitle{Études des états excités}
+\frametitle{Analyse des résultats}
 \framesubtitle{EELS et la fonction diélectrique}
 \begin{figure}[!h]
     \centering
@@ -304,7 +441,7 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
-\frametitle{Études des états excités}
+\frametitle{Analyse des résultats}
 \framesubtitle{Dispersion}
 \begin{figure}[!h]
     \centering
@@ -315,34 +452,36 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Études des états excités}
+\frametitle{Analyse des résultats}
 \framesubtitle{Dispersion}
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{q8}
-        \caption{EELS pour différents $\vb{q}$ dans la direction (0, 1, 0) dans la première zone de Brillouin}\label{fig-q6}
+        \caption{EELS pour différents $\vb{q}$ dans la direction (0, 1, 0) dans la première zone de Brillouin}\label{fig-q8}
 \end{figure}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Études des états excités}
+\frametitle{Analyse des résultats}
 \framesubtitle{Dispersion}
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{q10}
-    \caption{EELS pour différents $\vb{q}$ dans la direction (1, 0,0) dans la première zone de Brillouin}\label{fig-q6}
+    \caption{EELS pour différents $\vb{q}$ dans la direction (1, 0,0) dans la première zone de Brillouin}\label{fig-q10}
 \end{figure}
-
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-\item Un premier aperçu sur le travail de recherche en laboratoire
-\item Fournir une référence aux expérimentateurs
-\item Perspective
+  \item Conditions initiales $\rightarrow$ Études de convergence\\ $\rightarrow$ État fondamental $\rightarrow$ Études de convergence\\ $\rightarrow$ Dispersion, transition spectroscopique
+  \item Projet de recherche en collaboration, discussion et réunion
+  \item Compétence technique: logiciel de visualisation, gestion de tâches de calcul sur les clusters
+%\item Un premier aperçu sur le travail de recherche en laboratoire
+%\item Fournir une référence aux expérimentateurs
+%\item Perspective
 \end{itemize}
 
 \end{frame}

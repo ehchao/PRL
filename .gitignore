@@ -31,3 +31,9 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+
+## Beamer
+*.nav
+*.snm
+*.dump
+*.vrb
