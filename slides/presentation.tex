@@ -150,12 +150,12 @@ $\Rightarrow $ l'espace de dimension $768$ à considérer.
 \frametitle{Études de l'état fondamental}
 \framesubtitle{Théorie de la fonctionnelle de la densité, DFT en anglais}
 \begin{theoreme}[Hohenberg-Kohn]
-  L'espérance d'un observable dans l'état fondamental est une fonctionnelle unique
+  L'espérance d'une observable dans l'état fondamental est une fonctionnelle unique
   de la densité d'électrons.
 \end{theoreme}
 
 \begin{theoreme}[Kohn-Sham]
-  Pour tout système qui contient des termes d'interactions entre électrons,
+  Pour tout système qui contient des termes d'interaction entre électrons,
   il existe un système auxiliaire non-interagissant ayant la même densité d'électrons.
 \end{theoreme}
 
@@ -180,7 +180,7 @@ avec
 \end{equation*}
 \textbf{Remarque} un terme d'échange-corrélation apparaît
 
-$\Rightarrow$ Approximations nécesitées (avec l'approximation des gradients généralisés, GGA en anglais)
+$\Rightarrow$ Approximations nécesitées (avec l'approximation des gradients généralisée, GGA en anglais)
 
 Solution du système d'équations: $\phi_i(\vb{r})$. Processus itératif:
 \begin{equation*}
@@ -197,14 +197,14 @@ Solution du système d'équations: $\phi_i(\vb{r})$. Processus itératif:
   \item Fonctionnement:
     Théorème de Bloch
     \begin{equation*}
-      \phi_{n,\textbf{k}_i}
-      = \frac{1}{\sqrt{\Omega_{maille}}}e^{i\textbf{k}_i\cdot\textbf{r}}\sum_{\textbf{G}} c_{n,\textbf{k}_i}(\textbf{G})e^{i\textbf{G}\cdot\textbf{r}}
+      \phi_{n,\textbf{k}_i}      
       = e^{i\textbf{k}_i\cdot\textbf{r}} u_{n,\textbf{k}_i}(\textbf{r})
+      = \frac{1}{\sqrt{\Omega_{maille}}}e^{i\textbf{k}_i\cdot\textbf{r}}\sum_{\textbf{G}} c_{n,\textbf{k}_i}(\textbf{G})e^{i\textbf{G}\cdot\textbf{r}}
     \end{equation*}
   \item Réduction de la dimension de la base d'ondes planes en définissant une énergie de seuil $E_{cut}$:
-    \begin{equation}
+    \begin{equation*}
       \frac{1}{2}|\textbf{k}+\textbf{G}|^2 \leq E_{cut}
-    \end{equation}
+    \end{equation*}
 
   \item Résultat obtenu:
 
@@ -414,8 +414,19 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Études des états excités}
+On a désormais:
+\begin{itemize}
+\item Convergence en échantillonnage
+\item Les bandes nécessaires pour avoir la convergence
+\item Bonne méthode d'approximation
+\end{itemize}
+$\Longrightarrow$ On peut passer à l'analyse du matériau
+\end{frame}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Analyse des résultats}
 \framesubtitle{Anisotropie du système}
@@ -431,11 +442,20 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 \begin{frame}
 \frametitle{Analyse des résultats}
 \framesubtitle{EELS et la fonction diélectrique}
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=8cm]{epsilon_compare}
-    \caption{Relation entre les parties réelle et imaginaire de la fonction diélectrique $\epsilon$ et EELS}\label{fig-epsilon_compare}
-\end{figure}
+\begin{columns}
+  \begin{column}{\dimexpr0.2\paperwidth-10pt}
+  $\V{EELS} 
+  = \Im{(\epsilon^{-1})} 
+  		= \frac{-\Im({\epsilon})}{\Re{(\epsilon)}^2 + \Im{(\epsilon)}^2}$
+  \end{column}
+  \begin{column}{\dimexpr0.8\paperwidth-10pt}
+        \begin{figure}[!h]
+      \centering
+      \includegraphics[width=8cm]{epsilon_compare}
+      \caption{Relation entre les parties réelle et imaginaire de la fonction diélectrique $\epsilon$ et EELS}\label{fig-epsilon_compare}
+    \end{figure}
+  \end{column}
+\end{columns}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -477,8 +497,9 @@ $\Longrightarrow$ terme d'échange-corrélation à approximer,  avec la \textit{
 \frametitle{Conclusion}
 \begin{itemize}
   \item Conditions initiales $\rightarrow$ Études de convergence\\ $\rightarrow$ État fondamental $\rightarrow$ Études de convergence\\ $\rightarrow$ Dispersion, transition spectroscopique
+  \item Prospective: états hydratés d'oxalate de calcium  
   \item Projet de recherche en collaboration, discussion et réunion
-  \item Compétence technique: logiciel de visualisation, gestion de tâches de calcul sur les clusters
+  \item Compétences techniques: logiciel de visualisation, gestion de tâches de calcul sur les clusters
 %\item Un premier aperçu sur le travail de recherche en laboratoire
 %\item Fournir une référence aux expérimentateurs
 %\item Perspective
