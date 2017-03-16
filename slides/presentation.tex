@@ -197,7 +197,7 @@ Solution du système d'équations: $\phi_i(\vb{r})$. Processus itératif:
   \item Fonctionnement:
     Théorème de Bloch
     \begin{equation*}
-      \phi_{n,\textbf{k}_i}      
+      \phi_{n,\textbf{k}_i}
       = e^{i\textbf{k}_i\cdot\textbf{r}} u_{n,\textbf{k}_i}(\textbf{r})
       = \frac{1}{\sqrt{\Omega_{maille}}}e^{i\textbf{k}_i\cdot\textbf{r}}\sum_{\textbf{G}} c_{n,\textbf{k}_i}(\textbf{G})e^{i\textbf{G}\cdot\textbf{r}}
     \end{equation*}
@@ -223,7 +223,7 @@ Solution du système d'équations: $\phi_i(\vb{r})$. Processus itératif:
 \begin{figure}[!h]
     \centering
     \includegraphics[width=8cm]{E_cut}
-    \caption{L'énergie totale du système (en eV) en fonction de l'énergie de seuil (en Hartree).}\label{fig-Ecut}
+    \caption{L'énergie totale du système (en eV) en fonction de l'énergie de seuil (en Hartree). $E_{\V{cut}} = 40\ \V{Hartree}\sim 35000$ ondes planes }\label{fig-Ecut}
 \end{figure}
 \end{frame}
 
@@ -237,7 +237,7 @@ Solution du système d'équations: $\phi_i(\vb{r})$. Processus itératif:
 \end{equation*}
 
 \begin{itemize}
-\item Calul discrétisé dans l'espace de Fourier $\Longrightarrow$ échantillonnage de la première zone de Brillouin
+\item Calul discrétisé dans l'espace réciproque $\Longrightarrow$ échantillonnage de la première zone de Brillouin
 \item Choix d'échantillonnage pertinents (respectant les symétries du problème)
 
 \end{itemize}
@@ -443,16 +443,21 @@ $\Longrightarrow$ On peut passer à l'analyse du matériau
 \frametitle{Analyse des résultats}
 \framesubtitle{EELS et la fonction diélectrique}
 \begin{columns}
-  \begin{column}{\dimexpr0.2\paperwidth-10pt}
-  $\V{EELS} 
-  = \Im{(\epsilon^{-1})} 
-  		= \frac{-\Im({\epsilon})}{\Re{(\epsilon)}^2 + \Im{(\epsilon)}^2}$
+  \begin{column}{\dimexpr0.3\paperwidth-10pt}
+  \centering
+  $$
+  \V{EELS}
+  = \Im{(\epsilon^{-1})}
+  $$
+  $$
+  = \frac{-\Im({\epsilon})}{\Re{(\epsilon)}^2 + \Im{(\epsilon)}^2}
+  $$
   \end{column}
-  \begin{column}{\dimexpr0.8\paperwidth-10pt}
+  \begin{column}{\dimexpr0.75\paperwidth-10pt}
         \begin{figure}[!h]
       \centering
       \includegraphics[width=8cm]{epsilon_compare}
-      \caption{Relation entre les parties réelle et imaginaire de la fonction diélectrique $\epsilon$ et EELS}\label{fig-epsilon_compare}
+      \caption{\centering Relation entre les parties réelle et imaginaire de la fonction diélectrique $\epsilon$ et EELS}\label{fig-epsilon_compare}
     \end{figure}
   \end{column}
 \end{columns}
@@ -497,7 +502,7 @@ $\Longrightarrow$ On peut passer à l'analyse du matériau
 \frametitle{Conclusion}
 \begin{itemize}
   \item Conditions initiales $\rightarrow$ Études de convergence\\ $\rightarrow$ État fondamental $\rightarrow$ Études de convergence\\ $\rightarrow$ Dispersion, transition spectroscopique
-  \item Prospective: états hydratés d'oxalate de calcium  
+  \item Prospective: états hydratés d'oxalate de calcium
   \item Projet de recherche en collaboration, discussion et réunion
   \item Compétences techniques: logiciel de visualisation, gestion de tâches de calcul sur les clusters
 %\item Un premier aperçu sur le travail de recherche en laboratoire
